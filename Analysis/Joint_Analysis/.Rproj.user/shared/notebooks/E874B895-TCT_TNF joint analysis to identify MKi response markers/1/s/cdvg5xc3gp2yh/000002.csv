@@ -1,0 +1,58 @@
+"0","# DGE in inflammation using I_V and NI_V comparison"
+"0","tct_inf <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_V vs NI_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m,
+  NI_V_1 = [32mcol_double()[39m,
+  NI_V_2 = [32mcol_double()[39m,
+  NI_V_4 = [32mcol_double()[39m,
+  NI_V_6 = [32mcol_double()[39m,
+  NI_V_7 = [32mcol_double()[39m,
+  I_V_1 = [32mcol_double()[39m,
+  I_V_2 = [32mcol_double()[39m,
+  I_V_3 = [32mcol_double()[39m,
+  I_V_4 = [32mcol_double()[39m,
+  I_V_5 = [32mcol_double()[39m,
+  I_V_6 = [32mcol_double()[39m
+)
+"
+"0","tct_inf_DGE <- unique(tct_inf$X1)"
+"0","tct_inf_DGE_up <- tct_inf$X1[tct_inf$log2FoldChange > 0]"
+"0","tct_inf_DGE_down <- tct_inf$X1[tct_inf$log2FoldChange < 0]"
+"0","tnf_inf <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_V vs NI_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m,
+  NI_V_1 = [32mcol_double()[39m,
+  NI_V_2 = [32mcol_double()[39m,
+  NI_V_3 = [32mcol_double()[39m,
+  NI_V_4 = [32mcol_double()[39m,
+  NI_V_5 = [32mcol_double()[39m,
+  I_V_1 = [32mcol_double()[39m,
+  I_V_2 = [32mcol_double()[39m,
+  I_V_3 = [32mcol_double()[39m,
+  I_V_4 = [32mcol_double()[39m,
+  I_V_5 = [32mcol_double()[39m
+)
+"
+"0","tnf_inf_DGE <- unique(tnf_inf$X1)"
+"0","tnf_inf_DGE_up <- tnf_inf$X1[tnf_inf$log2FoldChange > 0]"
+"0","tnf_inf_DGE_down <- tnf_inf$X1[tnf_inf$log2FoldChange < 0]"
+"0","# Find out how big is the overlap"
+"0","## Total overlap"
+"0","inf_overlap <-intersect(tct_inf_DGE, tnf_inf_DGE)"
+"0","grid.newpage()"

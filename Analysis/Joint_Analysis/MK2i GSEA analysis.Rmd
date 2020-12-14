@@ -1,0 +1,72 @@
+---
+title: "GSEA_Joint_TCT_TNF"
+author: "Bing Shui"
+date: "4/19/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prepare libraries
+```{r prepare libraries}
+suppressMessages(
+  c(library(tidyverse))
+)
+
+```
+
+
+## Load GSEA results
+For this analysis, I would like to take a look at the GSEA pathways that are differentially enriched between MK2i and vehicle treated inflamed samples in TCT and TNF model to see how much overlap/difference we observe.
+
+```{r loading dataset}
+gsea_imki_iv_tct_down <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/GSEA/I_MKI vs I_V/Hallmark/gsea_report_for_0_1586820351136.csv")
+gsea_imki_iv_tct_up <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/GSEA/I_MKI vs I_V/Hallmark/gsea_report_for_1_1586820351136.csv")
+gsea_imki_iv_tct <- rbind(gsea_imki_iv_tct_down, gsea_imki_iv_tct_up)
+
+gsea_imki_iv_tnf_down <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GSEA/I_MKI vs I_V/Hallmark/gsea_report_for_0_1586821602749.csv")
+gsea_imki_iv_tnf_up <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GSEA/I_MKI vs I_V/Hallmark/gsea_report_for_1_1586821602749.csv")
+gsea_imki_iv_tnf <- rbind(gsea_imki_iv_tnf_down, gsea_imki_iv_tnf_up)
+
+```
+
+## Cross analysis
+First we filter the list and select only pathways that are significantly enriched using standard pval < 0.05 and q (padj) < 0.1.
+```{r select significant pathways}
+gsea_imki_iv_tct <- gsea_imki_iv_tct[gsea_imki_iv_tct$`NOM p-val` < 0.5 & gsea_imki_iv_tct$`FDR q-val` < 0.1, ]
+gsea_imki_iv_tnf <- gsea_imki_iv_tnf[gsea_imki_iv_tnf$`NOM p-val` < 0.5 & gsea_imki_iv_tnf$`FDR q-val` < 0.1, ]
+```
+
+First we look at the overlap.
+```{r overlapping pathways}
+overlap <- intersect(gsea_imki_iv_tct$NAME, gsea_imki_iv_tnf$NAME)
+
+# now let's check if all the overlapping pathways are enriched in the same direction
+opposite <- c()
+for (i in overlap) {
+  tct_nes <- gsea_imki_iv_tct$NES[gsea_imki_iv_tct$NAME == i]
+  tnf_nes <- gsea_imki_iv_tnf$NES[gsea_imki_iv_tnf$NAME == i]
+  dir <- tct_nes * tnf_nes
+  if (dir < 0) {
+    print(paste("Pathway enriched in opposite directoin:" ,i))
+    opposite <- c(opposite, i)
+  }
+}
+
+print(paste("The number of overlapping enriched pathways is:", length(overlap)- length(opposite)))
+overlap[!overlap%in%opposite]
+```
+
+Then we can take a look at uniquely enriched pathways.
+ 
+```{r show unique pathways}
+tct_unique <- setdiff(gsea_imki_iv_tct$NAME, overlap)
+tnf_unique <- setdiff(gsea_imki_iv_tnf$NAME, overlap)
+print(paste("These are the pathways uniquely enriched in TCT:", tct_unique))
+print(paste("These are the pathways uniquely enriched in TNF:", tnf_unique))
+```
+
+
+

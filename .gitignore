@@ -1,0 +1,14 @@
+*.docx
+*.pptx
+*.pdf
+*.png
+Analysis/*.ai
+Analysis/TCT/*.csv
+Analysis/TCT/First\ Round/
+Analysis/TNF/*.csv
+Gene\ Counts
+Manuscript
+MK2_Mouse-Human
+RDS\ for\ Doug/
+scRNA-Seq/Biton\ 2018/Data/
+scRNA-Seq/Biton\ 2018/Results/

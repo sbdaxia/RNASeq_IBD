@@ -1,0 +1,5 @@
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+]0;~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis[?1034hBing-Shuis-MacBook-Pro:Joint_Analysis mizuhi$ [KBing-Shuis-MacBook-Pro:Joint_Analysis mizuhi$ 

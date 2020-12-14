@@ -1,0 +1,561 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0050900","GO:0050900","leukocyte migration","34/164","325/16202",5.67682710101615e-25,1.61278657939869e-21,1.19153613046592e-21,"Itgb2/Tgfb1/Rarres2/Trpm2/Mmp9/Cxcl16/Ccl9/Madcam1/Myo1g/Retnlg/Cxcl13/Pla2g7/Trem2/Adam8/Ccr1/Cxcr2/Il1b/Il1a/Itgam/F7/Rac2/Cd300a/Gpsm3/Sirpa/Prex1/Trem1/Il1f9/Selplg/C5ar1/Fpr2/Cd47/Ptafr/Fcer1g/Fcgr3",34
+"GO:0002274","GO:0002274","myeloid leukocyte activation","27/164","206/16202",1.55232516165507e-22,2.20507789213102e-19,1.62912440649485e-19,"Itgb2/Spi1/Tgfb1/Lcp2/Hmox1/Mmp8/Trem2/Slc11a1/Cxcr2/Fgr/Clec4d/Tyrobp/Itgam/Rac2/Crlf2/Batf/Cd300a/C1qa/Cd84/Stx11/Cd300lf/C5ar1/Fpr2/Ptafr/Fcer1g/Pirb/Fcgr3",27
+"GO:0006909","GO:0006909","phagocytosis","25/164","197/16202",1.44826368531954e-20,1.3715057099976e-17,1.01327641702707e-17,"Itgb2/Tgfb1/Hck/Cyba/Myo1g/Trem2/Msr1/Slc11a1/Marco/Fcgr2b/Il1b/Fgr/Siglece/Tyrobp/Mfge8/Il2rg/Cd300a/Sirpa/Cd300lf/Pld4/Fpr2/Cd47/Fcer1g/Fcgr3/Ncf4",25
+"GO:0097529","GO:0097529","myeloid leukocyte migration","24/164","197/16202",2.37960345947242e-19,1.69011335709029e-16,1.24866560478632e-16,"Itgb2/Rarres2/Ccl9/Retnlg/Cxcl13/Pla2g7/Trem2/Adam8/Ccr1/Cxcr2/Il1b/Il1a/Itgam/Rac2/Cd300a/Sirpa/Prex1/Trem1/Il1f9/C5ar1/Fpr2/Cd47/Fcer1g/Fcgr3",24
+"GO:0050764","GO:0050764","regulation of phagocytosis","18/164","99/16202",5.9807586365885e-18,3.39826705730959e-15,2.51065952028578e-15,"Tgfb1/Hck/Cyba/Trem2/Slc11a1/Fcgr2b/Il1b/Fgr/Siglece/Mfge8/Il2rg/Cd300a/Sirpa/Cd300lf/Fpr2/Cd47/Fcer1g/Fcgr3",18
+"GO:0030595","GO:0030595","leukocyte chemotaxis","23/164","203/16202",7.31869820066182e-18,3.46540359801337e-15,2.56026038809117e-15,"Itgb2/Rarres2/Trpm2/Cxcl16/Ccl9/Retnlg/Cxcl13/Pla2g7/Adam8/Ccr1/Cxcr2/Il1b/Itgam/F7/Rac2/Gpsm3/Prex1/Trem1/Il1f9/C5ar1/Fpr2/Fcer1g/Fcgr3",23
+"GO:0001819","GO:0001819","positive regulation of cytokine production","30/164","434/16202",5.89098709695484e-17,2.39089919177839e-14,1.76641026636511e-14,"Tgfb1/Mmp8/Cyba/Cybb/Clec4n/Trem2/Csf1r/Adam8/Slc11a1/Il1b/Il1a/Fgr/Clec5a/Clec4e/Tyrobp/Crlf2/Gpsm3/Cd84/Il1f9/Cd300c2/C5ar1/Mmp12/Mapk11/Ifi205/Cebpb/Ptafr/Fcer1g/Fcgr3/Lilra5/Mndal",30
+"GO:0060326","GO:0060326","cell chemotaxis","25/164","282/16202",9.13496627483463e-17,3.24405489835065e-14,2.3967266778974e-14,"Itgb2/Rarres2/Trpm2/Cxcl16/Ccl9/Retnlg/Cxcl13/Pla2g7/Lox/Adam8/Ccr1/Cxcr2/Il1b/Itgam/F7/Rac2/Gpsm3/Prex1/Trem1/Il1f9/C5ar1/Fpr2/Fcer1g/Fcgr3/Arrb2",25
+"GO:0002443","GO:0002443","leukocyte mediated immunity","27/164","345/16202",1.14003458824567e-16,3.59870918356218e-14,2.65874733211915e-14,"Itgb2/Tgfb1/Hmox1/Ncf1/Vsir/Myo1g/Slc11a1/Fcgr2b/Il1b/Fgr/Tyrobp/Itgam/Rac2/Crlf2/Batf/Cd300a/C1qa/C1qc/C1qb/Cd84/Stx11/Trem1/Ptafr/Fcer1g/Pirb/Fcgr3/Arrb2",27
+"GO:0002687","GO:0002687","positive regulation of leukocyte migration","18/164","138/16202",2.74580269677903e-15,7.80082546154923e-13,5.76329534460778e-13,"Tgfb1/Rarres2/Mmp9/Madcam1/Cxcl13/Pla2g7/Trem2/Adam8/Ccr1/Cxcr2/Il1b/Il1a/F7/Rac2/Gpsm3/C5ar1/Fpr2/Ptafr",18
+"GO:0097530","GO:0097530","granulocyte migration","18/164","139/16202",3.12720310655878e-15,8.07671275066681e-13,5.96712248275426e-13,"Itgb2/Rarres2/Ccl9/Cxcl13/Adam8/Cxcr2/Il1b/Il1a/Itgam/Rac2/Cd300a/Sirpa/Prex1/Trem1/Il1f9/C5ar1/Fcer1g/Fcgr3",18
+"GO:0002685","GO:0002685","regulation of leukocyte migration","19/164","194/16202",9.3264996517754e-14,2.20804879255783e-11,1.63131932505615e-11,"Tgfb1/Rarres2/Mmp9/Madcam1/Cxcl13/Pla2g7/Trem2/Adam8/Ccr1/Cxcr2/Il1b/Il1a/F7/Rac2/Cd300a/Gpsm3/C5ar1/Fpr2/Ptafr",19
+"GO:0002694","GO:0002694","regulation of leukocyte activation","28/164","499/16202",1.36818095553938e-13,2.99000161129798e-11,2.20903062781014e-11,"Itgb2/Tgfb1/Hmox1/Mmp8/Vsir/Samsn1/Cd86/Trem2/Adam8/Fcgr2b/Il1b/Fgr/Gpnmb/Clec4d/Tyrobp/Itgam/Il2rg/Rac2/Crlf2/Cd300a/Sirpa/Cd84/Cd300lf/Cd47/Cebpb/Ptafr/Fcer1g/Slfn1",28
+"GO:0050766","GO:0050766","positive regulation of phagocytosis","13/164","70/16202",2.08751594370247e-13,4.23616628289908e-11,3.12970435469377e-11,"Cyba/Trem2/Slc11a1/Fcgr2b/Il1b/Mfge8/Il2rg/Sirpa/Cd300lf/Fpr2/Cd47/Fcer1g/Fcgr3",13
+"GO:1990266","GO:1990266","neutrophil migration","15/164","113/16202",4.82718709548518e-13,8.92790656322145e-11,6.59598943554477e-11,"Itgb2/Ccl9/Cxcl13/Adam8/Cxcr2/Il1b/Il1a/Itgam/Rac2/Prex1/Trem1/Il1f9/C5ar1/Fcer1g/Fcgr3",15
+"GO:0002444","GO:0002444","myeloid leukocyte mediated immunity","14/164","93/16202",5.02803607925178e-13,8.92790656322145e-11,6.59598943554477e-11,"Itgb2/Hmox1/Ncf1/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Stx11/Trem1/Ptafr/Fcer1g/Fcgr3",14
+"GO:1903555","GO:1903555","regulation of tumor necrosis factor superfamily cytokine production","17/164","162/16202",6.45354663259036e-13,1.0785015284229e-10,7.968032189093e-11,"Mmp8/Cyba/Cybb/Vsir/Trem2/Adam8/Gpnmb/Clec4a2/Tyrobp/Sirpa/Cd84/Cd47/Ptafr/Fcer1g/Fcgr3/Arrb2/Lilra5",17
+"GO:0071706","GO:0071706","tumor necrosis factor superfamily cytokine production","17/164","166/16202",9.64433857615299e-13,1.52219810526948e-10,1.12460883747655e-10,"Mmp8/Cyba/Cybb/Vsir/Trem2/Adam8/Gpnmb/Clec4a2/Tyrobp/Sirpa/Cd84/Cd47/Ptafr/Fcer1g/Fcgr3/Arrb2/Lilra5",17
+"GO:0032103","GO:0032103","positive regulation of response to external stimulus","24/164","386/16202",1.02697788674936e-12,1.53560219802892e-10,1.13451185937852e-10,"Tgfb1/Mmp8/Cyba/Rarres2/Cxcl13/Pla2g7/Trem2/Adam8/Ccr1/Cxcr2/Il1b/F7/Rac2/Gpsm3/C5ar1/Mmp12/Fpr2/Ifi205/Cd47/Cebpb/Fcer1g/Fcgr3/Lilra5/Mndal",24
+"GO:0050663","GO:0050663","cytokine secretion","19/164","235/16202",2.94738592057181e-12,4.18676170017226e-10,3.09320396085273e-10,"Lcp2/Mmp8/Srgn/Clec4n/Csf1r/Il1r2/Il1b/Il1a/Fgr/Tnfrsf9/Clec5a/Clec4e/Crlf2/Cd84/Trem1/Cd300c2/Mmp12/Mapk11/Lilra5",19
+"GO:0006911","GO:0006911","phagocytosis, engulfment","11/164","53/16202",4.30586089778769e-12,5.82521467172135e-10,4.30370257152314e-10,"Itgb2/Trem2/Msr1/Marco/Fcgr2b/Siglece/Mfge8/Cd300a/Sirpa/Fcer1g/Fcgr3",11
+"GO:0019221","GO:0019221","cytokine-mediated signaling pathway","21/164","307/16202",4.9533457976338e-12,6.39657064139892e-10,4.72582369401043e-10,"Spi1/Ccl9/Cxcl13/Trem2/Csf1r/Ifitm1/Ccr1/Il1r2/Cxcr2/Il1b/Il1a/Irf5/Il2rg/Crlf2/Il1f9/Cd300lf/Mmp12/Fcer1g/Pirb/Csf2rb/Csf2rb2",21
+"GO:0032680","GO:0032680","regulation of tumor necrosis factor production","16/164","160/16202",6.70333642640106e-12,8.28007773365452e-10,6.11736971818934e-10,"Mmp8/Cyba/Cybb/Vsir/Trem2/Gpnmb/Clec4a2/Tyrobp/Sirpa/Cd84/Cd47/Ptafr/Fcer1g/Fcgr3/Arrb2/Lilra5",16
+"GO:0002250","GO:0002250","adaptive immune response","23/164","387/16202",8.01851387479051e-12,9.49191579928326e-10,7.01268274839135e-10,"Tgfb1/Vsir/Myo1g/Samsn1/Cd86/Clec4n/Nfkb2/Slc11a1/Fcgr2b/Il1b/Clec4d/Clec4a2/Crlf2/Batf/C1qa/C1qc/C1qb/Cd84/Stx11/Serpina3g/Fcer1g/Pirb/Fcgr3",23
+"GO:0032640","GO:0032640","tumor necrosis factor production","16/164","163/16202",8.92232185848217e-12,1.01393265599791e-09,7.49099359402672e-10,"Mmp8/Cyba/Cybb/Vsir/Trem2/Gpnmb/Clec4a2/Tyrobp/Sirpa/Cd84/Cd47/Ptafr/Fcer1g/Fcgr3/Arrb2/Lilra5",16
+"GO:0050778","GO:0050778","positive regulation of immune response","25/164","473/16202",1.18107616038294e-11,1.2905528352492e-09,9.53467961054081e-10,"Itgb2/Cfp/Tgfb1/Lcp2/Myo1g/Adam8/Slc11a1/Fcgr2b/Il1b/Fgr/Itgam/Cd300a/C1qa/C1qc/C1qb/Fpr1/C5ar1/Mmp12/Fpr2/Ifi205/Cd47/Ptafr/Fcer1g/Fcgr3/Mndal",25
+"GO:0042742","GO:0042742","defense response to bacterium","18/164","224/16202",1.26351657265247e-11,1.32950021589099e-09,9.8224251300937e-10,"Hck/Cyba/Rarres2/Ncf1/Cxcl13/Trem2/Slc11a1/Fgr/Clec4e/Clec4d/Hp/Trem1/Mpeg1/C5ar1/Fpr2/Cebpb/Fcer1g/Lyz2",18
+"GO:0030593","GO:0030593","neutrophil chemotaxis","13/164","96/16202",1.41558392236632e-11,1.39405140592318e-09,1.02993330866108e-09,"Itgb2/Ccl9/Cxcl13/Cxcr2/Il1b/Itgam/Rac2/Prex1/Trem1/Il1f9/C5ar1/Fcer1g/Fcgr3",13
+"GO:0071621","GO:0071621","granulocyte chemotaxis","14/164","118/16202",1.42300213909793e-11,1.39405140592318e-09,1.02993330866108e-09,"Itgb2/Rarres2/Ccl9/Cxcl13/Cxcr2/Il1b/Itgam/Rac2/Prex1/Trem1/Il1f9/C5ar1/Fcer1g/Fcgr3",14
+"GO:0002886","GO:0002886","regulation of myeloid leukocyte mediated immunity","11/164","61/16202",2.20305496741169e-11,2.08629305413887e-09,1.54136547544523e-09,"Itgb2/Hmox1/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g/Fcgr3",11
+"GO:0032675","GO:0032675","regulation of interleukin-6 production","15/164","147/16202",2.34445633939192e-11,2.14858079361692e-09,1.58738402062733e-09,"Mmp8/Cyba/Trem2/Il1b/Il1a/Tyrobp/Sirpa/Cd84/Il1f9/Cd47/Cebpb/Ptafr/Fcer1g/Arrb2/Lilra5",15
+"GO:0099024","GO:0099024","plasma membrane invagination","11/164","62/16202",2.65503152370742e-11,2.35717017464149e-09,1.7414910718002e-09,"Itgb2/Trem2/Msr1/Marco/Fcgr2b/Siglece/Mfge8/Cd300a/Sirpa/Fcer1g/Fcgr3",11
+"GO:0002275","GO:0002275","myeloid cell activation involved in immune response","12/164","81/16202",2.98377689070586e-11,2.56876065045313e-09,1.89781534930382e-09,"Itgb2/Hmox1/Trem2/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",12
+"GO:0050707","GO:0050707","regulation of cytokine secretion","17/164","206/16202",3.17173963197773e-11,2.65026832189669e-09,1.95803369231071e-09,"Mmp8/Srgn/Clec4n/Csf1r/Il1r2/Il1b/Il1a/Fgr/Tnfrsf9/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",17
+"GO:0032635","GO:0032635","interleukin-6 production","15/164","156/16202",5.52464137901782e-11,4.48443033079704e-09,3.31312328113129e-09,"Mmp8/Cyba/Trem2/Il1b/Il1a/Tyrobp/Sirpa/Cd84/Il1f9/Cd47/Cebpb/Ptafr/Fcer1g/Arrb2/Lilra5",15
+"GO:0050867","GO:0050867","positive regulation of cell activation","20/164","314/16202",5.99084548516367e-11,4.72777556204166e-09,3.49290815713928e-09,"Itgb2/Tgfb1/Mmp8/Vsir/Plek/Cd86/Trem2/Adam8/Il1b/Fgr/Clec4d/Tyrobp/Itgam/Il2rg/Crlf2/Sirpa/Cd47/Ptafr/Fcer1g/Lilra5",20
+"GO:0001818","GO:0001818","negative regulation of cytokine production","18/164","252/16202",8.95130442198617e-11,6.70196513128545e-09,4.95145092416799e-09,"Tgfb1/Hmox1/Mmp8/Srgn/Vsir/Mefv/Trem2/Il1r2/Slc11a1/Fcgr2b/Tnfrsf9/Gpnmb/Clec4a2/Tyrobp/Sirpa/Cd84/Arrb2/Lilra5",18
+"GO:0010324","GO:0010324","membrane invagination","11/164","69/16202",8.96426170323292e-11,6.70196513128545e-09,4.95145092416799e-09,"Itgb2/Trem2/Msr1/Marco/Fcgr2b/Siglece/Mfge8/Cd300a/Sirpa/Fcer1g/Fcgr3",11
+"GO:0032653","GO:0032653","regulation of interleukin-10 production","10/164","55/16202",1.6938858102988e-10,1.23393066334843e-08,9.11635170239084e-09,"Mmp8/Vsir/Trem2/Fcgr2b/Tnfrsf9/Tyrobp/Cd84/Cd47/Fcer1g/Lilra5",10
+"GO:0050715","GO:0050715","positive regulation of cytokine secretion","14/164","144/16202",2.14137423285851e-10,1.52091104888775e-08,1.12365795271575e-08,"Mmp8/Clec4n/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",14
+"GO:0002573","GO:0002573","myeloid leukocyte differentiation","16/164","203/16202",2.46306596695472e-10,1.70672449076058e-08,1.26093800721636e-08,"Spi1/Tgfb1/Hcls1/Trem2/Csf1r/Adam8/Ccr1/Tyrobp/Itgam/Batf/C1qc/Rbp1/Cd300lf/Cebpb/Fcer1g/Pirb",16
+"GO:0042110","GO:0042110","T cell activation","23/164","460/16202",2.54938114322217e-10,1.72447424473671e-08,1.27405162896868e-08,"Itgb2/Tgfb1/Vsir/Cd86/Adam8/Slc11a1/Il1b/Gpnmb/Clec4e/Clec4d/Clec4a2/Itgam/Il2rg/Rac2/Batf/Cd300a/Sirpa/Stx11/Prex1/Cd47/Cebpb/Fcer1g/Slfn1",23
+"GO:0002366","GO:0002366","leukocyte activation involved in immune response","17/164","236/16202",2.69482344135332e-10,1.78046358067088e-08,1.31541687688091e-08,"Itgb2/Tgfb1/Hmox1/Trem2/Slc11a1/Fgr/Clec4e/Clec4d/Tyrobp/Itgam/Rac2/Batf/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",17
+"GO:0042119","GO:0042119","neutrophil activation","8/164","29/16202",3.32608557471757e-10,2.14759298131196e-08,1.58665421913561e-08,"Itgb2/Cxcr2/Tyrobp/Itgam/Cd300a/Stx11/Ptafr/Fcer1g",8
+"GO:0002263","GO:0002263","cell activation involved in immune response","17/164","240/16202",3.49889618857826e-10,2.17057653729224e-08,1.60363460433158e-08,"Itgb2/Tgfb1/Hmox1/Trem2/Slc11a1/Fgr/Clec4e/Clec4d/Tyrobp/Itgam/Rac2/Batf/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",17
+"GO:0032613","GO:0032613","interleukin-10 production","10/164","59/16202",3.51448506566149e-10,2.17057653729224e-08,1.60363460433158e-08,"Mmp8/Vsir/Trem2/Fcgr2b/Tnfrsf9/Tyrobp/Cd84/Cd47/Fcer1g/Lilra5",10
+"GO:0007159","GO:0007159","leukocyte cell-cell adhesion","19/164","313/16202",4.21597074353254e-10,2.54841976220765e-08,1.88278738244208e-08,"Itgb2/Tgfb1/Vsir/Madcam1/Cd86/Fermt3/Adam8/Il1b/Gpnmb/Itgam/Il2rg/Rac2/Cd300a/Sirpa/Selplg/Cd47/Cebpb/Ptafr/Slfn1",19
+"GO:0051047","GO:0051047","positive regulation of secretion","23/164","481/16202",6.09766642935643e-10,3.60905631787534e-08,2.66639185529314e-08,"Itgb2/Tgfb1/Cyp4f18/Mmp8/Cyba/Trpm2/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Itgam/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Ptafr/Fcer1g/Lilra5",23
+"GO:0045123","GO:0045123","cellular extravasation","10/164","63/16202",6.9053328421613e-10,4.00368379685312e-08,2.95794493818897e-08,"Itgb2/Madcam1/Adam8/Il1a/Itgam/Sirpa/Trem1/Selplg/Cd47/Ptafr",10
+"GO:0038094","GO:0038094","Fc-gamma receptor signaling pathway","6/164","12/16202",8.62338617394022e-10,4.88656415668389e-08,3.61022209689979e-08,"Myo1g/Fcgr2b/Clec4e/Clec4d/Cd47/Fcer1g",6
+"GO:0043300","GO:0043300","regulation of leukocyte degranulation","9/164","47/16202",8.77207926754236e-10,4.88656415668389e-08,3.61022209689979e-08,"Itgb2/Hmox1/Fgr/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g",9
+"GO:0002690","GO:0002690","positive regulation of leukocyte chemotaxis","11/164","85/16202",9.12442548771249e-10,4.98509477126753e-08,3.68301708957464e-08,"Rarres2/Cxcl13/Pla2g7/Ccr1/Cxcr2/Il1b/F7/Rac2/Gpsm3/C5ar1/Fpr2",11
+"GO:0045576","GO:0045576","mast cell activation","10/164","66/16202",1.11064434394446e-09,5.90113141361451e-08,4.35979030317247e-08,"Lcp2/Hmox1/Fgr/Rac2/Crlf2/Cd300a/Cd84/Cd300lf/Fcer1g/Fcgr3",10
+"GO:0002703","GO:0002703","regulation of leukocyte mediated immunity","16/164","225/16202",1.12165116626253e-09,5.90113141361451e-08,4.35979030317247e-08,"Itgb2/Tgfb1/Hmox1/Vsir/Fcgr2b/Il1b/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g/Fcgr3/Arrb2",16
+"GO:0043299","GO:0043299","leukocyte degranulation","10/164","67/16202",1.29421866111104e-09,6.68522766584812e-08,4.93908518709171e-08,"Itgb2/Hmox1/Fgr/Itgam/Rac2/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",10
+"GO:0002696","GO:0002696","positive regulation of leukocyte activation","18/164","299/16202",1.430298954598e-09,7.15524938346044e-08,5.28633997318221e-08,"Itgb2/Tgfb1/Mmp8/Vsir/Cd86/Trem2/Adam8/Il1b/Fgr/Clec4d/Tyrobp/Itgam/Il2rg/Crlf2/Sirpa/Cd47/Ptafr/Fcer1g",18
+"GO:0050921","GO:0050921","positive regulation of chemotaxis","13/164","138/16202",1.43558329763198e-09,7.15524938346044e-08,5.28633997318221e-08,"Tgfb1/Rarres2/Cxcl13/Pla2g7/Trem2/Ccr1/Cxcr2/Il1b/F7/Rac2/Gpsm3/C5ar1/Fpr2",13
+"GO:0036230","GO:0036230","granulocyte activation","8/164","35/16202",1.73224099313052e-09,8.34118078217595e-08,6.16251300678369e-08,"Itgb2/Cxcr2/Tyrobp/Itgam/Cd300a/Stx11/Ptafr/Fcer1g",8
+"GO:0042554","GO:0042554","superoxide anion generation","8/164","35/16202",1.73224099313052e-09,8.34118078217595e-08,6.16251300678369e-08,"Itgb2/Tgfb1/Cyba/Cybb/Ncf1/Tyrobp/Itgam/Fpr2",8
+"GO:0050765","GO:0050765","negative regulation of phagocytosis","7/164","23/16202",2.04840466426359e-09,9.6991960852881e-08,7.16582263252912e-08,"Tgfb1/Fcgr2b/Siglece/Cd300a/Sirpa/Cd300lf/Cd47",7
+"GO:0002683","GO:0002683","negative regulation of immune system process","21/164","438/16202",3.46501636172813e-09,1.61378876781469e-07,1.19227655311232e-07,"Tgfb1/Hmox1/Cd68/Vsir/Samsn1/Cd86/Ccr1/Cxcr2/Fcgr2b/Gpnmb/Tyrobp/Cd300a/C1qc/Cd84/Cd300lf/Mmp12/Cd47/Cebpb/Fcer1g/Arrb2/Slfn1",21
+"GO:0002237","GO:0002237","response to molecule of bacterial origin","17/164","281/16202",3.90298837020611e-09,1.78844999350896e-07,1.32131728526163e-07,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Slc11a1/Fcgr2b/Il1b/Irf5/Sirpa/Cd84/Il1f9/C5ar1/Wfdc21/Cebpb/Ptafr",17
+"GO:0050727","GO:0050727","regulation of inflammatory response","18/164","321/16202",4.40053716800887e-09,1.98443271338305e-07,1.46611046165576e-07,"Apoe/Mmp8/Aoah/Mefv/Trem2/Adam8/Il1r2/Fcgr2b/Il1b/Siglece/Gpsm3/Sirpa/Fpr2/Cd47/Cebpb/Fcer1g/Fcgr3/Lilra5",18
+"GO:0050714","GO:0050714","positive regulation of protein secretion","17/164","290/16202",6.26635942118534e-09,2.74404342372102e-07,2.02731528442532e-07,"Tgfb1/Mmp8/Trpm2/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",17
+"GO:1903532","GO:1903532","positive regulation of secretion by cell","21/164","453/16202",6.27817045201922e-09,2.74404342372102e-07,2.02731528442532e-07,"Itgb2/Tgfb1/Mmp8/Trpm2/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Itgam/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Ptafr/Fcer1g/Lilra5",21
+"GO:0002283","GO:0002283","neutrophil activation involved in immune response","6/164","16/16202",7.22697111384316e-09,3.11088256582249e-07,2.29833818197819e-07,"Itgb2/Tyrobp/Itgam/Stx11/Ptafr/Fcer1g",6
+"GO:0002253","GO:0002253","activation of immune response","16/164","258/16202",8.07722219924367e-09,3.42498332358974e-07,2.53039765362009e-07,"Cfp/Lcp2/Myo1g/Fcgr2b/Il1b/Cd300a/C1qa/C1qc/C1qb/Fpr1/C5ar1/Fpr2/Ifi205/Cd47/Fcer1g/Mndal",16
+"GO:0002449","GO:0002449","lymphocyte mediated immunity","16/164","261/16202",9.52107843883583e-09,3.97785056540185e-07,2.93885919613601e-07,"Tgfb1/Vsir/Myo1g/Slc11a1/Fcgr2b/Il1b/Crlf2/Batf/C1qa/C1qc/C1qb/Stx11/Fcer1g/Pirb/Fcgr3/Arrb2",16
+"GO:0038093","GO:0038093","Fc receptor signaling pathway","6/164","17/16202",1.10756772200507e-08,4.56028970756e-07,3.36916863108788e-07,"Myo1g/Fcgr2b/Clec4e/Clec4d/Cd47/Fcer1g",6
+"GO:0050708","GO:0050708","regulation of protein secretion","21/164","469/16202",1.15243503151661e-08,4.67723989219814e-07,3.45557210954004e-07,"Tgfb1/Apoe/Mmp8/Trpm2/Srgn/Clec4n/Trem2/Csf1r/Il1r2/Il1b/Il1a/Fgr/Tnfrsf9/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",21
+"GO:0002688","GO:0002688","regulation of leukocyte chemotaxis","11/164","108/16202",1.20799478414779e-08,4.83368053769558e-07,3.57115137077937e-07,"Rarres2/Cxcl13/Pla2g7/Ccr1/Cxcr2/Il1b/F7/Rac2/Gpsm3/C5ar1/Fpr2",11
+"GO:0006801","GO:0006801","superoxide metabolic process","9/164","64/16202",1.53078949266416e-08,6.04024020647067e-07,4.46256469060283e-07,"Itgb2/Tgfb1/Cyba/Cybb/Ncf1/Tyrobp/Itgam/Fpr2/Ncf4",9
+"GO:0072593","GO:0072593","reactive oxygen species metabolic process","16/164","271/16202",1.62125654477616e-08,6.3095751283686e-07,4.6615509016347e-07,"Itgb2/Tgfb1/Mmp8/Cyba/Cybb/Ncf1/Il1b/Tyrobp/Itgam/Hp/Sirpa/Prex1/Mmp3/Fpr2/Cd47/Ncf4",16
+"GO:0050866","GO:0050866","negative regulation of cell activation","14/164","201/16202",1.67918962519088e-08,6.44672665563146e-07,4.76287924983017e-07,"Tgfb1/Apoe/Hmox1/Vsir/Samsn1/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cd84/Cd300lf/Cebpb/Slfn1",14
+"GO:0002460","GO:0002460","adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains","16/164","277/16202",2.20641923312626e-08,8.35791605508226e-07,6.17487712400527e-07,"Tgfb1/Vsir/Myo1g/Nfkb2/Slc11a1/Fcgr2b/Il1b/Crlf2/Batf/C1qa/C1qc/C1qb/Stx11/Fcer1g/Pirb/Fcgr3",16
+"GO:0002793","GO:0002793","positive regulation of peptide secretion","17/164","316/16202",2.24012933865524e-08,8.37395717252572e-07,6.18672839512265e-07,"Tgfb1/Mmp8/Trpm2/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",17
+"GO:0043410","GO:0043410","positive regulation of MAPK cascade","21/164","490/16202",2.46073349384938e-08,9.04764039187941e-07,6.68444948643271e-07,"Tgfb1/Apoe/Mmp8/Ncf1/Ccl9/Trem2/Csf1r/Adam8/Ccr1/Marco/Fcgr2b/Il1b/Il1a/Gpnmb/Cd84/Il1f9/C5ar1/Fpr2/Arrb2/Lilra5/Klb",21
+"GO:0033003","GO:0033003","regulation of mast cell activation","8/164","48/16202",2.4840406566934e-08,9.04764039187941e-07,6.68444948643271e-07,"Hmox1/Fgr/Rac2/Crlf2/Cd300a/Cd84/Cd300lf/Fcer1g",8
+"GO:0032693","GO:0032693","negative regulation of interleukin-10 production","6/164","20/16202",3.38259275690359e-08,1.21644886359026e-06,8.98719514625683e-07,"Mmp8/Vsir/Fcgr2b/Tnfrsf9/Tyrobp/Cd84",6
+"GO:0002695","GO:0002695","negative regulation of leukocyte activation","13/164","181/16202",3.86712806795752e-08,1.37331385513342e-06,1.01461228519833e-06,"Tgfb1/Hmox1/Vsir/Samsn1/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cd84/Cd300lf/Cebpb/Slfn1",13
+"GO:0032930","GO:0032930","positive regulation of superoxide anion generation","6/164","21/16202",4.6960998556619e-08,1.64711354196734e-06,1.21689709060297e-06,"Itgb2/Tgfb1/Cyba/Tyrobp/Itgam/Fpr2",6
+"GO:1903557","GO:1903557","positive regulation of tumor necrosis factor superfamily cytokine production","10/164","97/16202",5.0599500710075e-08,1.75308757947955e-06,1.29519132754672e-06,"Mmp8/Cyba/Cybb/Adam8/Tyrobp/Cd84/Ptafr/Fcer1g/Fcgr3/Lilra5",10
+"GO:0030099","GO:0030099","myeloid cell differentiation","18/164","377/16202",5.26625404249114e-08,1.80258165478522e-06,1.33175783902693e-06,"Spi1/Tgfb1/Hcls1/Trem2/Lox/Csf1r/Adam8/Ccr1/Clec5a/Tyrobp/Itgam/Batf/C1qc/Rbp1/Cd300lf/Cebpb/Fcer1g/Pirb",18
+"GO:0031349","GO:0031349","positive regulation of defense response","15/164","257/16202",5.41675856327939e-08,1.83202512836628e-06,1.35351084901994e-06,"Mmp8/Cyba/Trem2/Adam8/Il1b/Gpsm3/Mmp12/Fpr2/Ifi205/Cd47/Cebpb/Fcer1g/Fcgr3/Lilra5/Mndal",15
+"GO:0070661","GO:0070661","leukocyte proliferation","16/164","299/16202",6.39735851647558e-08,2.13822300533025e-06,1.57973162623558e-06,"Itgb2/Tgfb1/Vsir/Cd86/Trem2/Csf1r/Slc11a1/Fcgr2b/Il1b/Gpnmb/Tyrobp/Itgam/Rac2/Cd300a/Cebpb/Slfn1",16
+"GO:0032612","GO:0032612","interleukin-1 production","10/164","100/16202",6.78577044785845e-08,2.24167137701928e-06,1.65615988653975e-06,"Mefv/Trem2/Il1r2/Il1b/Tyrobp/Sirpa/Ifi205/Arrb2/Lilra5/Mndal",10
+"GO:0097028","GO:0097028","dendritic cell differentiation","7/164","37/16202",7.63696126012339e-08,2.49386286666788e-06,1.84248042984707e-06,"Spi1/Tgfb1/Trpm2/Trem2/Batf/Cebpb/Pirb",7
+"GO:0002697","GO:0002697","regulation of immune effector process","18/164","387/16202",7.81923423116339e-08,2.52436868758355e-06,1.86501830824639e-06,"Itgb2/Tgfb1/Hmox1/Vsir/Fcgr2b/Il1b/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Mmp12/Cd47/Ptafr/Fcer1g/Fcgr3/Arrb2",18
+"GO:0071674","GO:0071674","mononuclear cell migration","9/164","77/16202",8.01486397170819e-08,2.55845264535089e-06,1.89019973501906e-06,"Tgfb1/Rarres2/Ccl9/Pla2g7/Ccr1/Sirpa/C5ar1/Fpr2/Cd47",9
+"GO:0032928","GO:0032928","regulation of superoxide anion generation","6/164","24/16202",1.13589756619269e-07,3.58564998394825e-06,2.64909911928447e-06,"Itgb2/Tgfb1/Cyba/Tyrobp/Itgam/Fpr2",6
+"GO:0032611","GO:0032611","interleukin-1 beta production","9/164","82/16202",1.3944603170795e-07,4.3534744624427e-06,3.21637232186989e-06,"Mefv/Trem2/Il1b/Tyrobp/Sirpa/Ifi205/Arrb2/Lilra5/Mndal",9
+"GO:0002888","GO:0002888","positive regulation of myeloid leukocyte mediated immunity","7/164","41/16202",1.61194103327321e-07,4.97774399514042e-06,3.67758629330295e-06,"Itgb2/Fgr/Tyrobp/Itgam/Ptafr/Fcer1g/Fcgr3",7
+"GO:0050920","GO:0050920","regulation of chemotaxis","13/164","205/16202",1.66910936891689e-07,5.04461672031157e-06,3.72699225265428e-06,"Tgfb1/Rarres2/Cxcl13/Pla2g7/Trem2/Ccr1/Cxcr2/Il1b/F7/Rac2/Gpsm3/C5ar1/Fpr2",13
+"GO:0070374","GO:0070374","positive regulation of ERK1 and ERK2 cascade","13/164","205/16202",1.66910936891689e-07,5.04461672031157e-06,3.72699225265428e-06,"Tgfb1/Apoe/Ccl9/Trem2/Csf1r/Ccr1/Marco/Il1b/Il1a/Gpnmb/C5ar1/Fpr2/Arrb2",13
+"GO:0032945","GO:0032945","negative regulation of mononuclear cell proliferation","9/164","85/16202",1.9091232060024e-07,5.59618101303497e-06,4.1344911687848e-06,"Tgfb1/Vsir/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cebpb/Slfn1",9
+"GO:0050672","GO:0050672","negative regulation of lymphocyte proliferation","9/164","85/16202",1.9091232060024e-07,5.59618101303497e-06,4.1344911687848e-06,"Tgfb1/Vsir/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cebpb/Slfn1",9
+"GO:0045730","GO:0045730","respiratory burst","6/164","26/16202",1.91069890272577e-07,5.59618101303497e-06,4.1344911687848e-06,"Cyba/Cybb/Ncf1/Slc11a1/Rac2/Ncf4",6
+"GO:0002761","GO:0002761","regulation of myeloid leukocyte differentiation","10/164","115/16202",2.56586550664814e-07,7.40828124385294e-06,5.47328138729609e-06,"Tgfb1/Hcls1/Trem2/Csf1r/Adam8/Ccr1/Tyrobp/C1qc/Rbp1/Cebpb",10
+"GO:0032652","GO:0032652","regulation of interleukin-1 production","9/164","88/16202",2.58155523809025e-07,7.40828124385294e-06,5.47328138729609e-06,"Mefv/Trem2/Il1r2/Tyrobp/Sirpa/Ifi205/Arrb2/Lilra5/Mndal",9
+"GO:0070664","GO:0070664","negative regulation of leukocyte proliferation","9/164","89/16202",2.84731118537461e-07,8.08921107764927e-06,5.97635631961787e-06,"Tgfb1/Vsir/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cebpb/Slfn1",9
+"GO:0051222","GO:0051222","positive regulation of protein transport","18/164","423/16202",2.9361996797753e-07,8.25915177251647e-06,6.10190949606248e-06,"Tgfb1/Mmp8/Trpm2/Hcls1/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",18
+"GO:0019724","GO:0019724","B cell mediated immunity","10/164","117/16202",3.01760863502572e-07,8.40492758049812e-06,6.20960951314891e-06,"Tgfb1/Fcgr2b/Crlf2/Batf/C1qa/C1qc/C1qb/Fcer1g/Pirb/Fcgr3",10
+"GO:0006897","GO:0006897","endocytosis","19/164","475/16202",3.4785760751053e-07,9.594790902305e-06,7.08868747446087e-06,"Itgb2/Apoe/Cxcl16/Csnk1e/Trem2/Msr1/Cxcr2/Marco/Fcgr2b/Siglece/Mfge8/Pstpip1/Cd300a/Sirpa/Fpr2/Fcer1g/Fcgr3/Arrb2/Nedd4l",19
+"GO:0032496","GO:0032496","response to lipopolysaccharide","14/164","263/16202",4.71440885484136e-07,1.28784957275041e-05,9.51470774954825e-06,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Slc11a1/Il1b/Sirpa/Cd84/Il1f9/Wfdc21/Cebpb/Ptafr",14
+"GO:1904951","GO:1904951","positive regulation of establishment of protein localization","18/164","438/16202",4.88791768196637e-07,1.32253086994919e-05,9.77093519583052e-06,"Tgfb1/Mmp8/Trpm2/Hcls1/Clec4n/Trem2/Csf1r/Il1b/Il1a/Fgr/Clec5a/Clec4e/Crlf2/Cd84/Cd300c2/Mmp12/Mapk11/Lilra5",18
+"GO:0032755","GO:0032755","positive regulation of interleukin-6 production","9/164","95/16202",4.99794909738777e-07,1.33954465902629e-05,9.8966340617589e-06,"Mmp8/Cyba/Il1b/Il1a/Tyrobp/Il1f9/Ptafr/Fcer1g/Lilra5",9
+"GO:0032760","GO:0032760","positive regulation of tumor necrosis factor production","9/164","96/16202",5.46762159753813e-07,1.45173018304727e-05,1.07254672557708e-05,"Mmp8/Cyba/Cybb/Tyrobp/Cd84/Ptafr/Fcer1g/Fcgr3/Lilra5",9
+"GO:0032651","GO:0032651","regulation of interleukin-1 beta production","8/164","71/16202",5.75005172902053e-07,1.51258305205068e-05,1.1175051800845e-05,"Mefv/Trem2/Tyrobp/Sirpa/Ifi205/Arrb2/Lilra5/Mndal",8
+"GO:0002526","GO:0002526","acute inflammatory response","9/164","97/16202",5.97506068065106e-07,1.5573529719018e-05,1.1505814579641e-05,"Adam8/Cxcr2/Fcgr2b/Il1b/Il1a/Hp/Trem1/Fcer1g/Fcgr3",9
+"GO:0030316","GO:0030316","osteoclast differentiation","9/164","98/16202",6.52278950897787e-07,1.68465863590965e-05,1.24463562496669e-05,"Tgfb1/Trem2/Csf1r/Adam8/Ccr1/Tyrobp/Cd300lf/Cebpb/Fcer1g",9
+"GO:0002446","GO:0002446","neutrophil mediated immunity","6/164","32/16202",7.15207100854521e-07,1.81419944064973e-05,1.34034112697736e-05,"Itgb2/Ncf1/Itgam/Stx11/Trem1/Ptafr",6
+"GO:0097242","GO:0097242","amyloid-beta clearance","6/164","32/16202",7.15207100854521e-07,1.81419944064973e-05,1.34034112697736e-05,"Itgb2/Apoe/Trem2/Msr1/Marco/C5ar1",6
+"GO:0071219","GO:0071219","cellular response to molecule of bacterial origin","12/164","196/16202",7.37905264782505e-07,1.8389375940764e-05,1.35861781899937e-05,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Fcgr2b/Il1b/Sirpa/Cd84/Il1f9/Cebpb",12
+"GO:2000377","GO:2000377","regulation of reactive oxygen species metabolic process","12/164","196/16202",7.37905264782505e-07,1.8389375940764e-05,1.35861781899937e-05,"Itgb2/Tgfb1/Mmp8/Cyba/Il1b/Tyrobp/Itgam/Hp/Sirpa/Mmp3/Fpr2/Cd47",12
+"GO:0002699","GO:0002699","positive regulation of immune effector process","13/164","236/16202",8.37206644255583e-07,2.0682644142001e-05,1.52804581111728e-05,"Itgb2/Tgfb1/Hmox1/Il1b/Fgr/Tyrobp/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g/Fcgr3",13
+"GO:0030574","GO:0030574","collagen catabolic process","6/164","33/16202",8.6685646587847e-07,2.08706713522096e-05,1.54193737106304e-05,"Mmp8/Mmp9/Vsir/Mmp3/Mmp10/Mmp12",6
+"GO:0043304","GO:0043304","regulation of mast cell degranulation","6/164","33/16202",8.6685646587847e-07,2.08706713522096e-05,1.54193737106304e-05,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:1902624","GO:1902624","positive regulation of neutrophil migration","6/164","33/16202",8.6685646587847e-07,2.08706713522096e-05,1.54193737106304e-05,"Adam8/Cxcr2/Il1b/Il1a/Rac2/C5ar1",6
+"GO:0046651","GO:0046651","lymphocyte proliferation","14/164","279/16202",9.56905665360234e-07,2.28275755297652e-05,1.68651459294732e-05,"Itgb2/Tgfb1/Vsir/Cd86/Slc11a1/Fcgr2b/Il1b/Gpnmb/Tyrobp/Itgam/Rac2/Cd300a/Cebpb/Slfn1",14
+"GO:0045637","GO:0045637","regulation of myeloid cell differentiation","12/164","201/16202",9.64205935787336e-07,2.28275755297652e-05,1.68651459294732e-05,"Spi1/Tgfb1/Hcls1/Trem2/Lox/Csf1r/Adam8/Ccr1/Tyrobp/C1qc/Rbp1/Cebpb",12
+"GO:0061900","GO:0061900","glial cell activation","7/164","53/16202",9.98146905517127e-07,2.34358294097038e-05,1.73145274432462e-05,"Mmp8/Trem2/Il1b/Tyrobp/C1qa/C5ar1/Fpr2",7
+"GO:0032943","GO:0032943","mononuclear cell proliferation","14/164","281/16202",1.04176864800898e-06,2.39157113755635e-05,1.76690670382459e-05,"Itgb2/Tgfb1/Vsir/Cd86/Slc11a1/Fcgr2b/Il1b/Gpnmb/Tyrobp/Itgam/Rac2/Cd300a/Cebpb/Slfn1",14
+"GO:0033006","GO:0033006","regulation of mast cell activation involved in immune response","6/164","34/16202",1.04383956725444e-06,2.39157113755635e-05,1.76690670382459e-05,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:0090322","GO:0090322","regulation of superoxide metabolic process","6/164","34/16202",1.04383956725444e-06,2.39157113755635e-05,1.76690670382459e-05,"Itgb2/Tgfb1/Cyba/Tyrobp/Itgam/Fpr2",6
+"GO:1903037","GO:1903037","regulation of leukocyte cell-cell adhesion","14/164","283/16202",1.13331435224904e-06,2.57039862457862e-05,1.89902549414023e-05,"Itgb2/Tgfb1/Vsir/Cd86/Adam8/Il1b/Gpnmb/Il2rg/Cd300a/Sirpa/Cd47/Cebpb/Ptafr/Slfn1",14
+"GO:0050729","GO:0050729","positive regulation of inflammatory response","10/164","135/16202",1.13998671839812e-06,2.57039862457862e-05,1.89902549414023e-05,"Mmp8/Trem2/Adam8/Il1b/Gpsm3/Cd47/Cebpb/Fcer1g/Fcgr3/Lilra5",10
+"GO:0048143","GO:0048143","astrocyte activation","5/164","20/16202",1.37062918996572e-06,3.06610829030914e-05,2.26525868610994e-05,"Trem2/Il1b/C1qa/C5ar1/Fpr2",5
+"GO:0070372","GO:0070372","regulation of ERK1 and ERK2 cascade","14/164","293/16202",1.70828299354125e-06,3.79158748800835e-05,2.8012469482905e-05,"Tgfb1/Apoe/Ccl9/Trem2/Csf1r/Ccr1/Marco/Il1b/Il1a/Gpnmb/Sirpa/C5ar1/Fpr2/Arrb2",14
+"GO:0022407","GO:0022407","regulation of cell-cell adhesion","16/164","386/16202",1.95985056352668e-06,4.31622903176689e-05,3.18885518047507e-05,"Itgb2/Tgfb1/Vsir/Cd86/Cxcl13/Fermt3/Adam8/Il1b/Gpnmb/Il2rg/Cd300a/Sirpa/Cd47/Cebpb/Ptafr/Slfn1",16
+"GO:1902563","GO:1902563","regulation of neutrophil activation","4/164","10/16202",2.02683997851641e-06,4.42942490689624e-05,3.27248495316738e-05,"Itgb2/Itgam/Cd300a/Ptafr",4
+"GO:0016064","GO:0016064","immunoglobulin mediated immune response","9/164","113/16202",2.17442574950738e-06,4.7156821025576e-05,3.48397343874464e-05,"Tgfb1/Fcgr2b/Crlf2/Batf/C1qa/C1qc/C1qb/Fcer1g/Fcgr3",9
+"GO:0071216","GO:0071216","cellular response to biotic stimulus","12/164","218/16202",2.26257582194676e-06,4.86968023496268e-05,3.59774815706685e-05,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Fcgr2b/Il1b/Sirpa/Cd84/Il1f9/Cebpb",12
+"GO:0051250","GO:0051250","negative regulation of lymphocyte activation","10/164","151/16202",3.15671777016002e-06,6.74278851587013e-05,4.98161147877695e-05,"Tgfb1/Vsir/Samsn1/Cd86/Fcgr2b/Gpnmb/Tyrobp/Cd300a/Cebpb/Slfn1",10
+"GO:0070371","GO:0070371","ERK1 and ERK2 cascade","14/164","309/16202",3.1803367163907e-06,6.74278851587013e-05,4.98161147877695e-05,"Tgfb1/Apoe/Ccl9/Trem2/Csf1r/Ccr1/Marco/Il1b/Il1a/Gpnmb/Sirpa/C5ar1/Fpr2/Arrb2",14
+"GO:0042116","GO:0042116","macrophage activation","8/164","89/16202",3.271776648784e-06,6.87561835595102e-05,5.07974693927873e-05,"Mmp8/Trem2/Slc11a1/Tyrobp/C1qa/Cd84/C5ar1/Fpr2",8
+"GO:1902622","GO:1902622","regulation of neutrophil migration","6/164","41/16202",3.29139069485864e-06,6.87561835595102e-05,5.07974693927873e-05,"Adam8/Cxcr2/Il1b/Il1a/Rac2/C5ar1",6
+"GO:0071222","GO:0071222","cellular response to lipopolysaccharide","11/164","188/16202",3.36914653383667e-06,6.98667540337955e-05,5.16179653359226e-05,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Il1b/Sirpa/Cd84/Il1f9/Cebpb",11
+"GO:0150076","GO:0150076","neuroinflammatory response","7/164","64/16202",3.66436306248087e-06,7.54380830471605e-05,5.57340957024169e-05,"Mmp8/Trem2/Il1b/Tyrobp/C1qa/C5ar1/Fpr2",7
+"GO:0051249","GO:0051249","regulation of lymphocyte activation","16/164","406/16202",3.75308541062607e-06,7.6449152431809e-05,5.64810796602483e-05,"Tgfb1/Vsir/Samsn1/Cd86/Adam8/Fcgr2b/Il1b/Gpnmb/Tyrobp/Il2rg/Rac2/Cd300a/Sirpa/Cd47/Cebpb/Slfn1",16
+"GO:0050777","GO:0050777","negative regulation of immune response","10/164","154/16202",3.76729367844184e-06,7.6449152431809e-05,5.64810796602483e-05,"Tgfb1/Hmox1/Vsir/Samsn1/Ccr1/Fcgr2b/Cd300a/Cd84/Mmp12/Arrb2",10
+"GO:0002768","GO:0002768","immune response-regulating cell surface receptor signaling pathway","11/164","191/16202",3.92566160943419e-06,7.90979051943443e-05,5.84379936484642e-05,"Lcp2/Myo1g/Fcgr2b/Clec4e/Clec4d/Cd300a/Fpr1/C5ar1/Fpr2/Cd47/Fcer1g",11
+"GO:0070555","GO:0070555","response to interleukin-1","8/164","92/16202",4.20276368048318e-06,8.40848705369909e-05,6.21223927270827e-05,"Ccl9/Il1r2/Il1b/Il1a/Sirpa/Mapk11/Cd47/Cebpb",8
+"GO:0002764","GO:0002764","immune response-regulating signaling pathway","11/164","194/16202",4.56102584237001e-06,9.01424330203427e-05,6.65977552168671e-05,"Lcp2/Myo1g/Fcgr2b/Clec4e/Clec4d/Cd300a/Fpr1/C5ar1/Fpr2/Cd47/Fcer1g",11
+"GO:0002831","GO:0002831","regulation of response to biotic stimulus","13/164","275/16202",4.56899343714514e-06,9.01424330203427e-05,6.65977552168671e-05,"Apoe/Cyba/Trem2/Adam8/Ccr1/Il1b/Fgr/Cd84/Mmp12/Fpr2/Ifi205/Arrb2/Mndal",13
+"GO:0033004","GO:0033004","negative regulation of mast cell activation","4/164","12/16202",4.70248075337274e-06,9.15051220570681e-05,6.76045178242627e-05,"Hmox1/Cd300a/Cd84/Cd300lf",4
+"GO:0043312","GO:0043312","neutrophil degranulation","4/164","12/16202",4.70248075337274e-06,9.15051220570681e-05,6.76045178242627e-05,"Itgb2/Itgam/Stx11/Ptafr",4
+"GO:1902105","GO:1902105","regulation of leukocyte differentiation","13/164","280/16202",5.55783010327916e-06,0.000107413573628681,7.93577746218306e-05,"Tgfb1/Vsir/Hcls1/Trem2/Csf1r/Adam8/Ccr1/Il1b/Tyrobp/Il2rg/C1qc/Rbp1/Cebpb",13
+"GO:1902107","GO:1902107","positive regulation of leukocyte differentiation","10/164","161/16202",5.60437061210151e-06,0.000107581195330949,7.94816145130185e-05,"Tgfb1/Vsir/Hcls1/Trem2/Csf1r/Adam8/Ccr1/Il1b/Tyrobp/Il2rg",10
+"GO:0001774","GO:0001774","microglial cell activation","6/164","45/16202",5.76621744808703e-06,0.000109212158466768,8.06865795893723e-05,"Mmp8/Trem2/Tyrobp/C1qa/C5ar1/Fpr2",6
+"GO:0002269","GO:0002269","leukocyte activation involved in inflammatory response","6/164","45/16202",5.76621744808703e-06,0.000109212158466768,8.06865795893723e-05,"Mmp8/Trem2/Tyrobp/C1qa/C5ar1/Fpr2",6
+"GO:0043303","GO:0043303","mast cell degranulation","6/164","46/16202",6.57597797428412e-06,0.00012372419486716,9.14081567146917e-05,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:0150146","GO:0150146","cell junction disassembly","4/164","13/16202",6.73891809476237e-06,0.000125955699389605,9.30568052697796e-05,"Trem2/C1qa/C1qc/C1qb",4
+"GO:0042098","GO:0042098","T cell proliferation","11/164","204/16202",7.3746093599959e-06,0.000136936373802277,0.00010116939156403,"Itgb2/Tgfb1/Vsir/Cd86/Slc11a1/Il1b/Gpnmb/Itgam/Rac2/Cebpb/Slfn1",11
+"GO:0002279","GO:0002279","mast cell activation involved in immune response","6/164","47/16202",7.47560485807065e-06,0.000137020602592121,0.000101231620285181,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:0002448","GO:0002448","mast cell mediated immunity","6/164","47/16202",7.47560485807065e-06,0.000137020602592121,0.000101231620285181,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:0002367","GO:0002367","cytokine production involved in immune response","8/164","101/16202",8.44884507615521e-06,0.000153314187730626,0.000113269416008028,"Tgfb1/Hmox1/Vsir/Slc11a1/Il1b/Crlf2/Trem1/Fcer1g",8
+"GO:0071675","GO:0071675","regulation of mononuclear cell migration","6/164","48/16202",8.47248415125248e-06,0.000153314187730626,0.000113269416008028,"Tgfb1/Rarres2/Pla2g7/Ccr1/C5ar1/Fpr2",6
+"GO:1903706","GO:1903706","regulation of hemopoiesis","15/164","388/16202",9.62342852323633e-06,0.000173038990091863,0.000127842215025538,"Spi1/Tgfb1/Vsir/Hcls1/Trem2/Lox/Csf1r/Adam8/Ccr1/Il1b/Tyrobp/Il2rg/C1qc/Rbp1/Cebpb",15
+"GO:0071347","GO:0071347","cellular response to interleukin-1","7/164","74/16202",9.75286083767896e-06,0.000173175947579363,0.000127943400016025,"Ccl9/Il1r2/Il1a/Sirpa/Mapk11/Cd47/Cebpb",7
+"GO:0043302","GO:0043302","positive regulation of leukocyte degranulation","5/164","29/16202",9.75295727303698e-06,0.000173175947579363,0.000127943400016025,"Itgb2/Fgr/Itgam/Ptafr/Fcer1g",5
+"GO:0032963","GO:0032963","collagen metabolic process","8/164","104/16202",1.04955579602249e-05,0.000185204224627322,0.000136829961246737,"Tgfb1/Mmp8/Mmp9/Vsir/Mmp3/Mmp10/Mmp12/Arrb2",8
+"GO:0031348","GO:0031348","negative regulation of defense response","11/164","212/16202",1.06151589234621e-05,0.00018615843519479,0.00013753493757884,"Apoe/Aoah/Mefv/Ccr1/Il1r2/Fcgr2b/Siglece/Sirpa/Mmp12/Fpr2/Arrb2",11
+"GO:0050863","GO:0050863","regulation of T cell activation","13/164","300/16202",1.16704270348194e-05,0.000203409099422835,0.000150279828914627,"Tgfb1/Vsir/Cd86/Adam8/Il1b/Gpnmb/Il2rg/Rac2/Cd300a/Sirpa/Cd47/Cebpb/Slfn1",13
+"GO:0045088","GO:0045088","regulation of innate immune response","10/164","176/16202",1.22970877401683e-05,0.00021302455042572,0.000157383780191884,"Apoe/Trem2/Adam8/Ccr1/Fgr/Mmp12/Fpr2/Ifi205/Arrb2/Mndal",10
+"GO:0006898","GO:0006898","receptor-mediated endocytosis","11/164","217/16202",1.32170169354722e-05,0.000227573000688948,0.000168132260091429,"Itgb2/Apoe/Cxcl16/Msr1/Cxcr2/Marco/Fcgr2b/Cd300a/Fpr2/Fcer1g/Arrb2",11
+"GO:2000379","GO:2000379","positive regulation of reactive oxygen species metabolic process","8/164","108/16202",1.38619965528717e-05,0.0002372405554621,0.000175274705938023,"Itgb2/Tgfb1/Mmp8/Cyba/Il1b/Tyrobp/Itgam/Fpr2",8
+"GO:0018108","GO:0018108","peptidyl-tyrosine phosphorylation","13/164","306/16202",1.44036982244561e-05,0.000245035369195687,0.000181033559782953,"Itgb2/Tgfb1/Hck/Ncf1/Sla/Hcls1/Samsn1/Trem2/Csf1r/Fgr/Cd300a/Arrb2/Lilra5",13
+"GO:0050670","GO:0050670","regulation of lymphocyte proliferation","11/164","220/16202",1.50305212919673e-05,0.000254176851133805,0.00018778733995102,"Tgfb1/Vsir/Cd86/Fcgr2b/Il1b/Gpnmb/Tyrobp/Rac2/Cd300a/Cebpb/Slfn1",11
+"GO:0018212","GO:0018212","peptidyl-tyrosine modification","13/164","309/16202",1.59703693253829e-05,0.000268472303274633,0.000198348903362277,"Itgb2/Tgfb1/Hck/Ncf1/Sla/Hcls1/Samsn1/Trem2/Csf1r/Fgr/Cd300a/Arrb2/Lilra5",13
+"GO:0001773","GO:0001773","myeloid dendritic cell activation","5/164","32/16202",1.61376613929127e-05,0.000269688800101558,0.000199247658312495,"Spi1/Tgfb1/Clec4d/Batf/Pirb",5
+"GO:0032944","GO:0032944","regulation of mononuclear cell proliferation","11/164","222/16202",1.63562168074931e-05,0.000271742759942034,0.000200765135821122,"Tgfb1/Vsir/Cd86/Fcgr2b/Il1b/Gpnmb/Tyrobp/Rac2/Cd300a/Cebpb/Slfn1",11
+"GO:0002431","GO:0002431","Fc receptor mediated stimulatory signaling pathway","4/164","16/16202",1.67512950742096e-05,0.000276688542475753,0.000204419108800331,"Myo1g/Fcgr2b/Cd47/Fcer1g",4
+"GO:0002704","GO:0002704","negative regulation of leukocyte mediated immunity","6/164","54/16202",1.69603478443919e-05,0.000278522244080447,0.000205773858239839,"Hmox1/Vsir/Fcgr2b/Cd300a/Cd84/Arrb2",6
+"GO:0006887","GO:0006887","exocytosis","14/164","359/16202",1.75157604272369e-05,0.000285990088355058,0.000211291145141624,"Itgb2/Hck/Hmox1/Plek/Myo1g/Ccr1/Fgr/Itgam/Rac2/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",14
+"GO:0032655","GO:0032655","regulation of interleukin-12 production","6/164","55/16202",1.88789283768211e-05,0.00030648591724885,0.000226433583057932,"Mefv/Tnfrsf9/Mapk11/Cd47/Arrb2/Lilra5",6
+"GO:0033033","GO:0033033","negative regulation of myeloid cell apoptotic process","4/164","17/16202",2.17330276967649e-05,0.000350815520946074,0.000259184552795151,"Cxcr2/Fcgr2b/Clec5a/Fcer1g",4
+"GO:0070663","GO:0070663","regulation of leukocyte proliferation","11/164","230/16202",2.27265765916479e-05,0.000364780814106619,0.000269502192826321,"Tgfb1/Vsir/Cd86/Fcgr2b/Il1b/Gpnmb/Tyrobp/Rac2/Cd300a/Cebpb/Slfn1",11
+"GO:0048002","GO:0048002","antigen processing and presentation of peptide antigen","6/164","57/16202",2.32409300421328e-05,0.000370940911515165,0.000274053308716812,"Trem2/Slc11a1/Fcgr2b/Clec4a2/Fcer1g/Fcgr3",6
+"GO:1903409","GO:1903409","reactive oxygen species biosynthetic process","8/164","117/16202",2.48653258422594e-05,0.000394650227474073,0.000291569889617555,"Itgb2/Mmp8/Cyba/Cybb/Ncf1/Il1b/Sirpa/Cd47",8
+"GO:2000249","GO:2000249","regulation of actin cytoskeleton reorganization","5/164","35/16202",2.5385104987292e-05,0.000400661573716092,0.000296011107278715,"Tgfb1/Hck/Trpm2/Csf1r/Arhgdib",5
+"GO:0032615","GO:0032615","interleukin-12 production","6/164","58/16202",2.57072513544322e-05,0.000403504425955479,0.000298111423092397,"Mefv/Tnfrsf9/Mapk11/Cd47/Arrb2/Lilra5",6
+"GO:0032642","GO:0032642","regulation of chemokine production","7/164","87/16202",2.83690380202596e-05,0.000442413789394939,0.000326857887716893,"Mefv/Trem2/Csf1r/Il1b/Il1a/Sirpa/Cd84",7
+"GO:0002705","GO:0002705","positive regulation of leukocyte mediated immunity","9/164","155/16202",2.84976147339929e-05,0.000442413789394939,0.000326857887716893,"Itgb2/Tgfb1/Il1b/Fgr/Tyrobp/Itgam/Ptafr/Fcer1g/Fcgr3",9
+"GO:0022409","GO:0022409","positive regulation of cell-cell adhesion","11/164","236/16202",2.88194199071543e-05,0.000444978108457746,0.000328752421595341,"Itgb2/Tgfb1/Vsir/Cd86/Cxcl13/Adam8/Il1b/Il2rg/Sirpa/Cd47/Ptafr",11
+"GO:1904645","GO:1904645","response to amyloid-beta","5/164","36/16202",2.92396894769217e-05,0.000449026798940187,0.000331743617735317,"Mmp9/Trem2/Fcgr2b/Atp1a3/Fpr2",5
+"GO:0002763","GO:0002763","positive regulation of myeloid leukocyte differentiation","6/164","60/16202",3.12712889755571e-05,0.000475089475826512,0.000350998875413796,"Tgfb1/Hcls1/Trem2/Csf1r/Ccr1/Tyrobp",6
+"GO:0032720","GO:0032720","negative regulation of tumor necrosis factor production","6/164","60/16202",3.12712889755571e-05,0.000475089475826512,0.000350998875413796,"Vsir/Trem2/Gpnmb/Clec4a2/Sirpa/Arrb2",6
+"GO:0002286","GO:0002286","T cell activation involved in immune response","7/164","89/16202",3.28907205830043e-05,0.000494404958604842,0.000365269266736344,"Tgfb1/Slc11a1/Clec4e/Clec4d/Batf/Stx11/Fcer1g",7
+"GO:0007229","GO:0007229","integrin-mediated signaling pathway","7/164","89/16202",3.28907205830043e-05,0.000494404958604842,0.000365269266736344,"Itgb2/Plek/Madcam1/Fermt3/Fgr/Tyrobp/Fcer1g",7
+"GO:0014002","GO:0014002","astrocyte development","5/164","37/16202",3.35334464771808e-05,0.000500411155335808,0.000369706679908706,"Trem2/Il1b/C1qa/C5ar1/Fpr2",5
+"GO:0042107","GO:0042107","cytokine metabolic process","8/164","122/16202",3.36425662334176e-05,0.000500411155335808,0.000369706679908706,"Cybb/Il1b/Il1a/Tyrobp/Trem1/Cebpb/Ptafr/Fcgr3",8
+"GO:0017144","GO:0017144","drug metabolic process","16/164","485/16202",3.40511378285995e-05,0.000503687821683355,0.000372127500115456,"Itgb2/Tgfb1/Cyp4f18/Mmp8/Cyba/Cybb/Ncf1/Pla2g7/Trem2/Il1b/Renbp/Hp/Sirpa/Chil3/Mmp3/Cd47",16
+"GO:1903556","GO:1903556","negative regulation of tumor necrosis factor superfamily cytokine production","6/164","61/16202",3.43947333356462e-05,0.000503687821683355,0.000372127500115456,"Vsir/Trem2/Gpnmb/Clec4a2/Sirpa/Arrb2",6
+"GO:1903793","GO:1903793","positive regulation of anion transport","6/164","61/16202",3.43947333356462e-05,0.000503687821683355,0.000372127500115456,"Apoe/Cyp4f18/Il1b/Il1a/Cebpb/Ptafr",6
+"GO:0032695","GO:0032695","negative regulation of interleukin-12 production","4/164","19/16202",3.48387521171251e-05,0.000507573819306423,0.000374998497822119,"Mefv/Tnfrsf9/Arrb2/Lilra5",4
+"GO:1903708","GO:1903708","positive regulation of hemopoiesis","10/164","199/16202",3.54942137443844e-05,0.000514485006366307,0.000380104523127296,"Tgfb1/Vsir/Hcls1/Trem2/Csf1r/Adam8/Ccr1/Il1b/Tyrobp/Il2rg",10
+"GO:1903039","GO:1903039","positive regulation of leukocyte cell-cell adhesion","10/164","200/16202",3.70409394145348e-05,0.000534179232876616,0.000394654732527824,"Itgb2/Tgfb1/Vsir/Cd86/Adam8/Il1b/Il2rg/Sirpa/Cd47/Ptafr",10
+"GO:0032602","GO:0032602","chemokine production","7/164","91/16202",3.79888711298971e-05,0.000545082741818373,0.000402710308522142,"Mefv/Trem2/Csf1r/Il1b/Il1a/Sirpa/Cd84",7
+"GO:0045055","GO:0045055","regulated exocytosis","11/164","244/16202",3.91053425138888e-05,0.00055828280443195,0.000412462591762466,"Itgb2/Hmox1/Plek/Fgr/Itgam/Rac2/Cd300a/Cd84/Stx11/Ptafr/Fcer1g",11
+"GO:0043011","GO:0043011","myeloid dendritic cell differentiation","4/164","20/16202",4.32057828489149e-05,0.000613738145368836,0.000453433321056506,"Spi1/Tgfb1/Batf/Pirb",4
+"GO:0051480","GO:0051480","regulation of cytosolic calcium ion concentration","13/164","343/16202",4.7344417849098e-05,0.000667475241649373,0.00049313460117781,"Cd52/Tgfb1/Cyba/Trpm2/Cxcl13/Ccr1/Cxcr2/Il1b/Fpr1/Marcksl1/C5ar1/Fpr2/Ryr2",13
+"GO:0034341","GO:0034341","response to interferon-gamma","8/164","128/16202",4.7458640905728e-05,0.000667475241649373,0.00049313460117781,"Cxcl16/Ccl9/Mefv/Ifitm1/Slc11a1/Sirpa/Stx11/Cd47",8
+"GO:0030225","GO:0030225","macrophage differentiation","5/164","40/16202",4.93958877535569e-05,0.000690363863428833,0.000510044848432573,"Spi1/Tgfb1/Hcls1/Itgam/C1qc",5
+"GO:0002440","GO:0002440","production of molecular mediator of immune response","10/164","207/16202",4.95720619991137e-05,0.000690363863428833,0.000510044848432573,"Tgfb1/Hmox1/Vsir/Slc11a1/Fcgr2b/Il1b/Crlf2/Batf/Trem1/Fcer1g",10
+"GO:0007204","GO:0007204","positive regulation of cytosolic calcium ion concentration","12/164","298/16202",5.22427690498577e-05,0.000724008326198272,0.000534901573737696,"Cd52/Tgfb1/Cyba/Trpm2/Cxcl13/Ccr1/Cxcr2/Il1b/Fpr1/C5ar1/Fpr2/Ryr2",12
+"GO:0002698","GO:0002698","negative regulation of immune effector process","8/164","130/16202",5.3001858650663e-05,0.000727431306408375,0.00053743049147939,"Tgfb1/Hmox1/Vsir/Fcgr2b/Cd300a/Cd84/Cd47/Arrb2",8
+"GO:1903038","GO:1903038","negative regulation of leukocyte cell-cell adhesion","8/164","130/16202",5.3001858650663e-05,0.000727431306408375,0.00053743049147939,"Tgfb1/Vsir/Cd86/Adam8/Gpnmb/Cd300a/Cebpb/Slfn1",8
+"GO:0045670","GO:0045670","regulation of osteoclast differentiation","6/164","66/16202",5.39846273529509e-05,0.000737357338027565,0.000544763901527248,"Trem2/Csf1r/Adam8/Ccr1/Tyrobp/Cebpb",6
+"GO:0019882","GO:0019882","antigen processing and presentation","7/164","97/16202",5.7312363017094e-05,0.000778293748193947,0.000575007960095122,"Cd68/Trem2/Slc11a1/Fcgr2b/Clec4a2/Fcer1g/Fcgr3",7
+"GO:0043270","GO:0043270","positive regulation of ion transport","12/164","301/16202",5.75296329182432e-05,0.000778293748193947,0.000575007960095122,"Apoe/Cyp4f18/Trem2/Ccr1/Il1b/Il1a/Cebpb/Ptafr/Arrb2/Lilra5/Ryr2/Nedd4l",12
+"GO:0072503","GO:0072503","cellular divalent inorganic cation homeostasis","15/164","457/16202",6.40415256994697e-05,0.000862284239394282,0.000637060624817873,"Cd52/Tgfb1/Apoe/Cyba/Trpm2/Cxcl13/Ccr1/Slc11a1/Cxcr2/Il1b/Fpr1/Marcksl1/C5ar1/Fpr2/Ryr2",15
+"GO:0002532","GO:0002532","production of molecular mediator involved in inflammatory response","6/164","69/16202",6.9468628557567e-05,0.00092871721133883,0.000686141691920794,"Mefv/Il1r2/Cd300a/Gpsm3/Sirpa/Fcer1g",6
+"GO:0050830","GO:0050830","defense response to Gram-positive bacterium","7/164","100/16202",6.96292735005881e-05,0.00092871721133883,0.000686141691920794,"Hck/Rarres2/Ncf1/Fgr/Mpeg1/C5ar1/Lyz2",7
+"GO:0043277","GO:0043277","apoptotic cell clearance","5/164","43/16202",7.05141514938251e-05,0.00093612478688765,0.000691614451936484,"Trem2/Marco/Tyrobp/Mfge8/Cd300lf",5
+"GO:1903305","GO:1903305","regulation of regulated secretory pathway","9/164","176/16202",7.68292504477339e-05,0.00101430368842361,0.000749373480322596,"Itgb2/Hmox1/Fgr/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g",9
+"GO:0071677","GO:0071677","positive regulation of mononuclear cell migration","4/164","23/16202",7.71170702919743e-05,0.00101430368842361,0.000749373480322596,"Tgfb1/Pla2g7/Ccr1/Fpr2",4
+"GO:0042130","GO:0042130","negative regulation of T cell proliferation","6/164","71/16202",8.16243335721722e-05,0.00106863931649097,0.000789516959218585,"Tgfb1/Vsir/Cd86/Gpnmb/Cebpb/Slfn1",6
+"GO:0002438","GO:0002438","acute inflammatory response to antigenic stimulus","4/164","24/16202",9.18131893685912e-05,0.00118564214089167,0.00087595932823431,"Cxcr2/Fcgr2b/Fcer1g/Fcgr3",4
+"GO:0002478","GO:0002478","antigen processing and presentation of exogenous peptide antigen","4/164","24/16202",9.18131893685912e-05,0.00118564214089167,0.00087595932823431,"Fcgr2b/Clec4a2/Fcer1g/Fcgr3",4
+"GO:0055094","GO:0055094","response to lipoprotein particle","4/164","24/16202",9.18131893685912e-05,0.00118564214089167,0.00087595932823431,"Itgb2/Apoe/Cd68/Fcer1g",4
+"GO:0002429","GO:0002429","immune response-activating cell surface receptor signaling pathway","9/164","181/16202",9.52592844304912e-05,0.00121560534652802,0.000898096319300792,"Lcp2/Myo1g/Fcgr2b/Cd300a/Fpr1/C5ar1/Fpr2/Cd47/Fcer1g",9
+"GO:0032418","GO:0032418","lysosome localization","6/164","73/16202",9.54171039337376e-05,0.00121560534652802,0.000898096319300792,"Hmox1/Fgr/Rac2/Cd300a/Cd84/Fcer1g",6
+"GO:0042108","GO:0042108","positive regulation of cytokine biosynthetic process","6/164","73/16202",9.54171039337376e-05,0.00121560534652802,0.000898096319300792,"Cybb/Il1b/Il1a/Tyrobp/Ptafr/Fcgr3",6
+"GO:0002673","GO:0002673","regulation of acute inflammatory response","5/164","46/16202",9.79871222161374e-05,0.00123177616909755,0.000910043417321742,"Adam8/Fcgr2b/Il1b/Fcer1g/Fcgr3",5
+"GO:0006956","GO:0006956","complement activation","5/164","46/16202",9.79871222161374e-05,0.00123177616909755,0.000910043417321742,"Cfp/Il1b/C1qa/C1qc/C1qb",5
+"GO:0042743","GO:0042743","hydrogen peroxide metabolic process","5/164","46/16202",9.79871222161374e-05,0.00123177616909755,0.000910043417321742,"Cyba/Cybb/Ncf1/Hp/Mmp3",5
+"GO:0050728","GO:0050728","negative regulation of inflammatory response","8/164","142/16202",9.8812400735293e-05,0.00123667854840955,0.00091366532374762,"Apoe/Aoah/Mefv/Il1r2/Fcgr2b/Siglece/Sirpa/Fpr2",8
+"GO:0002757","GO:0002757","immune response-activating signal transduction","9/164","182/16202",9.93582237557093e-05,0.00123805576179811,0.00091468281703086,"Lcp2/Myo1g/Fcgr2b/Cd300a/Fpr1/C5ar1/Fpr2/Cd47/Fcer1g",9
+"GO:0042035","GO:0042035","regulation of cytokine biosynthetic process","7/164","106/16202",0.000100768042759676,0.00125013977938969,0.000923610559700273,"Cybb/Il1b/Il1a/Tyrobp/Cebpb/Ptafr/Fcgr3",7
+"GO:0021782","GO:0021782","glial cell development","7/164","107/16202",0.000106915630848018,0.00131660494966273,0.000972715415116061,"Tgfb1/Trem2/Il1b/Itgam/C1qa/C5ar1/Fpr2",7
+"GO:0072507","GO:0072507","divalent inorganic cation homeostasis","15/164","479/16202",0.00010817072866544,0.00131660494966273,0.000972715415116061,"Cd52/Tgfb1/Apoe/Cyba/Trpm2/Cxcl13/Ccr1/Slc11a1/Cxcr2/Il1b/Fpr1/Marcksl1/C5ar1/Fpr2/Ryr2",15
+"GO:0045408","GO:0045408","regulation of interleukin-6 biosynthetic process","4/164","25/16202",0.000108442646329138,0.00131660494966273,0.000972715415116061,"Il1b/Tyrobp/Cebpb/Ptafr",4
+"GO:0050832","GO:0050832","defense response to fungus","4/164","25/16202",0.000108442646329138,0.00131660494966273,0.000972715415116061,"Tgfb1/Rarres2/Ncf1/Clec4n",4
+"GO:0090023","GO:0090023","positive regulation of neutrophil chemotaxis","4/164","25/16202",0.000108442646329138,0.00131660494966273,0.000972715415116061,"Cxcr2/Il1b/Rac2/C5ar1",4
+"GO:0043301","GO:0043301","negative regulation of leukocyte degranulation","3/164","10/16202",0.000115981114704463,0.00139030526107756,0.001027165635002,"Hmox1/Cd300a/Cd84",3
+"GO:0072610","GO:0072610","interleukin-12 secretion","3/164","10/16202",0.000115981114704463,0.00139030526107756,0.001027165635002,"Tnfrsf9/Mapk11/Lilra5",3
+"GO:2001179","GO:2001179","regulation of interleukin-10 secretion","3/164","10/16202",0.000115981114704463,0.00139030526107756,0.001027165635002,"Tnfrsf9/Cd84/Lilra5",3
+"GO:0042226","GO:0042226","interleukin-6 biosynthetic process","4/164","26/16202",0.000127152853029522,0.00151146968810407,0.00111668262030772,"Il1b/Tyrobp/Cebpb/Ptafr",4
+"GO:0071402","GO:0071402","cellular response to lipoprotein particle stimulus","4/164","26/16202",0.000127152853029522,0.00151146968810407,0.00111668262030772,"Itgb2/Apoe/Cd68/Fcer1g",4
+"GO:0033619","GO:0033619","membrane protein proteolysis","5/164","49/16202",0.000133020445377021,0.00156809578969343,0.00115851831439956,"Napsa/Tgfb1/Apoe/Adam8/Il1b",5
+"GO:0071622","GO:0071622","regulation of granulocyte chemotaxis","5/164","49/16202",0.000133020445377021,0.00156809578969343,0.00115851831439956,"Rarres2/Cxcr2/Il1b/Rac2/C5ar1",5
+"GO:0006874","GO:0006874","cellular calcium ion homeostasis","14/164","435/16202",0.000138995259277089,0.00163175839506698,0.00120555261852333,"Cd52/Tgfb1/Apoe/Cyba/Trpm2/Cxcl13/Ccr1/Cxcr2/Il1b/Fpr1/Marcksl1/C5ar1/Fpr2/Ryr2",14
+"GO:0071624","GO:0071624","positive regulation of granulocyte chemotaxis","4/164","27/16202",0.000148094316048669,0.00173142367034678,0.00127918590513773,"Cxcr2/Il1b/Rac2/C5ar1",4
+"GO:0002468","GO:0002468","dendritic cell antigen processing and presentation","3/164","11/16202",0.000158289067199484,0.00183550710168871,0.00135608335121706,"Cd68/Slc11a1/Clec4a2",3
+"GO:0002883","GO:0002883","regulation of hypersensitivity","3/164","11/16202",0.000158289067199484,0.00183550710168871,0.00135608335121706,"Fcgr2b/Fcer1g/Fcgr3",3
+"GO:0042060","GO:0042060","wound healing","12/164","338/16202",0.000171871639496943,0.00198490783662933,0.00146646148548098,"Tgfb1/Apoe/Hmox1/Plek/Lox/Fermt3/Slc11a1/Il1a/F7/Ninj1/Mmp12/Fcer1g",12
+"GO:0055074","GO:0055074","calcium ion homeostasis","14/164","449/16202",0.000192982337099435,0.00221968752914775,0.00163991809152471,"Cd52/Tgfb1/Apoe/Cyba/Trpm2/Cxcl13/Ccr1/Cxcr2/Il1b/Fpr1/Marcksl1/C5ar1/Fpr2/Ryr2",14
+"GO:0002437","GO:0002437","inflammatory response to antigenic stimulus","5/164","53/16202",0.000193769185888375,0.00221975103672933,0.00163996501129635,"Cd68/Cxcr2/Fcgr2b/Fcer1g/Fcgr3",5
+"GO:0042089","GO:0042089","cytokine biosynthetic process","7/164","118/16202",0.000197016255700853,0.00224197189225695,0.00165638190894991,"Cybb/Il1b/Il1a/Tyrobp/Cebpb/Ptafr/Fcgr3",7
+"GO:0032692","GO:0032692","negative regulation of interleukin-1 production","4/164","29/16202",0.000197287213327785,0.00224197189225695,0.00165638190894991,"Mefv/Trem2/Il1r2/Arrb2",4
+"GO:0051048","GO:0051048","negative regulation of secretion","10/164","245/16202",0.000199456879901067,0.00225759759282443,0.00166792626765665,"Apoe/Cyp4f18/Hmox1/Srgn/Il1r2/Il1b/Tnfrsf9/Cd300a/Cd84/Lilra5",10
+"GO:0050868","GO:0050868","negative regulation of T cell activation","7/164","119/16202",0.000207572781811731,0.00233390485207137,0.00172430251580441,"Tgfb1/Vsir/Cd86/Gpnmb/Cd300a/Cebpb/Slfn1",7
+"GO:0002524","GO:0002524","hypersensitivity","3/164","12/16202",0.000209484596014854,0.00233390485207137,0.00172430251580441,"Fcgr2b/Fcer1g/Fcgr3",3
+"GO:0071639","GO:0071639","positive regulation of monocyte chemotactic protein-1 production","3/164","12/16202",0.000209484596014854,0.00233390485207137,0.00172430251580441,"Il1b/Il1a/Cd84",3
+"GO:0072608","GO:0072608","interleukin-10 secretion","3/164","12/16202",0.000209484596014854,0.00233390485207137,0.00172430251580441,"Tnfrsf9/Cd84/Lilra5",3
+"GO:2000107","GO:2000107","negative regulation of leukocyte apoptotic process","5/164","54/16202",0.000211810904056129,0.00235060460321665,0.00173664038934178,"Hcls1/Cxcr2/Fcgr2b/Fcer1g/Bcl2a1a",5
+"GO:1901214","GO:1901214","regulation of neuron death","12/164","348/16202",0.000224877042517897,0.00247740914125136,0.0018303243215529,"Apoe/Hmox1/Trpm2/Adam8/Fcgr2b/Il1b/Gpnmb/Tyrobp/C1qa/C5ar1/Cebpb/Arrb2",12
+"GO:0019884","GO:0019884","antigen processing and presentation of exogenous antigen","4/164","30/16202",0.000225853209286907,0.00247740914125136,0.0018303243215529,"Fcgr2b/Clec4a2/Fcer1g/Fcgr3",4
+"GO:0045672","GO:0045672","positive regulation of osteoclast differentiation","4/164","30/16202",0.000225853209286907,0.00247740914125136,0.0018303243215529,"Trem2/Csf1r/Ccr1/Tyrobp",4
+"GO:0045785","GO:0045785","positive regulation of cell adhesion","13/164","403/16202",0.00023642776021024,0.00258342794906651,0.00190865163505757,"Itgb2/Tgfb1/Vsir/Cd86/Cxcl13/Adam8/Il1b/Il2rg/Sirpa/Ninj1/Prex1/Cd47/Ptafr",13
+"GO:0050730","GO:0050730","regulation of peptidyl-tyrosine phosphorylation","10/164","251/16202",0.000242336006563304,0.00263784135879826,0.00194885257950082,"Itgb2/Tgfb1/Ncf1/Hcls1/Samsn1/Trem2/Csf1r/Cd300a/Arrb2/Lilra5",10
+"GO:0002675","GO:0002675","positive regulation of acute inflammatory response","4/164","31/16202",0.000257279180602037,0.00275822698902033,0.00203779418518555,"Adam8/Il1b/Fcer1g/Fcgr3",4
+"GO:0033032","GO:0033032","regulation of myeloid cell apoptotic process","4/164","31/16202",0.000257279180602037,0.00275822698902033,0.00203779418518555,"Cxcr2/Fcgr2b/Clec5a/Fcer1g",4
+"GO:0090022","GO:0090022","regulation of neutrophil chemotaxis","4/164","31/16202",0.000257279180602037,0.00275822698902033,0.00203779418518555,"Cxcr2/Il1b/Rac2/C5ar1",4
+"GO:1904646","GO:1904646","cellular response to amyloid-beta","4/164","31/16202",0.000257279180602037,0.00275822698902033,0.00203779418518555,"Trem2/Fcgr2b/Atp1a3/Fpr2",4
+"GO:0032102","GO:0032102","negative regulation of response to external stimulus","12/164","354/16202",0.000262932108204459,0.00280823353161229,0.00207473931048552,"Apoe/Aoah/Mefv/Cxcl13/Ccr1/Il1r2/Fcgr2b/Siglece/Sirpa/Mmp12/Fpr2/Arrb2",12
+"GO:0032494","GO:0032494","response to peptidoglycan","3/164","13/16202",0.000270308299390881,0.0028762017923951,0.0021249546579358,"Trem2/Irf5/C5ar1",3
+"GO:0060142","GO:0060142","regulation of syncytium formation by plasma membrane fusion","4/164","32/16202",0.000291727969060484,0.00309253417948072,0.00228478228714299,"Trem2/Tyrobp/Cd53/Il1f9",4
+"GO:1903307","GO:1903307","positive regulation of regulated secretory pathway","5/164","58/16202",0.00029706639754028,0.00313741871900348,0.00231794324670444,"Itgb2/Fgr/Itgam/Ptafr/Fcer1g",5
+"GO:0006959","GO:0006959","humoral immune response","8/164","167/16202",0.000301319677881041,0.00317055261059274,0.00234242275904404,"Cfp/Rarres2/Cxcl13/Fcgr2b/Il1b/C1qa/C1qc/C1qb",8
+"GO:0000768","GO:0000768","syncytium formation by plasma membrane fusion","5/164","59/16202",0.000321944783454671,0.00336266591836294,0.00248435719120981,"Trem2/Adam8/Tyrobp/Cd53/Il1f9",5
+"GO:0140253","GO:0140253","cell-cell fusion","5/164","59/16202",0.000321944783454671,0.00336266591836294,0.00248435719120981,"Trem2/Adam8/Tyrobp/Cd53/Il1f9",5
+"GO:0042129","GO:0042129","regulation of T cell proliferation","8/164","169/16202",0.000326504380518625,0.00339779833352899,0.00251031322442313,"Tgfb1/Vsir/Cd86/Il1b/Gpnmb/Rac2/Cebpb/Slfn1",8
+"GO:0016999","GO:0016999","antibiotic metabolic process","6/164","92/16202",0.000341304091007853,0.00346476168180968,0.0025597861366563,"Cyba/Cybb/Ncf1/Renbp/Hp/Mmp3",6
+"GO:0072676","GO:0072676","lymphocyte migration","6/164","92/16202",0.000341304091007853,0.00346476168180968,0.0025597861366563,"Cxcl16/Ccl9/Madcam1/Myo1g/Cxcl13/Adam8",6
+"GO:2000106","GO:2000106","regulation of leukocyte apoptotic process","6/164","92/16202",0.000341304091007853,0.00346476168180968,0.0025597861366563,"Hcls1/Adam8/Cxcr2/Fcgr2b/Fcer1g/Bcl2a1a",6
+"GO:0001820","GO:0001820","serotonin secretion","3/164","14/16202",0.00034147598412767,0.00346476168180968,0.0025597861366563,"Cd300a/Fcer1g/Fcgr3",3
+"GO:0043117","GO:0043117","positive regulation of vascular permeability","3/164","14/16202",0.00034147598412767,0.00346476168180968,0.0025597861366563,"Tgfb1/Apoe/Cxcr2",3
+"GO:0045591","GO:0045591","positive regulation of regulatory T cell differentiation","3/164","14/16202",0.00034147598412767,0.00346476168180968,0.0025597861366563,"Tgfb1/Vsir/Il2rg",3
+"GO:0070486","GO:0070486","leukocyte aggregation","3/164","14/16202",0.00034147598412767,0.00346476168180968,0.0025597861366563,"Adam8/Il1b/Rac2",3
+"GO:0030217","GO:0030217","T cell differentiation","10/164","263/16202",0.000351537408585614,0.00355415579285313,0.0026258310272325,"Tgfb1/Vsir/Adam8/Il1b/Clec4e/Clec4d/Il2rg/Batf/Prex1/Fcer1g",10
+"GO:0045639","GO:0045639","positive regulation of myeloid cell differentiation","6/164","93/16202",0.000361827217688127,0.00364521675692187,0.0026931073985447,"Tgfb1/Hcls1/Trem2/Csf1r/Ccr1/Tyrobp",6
+"GO:0002701","GO:0002701","negative regulation of production of molecular mediator of immune response","4/164","34/16202",0.000370354585479992,0.00370484992024175,0.00273716472737993,"Tgfb1/Hmox1/Vsir/Fcgr2b",4
+"GO:0033028","GO:0033028","myeloid cell apoptotic process","4/164","34/16202",0.000370354585479992,0.00370484992024175,0.00273716472737993,"Cxcr2/Fcgr2b/Clec5a/Fcer1g",4
+"GO:0006949","GO:0006949","syncytium formation","5/164","61/16202",0.000376403120986769,0.00375214479552074,0.00277210645705491,"Trem2/Adam8/Tyrobp/Cd53/Il1f9",5
+"GO:0045766","GO:0045766","positive regulation of angiogenesis","8/164","175/16202",0.000412555852610685,0.00409815096946488,0.00302773783623741,"Itgb2/Hmox1/Cybb/Mmp9/Cxcr2/Il1b/Il1a/C5ar1",8
+"GO:0050869","GO:0050869","negative regulation of B cell activation","4/164","35/16202",0.000414866776511309,0.00410674742881055,0.00303408895053567,"Samsn1/Fcgr2b/Tyrobp/Cd300a",4
+"GO:0006828","GO:0006828","manganese ion transport","3/164","15/16202",0.000423679173557449,0.00412216620574217,0.00304548043285348,"Trpm2/Slc11a1/Ryr2",3
+"GO:0006910","GO:0006910","phagocytosis, recognition","3/164","15/16202",0.000423679173557449,0.00412216620574217,0.00304548043285348,"Mfge8/Sirpa/Fcgr3",3
+"GO:0033089","GO:0033089","positive regulation of T cell differentiation in thymus","3/164","15/16202",0.000423679173557449,0.00412216620574217,0.00304548043285348,"Adam8/Il1b/Il2rg",3
+"GO:0051044","GO:0051044","positive regulation of membrane protein ectodomain proteolysis","3/164","15/16202",0.000423679173557449,0.00412216620574217,0.00304548043285348,"Apoe/Adam8/Il1b",3
+"GO:0072672","GO:0072672","neutrophil extravasation","3/164","15/16202",0.000423679173557449,0.00412216620574217,0.00304548043285348,"Adam8/Il1a/Trem1",3
+"GO:0002244","GO:0002244","hematopoietic progenitor cell differentiation","7/164","134/16202",0.000428648872739811,0.00415628480359659,0.00307068745192449,"Spi1/Tgfb1/Csf1r/Batf/Sirpa/Arl11/Pld4",7
+"GO:1903531","GO:1903531","negative regulation of secretion by cell","9/164","222/16202",0.000437226824496028,0.00422503880405855,0.00312148330843208,"Apoe/Hmox1/Srgn/Il1r2/Il1b/Tnfrsf9/Cd300a/Cd84/Lilra5",9
+"GO:0043491","GO:0043491","protein kinase B signaling","8/164","178/16202",0.000462028802405154,0.00444453490321525,0.00328364830656782,"Tgfb1/Hcls1/Lox/Adam8/Il1b/F7/Mmp3/Arrb2",8
+"GO:0061756","GO:0061756","leukocyte adhesion to vascular endothelial cell","4/164","36/16202",0.000463070162390607,0.00444453490321525,0.00328364830656782,"Itgb2/Madcam1/Selplg/Ptafr",4
+"GO:0032970","GO:0032970","regulation of actin filament-based process","12/164","379/16202",0.000486106027383893,0.00464992331244997,0.0034353904611146,"Tgfb1/Hck/Trpm2/Plek/Hcls1/Csf1r/Il1a/Fgr/Arhgdib/Prex1/Cd47/Ryr2",12
+"GO:0009611","GO:0009611","response to wounding","13/164","436/16202",0.000501098235345279,0.00477724861280516,0.00352945913556513,"Tgfb1/Apoe/Hmox1/Plek/Lox/Fermt3/Slc11a1/Il1a/Tyrobp/F7/Ninj1/Mmp12/Fcer1g",13
+"GO:0030851","GO:0030851","granulocyte differentiation","4/164","37/16202",0.000515135218864962,0.00485300564237368,0.00358542887081759,"Spi1/Hcls1/C1qc/Rbp1",4
+"GO:0002864","GO:0002864","regulation of acute inflammatory response to antigenic stimulus","3/164","16/16202",0.000517585607053582,0.00485300564237368,0.00358542887081759,"Fcgr2b/Fcer1g/Fcgr3",3
+"GO:0032305","GO:0032305","positive regulation of icosanoid secretion","3/164","16/16202",0.000517585607053582,0.00485300564237368,0.00358542887081759,"Cyp4f18/Il1b/Il1a",3
+"GO:0050665","GO:0050665","hydrogen peroxide biosynthetic process","3/164","16/16202",0.000517585607053582,0.00485300564237368,0.00358542887081759,"Cyba/Cybb/Ncf1",3
+"GO:1900016","GO:1900016","negative regulation of cytokine production involved in inflammatory response","3/164","16/16202",0.000517585607053582,0.00485300564237368,0.00358542887081759,"Mefv/Il1r2/Sirpa",3
+"GO:0070997","GO:0070997","neuron death","12/164","383/16202",0.000533563303038334,0.00497064452959811,0.00367234116675694,"Apoe/Hmox1/Trpm2/Adam8/Fcgr2b/Il1b/Gpnmb/Tyrobp/C1qa/C5ar1/Cebpb/Arrb2",12
+"GO:1903426","GO:1903426","regulation of reactive oxygen species biosynthetic process","6/164","100/16202",0.000533936492018737,0.00497064452959811,0.00367234116675694,"Itgb2/Mmp8/Cyba/Il1b/Sirpa/Cd47",6
+"GO:0002819","GO:0002819","regulation of adaptive immune response","8/164","182/16202",0.000535380931382268,0.00497064452959811,0.00367234116675694,"Tgfb1/Vsir/Samsn1/Slc11a1/Fcgr2b/Il1b/Fcer1g/Fcgr3",8
+"GO:0050710","GO:0050710","negative regulation of cytokine secretion","5/164","66/16202",0.000542942094348202,0.00499190449852182,0.00368804815578374,"Srgn/Il1r2/Tnfrsf9/Cd84/Lilra5",5
+"GO:1990868","GO:1990868","response to chemokine","5/164","66/16202",0.000542942094348202,0.00499190449852182,0.00368804815578374,"Ccl9/Cxcl13/Trem2/Lox/Ccr1",5
+"GO:1990869","GO:1990869","cellular response to chemokine","5/164","66/16202",0.000542942094348202,0.00499190449852182,0.00368804815578374,"Ccl9/Cxcl13/Trem2/Lox/Ccr1",5
+"GO:0022408","GO:0022408","negative regulation of cell-cell adhesion","8/164","183/16202",0.000555119299090597,0.00508739977005286,0.00375860061930951,"Tgfb1/Vsir/Cd86/Adam8/Gpnmb/Cd300a/Cebpb/Slfn1",8
+"GO:0032956","GO:0032956","regulation of actin cytoskeleton organization","11/164","331/16202",0.000560190486474775,0.00511736711278082,0.0037807406668834,"Tgfb1/Hck/Trpm2/Plek/Hcls1/Csf1r/Il1a/Fgr/Arhgdib/Prex1/Cd47",11
+"GO:0031532","GO:0031532","actin cytoskeleton reorganization","6/164","101/16202",0.000562973411755624,0.00512630597050554,0.00378734474710093,"Tgfb1/Hck/Trpm2/Plek/Csf1r/Arhgdib",6
+"GO:0002455","GO:0002455","humoral immune response mediated by circulating immunoglobulin","4/164","38/16202",0.000571233443912296,0.00516838921705361,0.00381843609507583,"Fcgr2b/C1qa/C1qc/C1qb",4
+"GO:0009620","GO:0009620","response to fungus","4/164","38/16202",0.000571233443912296,0.00516838921705361,0.00381843609507583,"Tgfb1/Rarres2/Ncf1/Clec4n",4
+"GO:0050870","GO:0050870","positive regulation of T cell activation","8/164","184/16202",0.000575442849545303,0.00518994646208954,0.00383436271342802,"Tgfb1/Vsir/Cd86/Adam8/Il1b/Il2rg/Sirpa/Cd47",8
+"GO:0045428","GO:0045428","regulation of nitric oxide biosynthetic process","5/164","67/16202",0.00058198559480692,0.00523234517356474,0.00386568712873084,"Itgb2/Mmp8/Il1b/Sirpa/Cd47",5
+"GO:0017157","GO:0017157","regulation of exocytosis","9/164","232/16202",0.000600973627781809,0.00538601285971016,0.00397921771142928,"Itgb2/Hmox1/Fgr/Itgam/Rac2/Cd300a/Cd84/Ptafr/Fcer1g",9
+"GO:0045410","GO:0045410","positive regulation of interleukin-6 biosynthetic process","3/164","17/16202",0.000623839731201471,0.00555588926753411,0.00410472339223143,"Il1b/Tyrobp/Ptafr",3
+"GO:0090026","GO:0090026","positive regulation of monocyte chemotaxis","3/164","17/16202",0.000623839731201471,0.00555588926753411,0.00410472339223143,"Pla2g7/Ccr1/Fpr2",3
+"GO:0002369","GO:0002369","T cell cytokine production","4/164","39/16202",0.000631537201396276,0.00560686621614632,0.00414238545915847,"Vsir/Slc11a1/Il1b/Crlf2",4
+"GO:0002292","GO:0002292","T cell differentiation involved in immune response","5/164","69/16202",0.000666351233400587,0.00589751979467623,0.00435712201803827,"Tgfb1/Clec4e/Clec4d/Batf/Fcer1g",5
+"GO:0050709","GO:0050709","negative regulation of protein secretion","7/164","145/16202",0.00068723274503351,0.00606344170385156,0.00447970609217659,"Apoe/Srgn/Il1r2/Il1b/Tnfrsf9/Cd84/Lilra5",7
+"GO:1900015","GO:1900015","regulation of cytokine production involved in inflammatory response","4/164","40/16202",0.000696219569578801,0.00612371454233242,0.00452423601675128,"Mefv/Il1r2/Gpsm3/Sirpa",4
+"GO:0002495","GO:0002495","antigen processing and presentation of peptide antigen via MHC class II","3/164","18/16202",0.000743063182754877,0.00649551539140494,0.00479892465235052,"Trem2/Fcgr2b/Fcer1g",3
+"GO:0030852","GO:0030852","regulation of granulocyte differentiation","3/164","18/16202",0.000743063182754877,0.00649551539140494,0.00479892465235052,"Hcls1/C1qc/Rbp1",3
+"GO:0001776","GO:0001776","leukocyte homeostasis","6/164","107/16202",0.000763883152333334,0.00665703078459816,0.00491825316678291,"Tgfb1/Cxcr2/Fcgr2b/Fcer1g/Pirb/Bcl2a1a",6
+"GO:1904018","GO:1904018","positive regulation of vasculature development","8/164","194/16202",0.000813764136861538,0.00707004254686125,0.00522338866538518,"Itgb2/Hmox1/Cybb/Mmp9/Cxcr2/Il1b/Il1a/C5ar1",8
+"GO:0046631","GO:0046631","alpha-beta T cell activation","7/164","151/16202",0.000873077124295949,0.00749489398675288,0.0055372713868672,"Tgfb1/Vsir/Clec4a2/Il2rg/Batf/Cd300a/Cebpb",7
+"GO:0002504","GO:0002504","antigen processing and presentation of peptide or polysaccharide antigen via MHC class II","3/164","19/16202",0.000875855263499456,0.00749489398675288,0.0055372713868672,"Trem2/Fcgr2b/Fcer1g",3
+"GO:0060099","GO:0060099","regulation of phagocytosis, engulfment","3/164","19/16202",0.000875855263499456,0.00749489398675288,0.0055372713868672,"Trem2/Siglece/Cd300a",3
+"GO:0071605","GO:0071605","monocyte chemotactic protein-1 production","3/164","19/16202",0.000875855263499456,0.00749489398675288,0.0055372713868672,"Il1b/Il1a/Cd84",3
+"GO:0071637","GO:0071637","regulation of monocyte chemotactic protein-1 production","3/164","19/16202",0.000875855263499456,0.00749489398675288,0.0055372713868672,"Il1b/Il1a/Cd84",3
+"GO:0002534","GO:0002534","cytokine production involved in inflammatory response","4/164","43/16202",0.000918276787913535,0.00783430737075782,0.00578803197439415,"Mefv/Il1r2/Gpsm3/Sirpa",4
+"GO:0002792","GO:0002792","negative regulation of peptide secretion","7/164","153/16202",0.000943135360269608,0.00802229807941903,0.00592692060629561,"Apoe/Srgn/Il1r2/Il1b/Tnfrsf9/Cd84/Lilra5",7
+"GO:0071887","GO:0071887","leukocyte apoptotic process","6/164","112/16202",0.000970226654832976,0.00822810127277757,0.00607896920577205,"Hcls1/Adam8/Cxcr2/Fcgr2b/Fcer1g/Bcl2a1a",6
+"GO:0006809","GO:0006809","nitric oxide biosynthetic process","5/164","75/16202",0.000974762000581084,0.00824196084419899,0.0060892087379658,"Itgb2/Mmp8/Il1b/Sirpa/Cd47",5
+"GO:1901136","GO:1901136","carbohydrate derivative catabolic process","6/164","113/16202",0.00101619077470649,0.00837393680027424,0.00618671334398445,"Gm2a/Tgfb1/Aoah/Renbp/Chil3/Mmp12",6
+"GO:0030098","GO:0030098","lymphocyte differentiation","11/164","356/16202",0.00101752865829865,0.00837393680027424,0.00618671334398445,"Spi1/Tgfb1/Vsir/Adam8/Il1b/Clec4e/Clec4d/Il2rg/Batf/Prex1/Fcer1g",11
+"GO:0051251","GO:0051251","positive regulation of lymphocyte activation","9/164","250/16202",0.00102101974203107,0.00837393680027424,0.00618671334398445,"Tgfb1/Vsir/Cd86/Adam8/Il1b/Tyrobp/Il2rg/Sirpa/Cd47",9
+"GO:0002523","GO:0002523","leukocyte migration involved in inflammatory response","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Itgb2/Adam8/Itgam",3
+"GO:0002577","GO:0002577","regulation of antigen processing and presentation","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Cd68/Trem2/Slc11a1",3
+"GO:0006837","GO:0006837","serotonin transport","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Cd300a/Fcer1g/Fcgr3",3
+"GO:0017000","GO:0017000","antibiotic biosynthetic process","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Cyba/Cybb/Ncf1",3
+"GO:0030889","GO:0030889","negative regulation of B cell proliferation","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Fcgr2b/Tyrobp/Cd300a",3
+"GO:0045649","GO:0045649","regulation of macrophage differentiation","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Tgfb1/Hcls1/C1qc",3
+"GO:1905153","GO:1905153","regulation of membrane invagination","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Trem2/Siglece/Cd300a",3
+"GO:2000193","GO:2000193","positive regulation of fatty acid transport","3/164","20/16202",0.00102279340714367,0.00837393680027424,0.00618671334398445,"Cyp4f18/Il1b/Il1a",3
+"GO:0044070","GO:0044070","regulation of anion transport","6/164","114/16202",0.00106381058079015,0.00868472948282995,0.00641632879036771,"Apoe/Cyp4f18/Il1b/Il1a/Cebpb/Ptafr",6
+"GO:0032303","GO:0032303","regulation of icosanoid secretion","3/164","21/16202",0.00118443363835557,0.0095452045734303,0.00705205280550585,"Cyp4f18/Il1b/Il1a",3
+"GO:0032691","GO:0032691","negative regulation of interleukin-1 beta production","3/164","21/16202",0.00118443363835557,0.0095452045734303,0.00705205280550585,"Mefv/Trem2/Arrb2",3
+"GO:0042535","GO:0042535","positive regulation of tumor necrosis factor biosynthetic process","3/164","21/16202",0.00118443363835557,0.0095452045734303,0.00705205280550585,"Cybb/Tyrobp/Fcgr3",3
+"GO:0071276","GO:0071276","cellular response to cadmium ion","3/164","21/16202",0.00118443363835557,0.0095452045734303,0.00705205280550585,"Hmox1/Ncf1/Mmp9",3
+"GO:0032731","GO:0032731","positive regulation of interleukin-1 beta production","4/164","46/16202",0.00118601098712457,0.0095452045734303,0.00705205280550585,"Tyrobp/Ifi205/Lilra5/Mndal",4
+"GO:0046209","GO:0046209","nitric oxide metabolic process","5/164","79/16202",0.00123229244081218,0.00988966899533168,0.00730654512928782,"Itgb2/Mmp8/Il1b/Sirpa/Cd47",5
+"GO:1902930","GO:1902930","regulation of alcohol biosynthetic process","4/164","47/16202",0.00128622016705671,0.0102933844918539,0.00760481249254583,"Apoe/Plek/Il1b/Ptafr",4
+"GO:0002719","GO:0002719","negative regulation of cytokine production involved in immune response","3/164","22/16202",0.00136131102406236,0.0107832014169606,0.00796669209337685,"Tgfb1/Hmox1/Vsir",3
+"GO:0051043","GO:0051043","regulation of membrane protein ectodomain proteolysis","3/164","22/16202",0.00136131102406236,0.0107832014169606,0.00796669209337685,"Apoe/Adam8/Il1b",3
+"GO:1904469","GO:1904469","positive regulation of tumor necrosis factor secretion","3/164","22/16202",0.00136131102406236,0.0107832014169606,0.00796669209337685,"Mmp8/Cd84/Lilra5",3
+"GO:0002285","GO:0002285","lymphocyte activation involved in immune response","7/164","163/16202",0.0013626079932027,0.0107832014169606,0.00796669209337685,"Tgfb1/Slc11a1/Clec4e/Clec4d/Batf/Stx11/Fcer1g",7
+"GO:0002718","GO:0002718","regulation of cytokine production involved in immune response","5/164","81/16202",0.00137843377059194,0.0108781398395881,0.00803683315368518,"Tgfb1/Hmox1/Vsir/Il1b/Fcer1g",5
+"GO:0002456","GO:0002456","T cell mediated immunity","6/164","120/16202",0.00138654123555888,0.0109118106654371,0.00806170935618721,"Vsir/Myo1g/Slc11a1/Il1b/Crlf2/Stx11",6
+"GO:0051187","GO:0051187","cofactor catabolic process","4/164","48/16202",0.00139220164500006,0.010926090810622,0.0080722596107302,"Cyp4f18/Hmox1/Ncf1/Hp",4
+"GO:0050829","GO:0050829","defense response to Gram-negative bacterium","5/164","82/16202",0.00145611672229664,0.0113962193059084,0.00841959328478906,"Rarres2/Slc11a1/Trem1/Mpeg1/Lyz2",5
+"GO:0048247","GO:0048247","lymphocyte chemotaxis","4/164","49/16202",0.00150412886274433,0.0117396431292765,0.00867331680830592,"Cxcl16/Ccl9/Cxcl13/Adam8",4
+"GO:0001909","GO:0001909","leukocyte mediated cytotoxicity","6/164","122/16202",0.00150920034260932,0.011746834623179,0.00867862992594119,"Ncf1/Tyrobp/Stx11/Trem1/Fcgr3/Arrb2",6
+"GO:0002822","GO:0002822","regulation of adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains","7/164","166/16202",0.0015133197719407,0.011746834623179,0.00867862992594119,"Tgfb1/Vsir/Slc11a1/Fcgr2b/Il1b/Fcer1g/Fcgr3",7
+"GO:2001057","GO:2001057","reactive nitrogen species metabolic process","5/164","83/16202",0.00153697789376466,0.0118357744578027,0.00874433919444919,"Itgb2/Mmp8/Il1b/Sirpa/Cd47",5
+"GO:0002693","GO:0002693","positive regulation of cellular extravasation","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Adam8/Il1a/Ptafr",3
+"GO:0031100","GO:0031100","animal organ regeneration","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Tgfb1/Hmox1/Cebpb",3
+"GO:0070168","GO:0070168","negative regulation of biomineral tissue development","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Tgfb1/Srgn/Ccr1",3
+"GO:0072677","GO:0072677","eosinophil migration","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Ccl9/Adam8/Cd300a",3
+"GO:0110150","GO:0110150","negative regulation of biomineralization","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Tgfb1/Srgn/Ccr1",3
+"GO:1903306","GO:1903306","negative regulation of regulated secretory pathway","3/164","23/16202",0.00155394011712792,0.0118357744578027,0.00874433919444919,"Hmox1/Cd300a/Cd84",3
+"GO:0002706","GO:0002706","regulation of lymphocyte mediated immunity","7/164","168/16202",0.00162080734708608,0.0121920591038507,0.009007564368765,"Tgfb1/Vsir/Fcgr2b/Il1b/Fcer1g/Fcgr3/Arrb2",7
+"GO:0048708","GO:0048708","astrocyte differentiation","5/164","84/16202",0.0016210952901074,0.0121920591038507,0.009007564368765,"Trem2/Il1b/C1qa/C5ar1/Fpr2",5
+"GO:1905954","GO:1905954","positive regulation of lipid localization","5/164","84/16202",0.0016210952901074,0.0121920591038507,0.009007564368765,"Apoe/Cyp4f18/Msr1/Il1b/Il1a",5
+"GO:0002548","GO:0002548","monocyte chemotaxis","4/164","50/16202",0.00162217470653135,0.0121920591038507,0.009007564368765,"Ccl9/Pla2g7/Ccr1/Fpr2",4
+"GO:0031663","GO:0031663","lipopolysaccharide-mediated signaling pathway","4/164","50/16202",0.00162217470653135,0.0121920591038507,0.009007564368765,"Tgfb1/Trem2/Il1b/Cd84",4
+"GO:0050864","GO:0050864","regulation of B cell activation","6/164","124/16202",0.00163995878065991,0.012293200252915,0.00908228803953854,"Tgfb1/Samsn1/Fcgr2b/Tyrobp/Il2rg/Cd300a",6
+"GO:0010575","GO:0010575","positive regulation of vascular endothelial growth factor production","3/164","24/16202",0.00176281539252211,0.0131103626443856,0.0096860123799644,"Il1b/Il1a/C5ar1",3
+"GO:0033622","GO:0033622","integrin activation","3/164","24/16202",0.00176281539252211,0.0131103626443856,0.0096860123799644,"Plek/Cxcl13/Fermt3",3
+"GO:0090025","GO:0090025","regulation of monocyte chemotaxis","3/164","24/16202",0.00176281539252211,0.0131103626443856,0.0096860123799644,"Pla2g7/Ccr1/Fpr2",3
+"GO:0006958","GO:0006958","complement activation, classical pathway","3/164","25/16202",0.00198841167609387,0.0147111395098508,0.0108686756637368,"C1qa/C1qc/C1qb",3
+"GO:1905523","GO:1905523","positive regulation of macrophage migration","3/164","25/16202",0.00198841167609387,0.0147111395098508,0.0108686756637368,"Rarres2/Trem2/C5ar1",3
+"GO:0032732","GO:0032732","positive regulation of interleukin-1 production","4/164","54/16202",0.00215897686859955,0.0159315669706268,0.0117703345891661,"Tyrobp/Ifi205/Lilra5/Mndal",4
+"GO:0007162","GO:0007162","negative regulation of cell adhesion","9/164","280/16202",0.0022264322719775,0.0163371014231264,0.0120699458077082,"Tgfb1/Vsir/Cd86/Adam8/Gpnmb/Cd300a/Mmp12/Cebpb/Slfn1",9
+"GO:0045742","GO:0045742","positive regulation of epidermal growth factor receptor signaling pathway","3/164","26/16202",0.00223118456605879,0.0163371014231264,0.0120699458077082,"Ncf1/Mmp9/Plaur",3
+"GO:0050901","GO:0050901","leukocyte tethering or rolling","3/164","26/16202",0.00223118456605879,0.0163371014231264,0.0120699458077082,"Madcam1/Selplg/Ptafr",3
+"GO:0002712","GO:0002712","regulation of B cell mediated immunity","4/164","55/16202",0.00231018257581331,0.0167857511454875,0.0124014108390678,"Tgfb1/Fcgr2b/Fcer1g/Fcgr3",4
+"GO:0002889","GO:0002889","regulation of immunoglobulin mediated immune response","4/164","55/16202",0.00231018257581331,0.0167857511454875,0.0124014108390678,"Tgfb1/Fcgr2b/Fcer1g/Fcgr3",4
+"GO:0035306","GO:0035306","positive regulation of dephosphorylation","4/164","55/16202",0.00231018257581331,0.0167857511454875,0.0124014108390678,"Tgfb1/Plek/Cd300a/Pirb",4
+"GO:0071396","GO:0071396","cellular response to lipid","12/164","458/16202",0.00245210963685972,0.0177715394855063,0.0131297170136903,"Tgfb1/Cd68/Cxcl16/Cd86/Cxcl13/Trem2/Il1b/Sirpa/Cd84/Il1f9/Cebpb/Arrb2",12
+"GO:0070098","GO:0070098","chemokine-mediated signaling pathway","4/164","56/16202",0.00246852695779836,0.0178450002216416,0.0131839902339626,"Ccl9/Cxcl13/Trem2/Ccr1",4
+"GO:0060143","GO:0060143","positive regulation of syncytium formation by plasma membrane fusion","3/164","27/16202",0.00249157084731006,0.0179658699929134,0.0132732895258783,"Trem2/Tyrobp/Cd53",3
+"GO:0002221","GO:0002221","pattern recognition receptor signaling pathway","6/164","135/16202",0.00251943755414482,0.0181208154210771,0.0133877641118315,"Cyba/Cd86/Clec4e/Cd300a/Cd300lf/Arrb2",6
+"GO:0045582","GO:0045582","positive regulation of T cell differentiation","5/164","93/16202",0.00253770547754848,0.0182061142972607,0.0134507834190103,"Tgfb1/Vsir/Adam8/Il1b/Il2rg",5
+"GO:0046328","GO:0046328","regulation of JNK cascade","7/164","182/16202",0.00254944877015576,0.0182442920806361,0.0134789893880169,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9",7
+"GO:0042113","GO:0042113","B cell activation","8/164","233/16202",0.00259538396712818,0.0185263463583195,0.0136873727332811,"Tgfb1/Samsn1/Cd86/Fcgr2b/Tyrobp/Il2rg/Batf/Cd300a",8
+"GO:0050731","GO:0050731","positive regulation of peptidyl-tyrosine phosphorylation","7/164","183/16202",0.00262876869230039,0.0187092370667211,0.0138224934552481,"Tgfb1/Ncf1/Hcls1/Trem2/Csf1r/Arrb2/Lilra5",7
+"GO:0072678","GO:0072678","T cell migration","4/164","57/16202",0.00263417628535321,0.0187092370667211,0.0138224934552481,"Cxcl16/Myo1g/Cxcl13/Adam8",4
+"GO:0007173","GO:0007173","epidermal growth factor receptor signaling pathway","5/164","94/16202",0.00265873928531165,0.0187897470387323,0.0138819746920959,"Tgfb1/Ncf1/Mmp9/Adgre4/Plaur",5
+"GO:0045921","GO:0045921","positive regulation of exocytosis","5/164","94/16202",0.00265873928531165,0.0187897470387323,0.0138819746920959,"Itgb2/Fgr/Itgam/Ptafr/Fcer1g",5
+"GO:0051235","GO:0051235","maintenance of location","9/164","288/16202",0.00268957412155036,0.0189604964747508,0.0140081253712196,"Gm2a/Tgfb1/Apoe/Cyba/Trpm2/Srgn/Msr1/Il1b/Ryr2",9
+"GO:0046330","GO:0046330","positive regulation of JNK cascade","6/164","137/16202",0.00271138543093744,0.0190669455675576,0.0140867705817855,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Il1f9",6
+"GO:0033005","GO:0033005","positive regulation of mast cell activation","3/164","28/16202",0.00276998889866056,0.0193354753343849,0.0142851619395556,"Fgr/Crlf2/Fcer1g",3
+"GO:0043552","GO:0043552","positive regulation of phosphatidylinositol 3-kinase activity","3/164","28/16202",0.00276998889866056,0.0193354753343849,0.0142851619395556,"Tgfb1/Fgr/Fpr2",3
+"GO:1901186","GO:1901186","positive regulation of ERBB signaling pathway","3/164","28/16202",0.00276998889866056,0.0193354753343849,0.0142851619395556,"Ncf1/Mmp9/Plaur",3
+"GO:0015718","GO:0015718","monocarboxylic acid transport","6/164","138/16202",0.00281137482684467,0.0195762644192787,0.0144630583197324,"Apoe/Cyp4f18/Emb/Il1b/Il1a/Slc16a12",6
+"GO:0051897","GO:0051897","positive regulation of protein kinase B signaling","5/164","96/16202",0.00291328173961848,0.0202362675360785,0.0149506724714947,"Tgfb1/Hcls1/Adam8/F7/Arrb2",5
+"GO:0031214","GO:0031214","biomineral tissue development","6/164","140/16202",0.00301961572024947,0.0208728181538412,0.0154209597801958,"Tgfb1/Srgn/Lox/Ccr1/Fgr/Cebpb",6
+"GO:0110148","GO:0110148","biomineralization","6/164","140/16202",0.00301961572024947,0.0208728181538412,0.0154209597801958,"Tgfb1/Srgn/Lox/Ccr1/Fgr/Cebpb",6
+"GO:0035710","GO:0035710","CD4-positive, alpha-beta T cell activation","5/164","97/16202",0.00304695125214971,0.0209949153338788,0.0155111658888658,"Tgfb1/Vsir/Il2rg/Batf/Cebpb",5
+"GO:0042533","GO:0042533","tumor necrosis factor biosynthetic process","3/164","29/16202",0.00306683909312204,0.0209949153338788,0.0155111658888658,"Cybb/Tyrobp/Fcgr3",3
+"GO:0042534","GO:0042534","regulation of tumor necrosis factor biosynthetic process","3/164","29/16202",0.00306683909312204,0.0209949153338788,0.0155111658888658,"Cybb/Tyrobp/Fcgr3",3
+"GO:0048535","GO:0048535","lymph node development","3/164","29/16202",0.00306683909312204,0.0209949153338788,0.0155111658888658,"Tgfb1/Cxcl13/Nfkb2",3
+"GO:1903428","GO:1903428","positive regulation of reactive oxygen species biosynthetic process","4/164","60/16202",0.00317659679488034,0.0216940180150362,0.0160276670268001,"Itgb2/Mmp8/Cyba/Il1b",4
+"GO:0048872","GO:0048872","homeostasis of number of cells","9/164","296/16202",0.00322606626513883,0.0219790270006221,0.0162382333274942,"Spi1/Tgfb1/Hmox1/Hcls1/Cxcr2/Fcgr2b/Fcer1g/Pirb/Bcl2a1a",9
+"GO:0002700","GO:0002700","regulation of production of molecular mediator of immune response","6/164","143/16202",0.0033533306183905,0.0227717876956327,0.0168239295522672,"Tgfb1/Hmox1/Vsir/Fcgr2b/Il1b/Fcer1g",6
+"GO:0034121","GO:0034121","regulation of toll-like receptor signaling pathway","4/164","61/16202",0.00337310161410094,0.0227717876956327,0.0168239295522672,"Cyba/Cd300a/Cd300lf/Arrb2",4
+"GO:0043388","GO:0043388","positive regulation of DNA binding","4/164","61/16202",0.00337310161410094,0.0227717876956327,0.0168239295522672,"Tgfb1/Mmp8/Mmp9/Plaur",4
+"GO:0045589","GO:0045589","regulation of regulatory T cell differentiation","3/164","30/16202",0.00338250419132594,0.0227717876956327,0.0168239295522672,"Tgfb1/Vsir/Il2rg",3
+"GO:0061082","GO:0061082","myeloid leukocyte cytokine production","3/164","30/16202",0.00338250419132594,0.0227717876956327,0.0168239295522672,"Tgfb1/Hmox1/Fcer1g",3
+"GO:0000302","GO:0000302","response to reactive oxygen species","7/164","193/16202",0.00353055030769765,0.0237122775985084,0.0175187689773526,"Hmox1/Trpm2/Ncf1/Mmp9/Hk3/Hp/Sirpa",7
+"GO:0032722","GO:0032722","positive regulation of chemokine production","4/164","62/16202",0.0035777218406752,0.0239724239371656,0.0177109666094994,"Csf1r/Il1b/Il1a/Cd84",4
+"GO:0002833","GO:0002833","positive regulation of response to biotic stimulus","6/164","145/16202",0.00359058929284055,0.0240020333669647,0.0177328422289141,"Cyba/Adam8/Mmp12/Fpr2/Ifi205/Mndal",6
+"GO:0002224","GO:0002224","toll-like receptor signaling pathway","5/164","101/16202",0.00362616109177959,0.0241262849221214,0.0178246400024862,"Cyba/Cd86/Cd300a/Cd300lf/Arrb2",5
+"GO:0042136","GO:0042136","neurotransmitter biosynthetic process","5/164","101/16202",0.00362616109177959,0.0241262849221214,0.0178246400024862,"Itgb2/Mmp8/Il1b/Sirpa/Cd47",5
+"GO:0045834","GO:0045834","positive regulation of lipid metabolic process","6/164","146/16202",0.00371379447906174,0.0242224554536366,0.0178956913520263,"Tgfb1/Apoe/Il1b/Il1a/Fgr/Fpr2",6
+"GO:0002861","GO:0002861","regulation of inflammatory response to antigenic stimulus","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Fcgr2b/Fcer1g/Fcgr3",3
+"GO:0006775","GO:0006775","fat-soluble vitamin metabolic process","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Cyp4f18/Il1b/Rbp1",3
+"GO:0010574","GO:0010574","regulation of vascular endothelial growth factor production","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Il1b/Il1a/C5ar1",3
+"GO:0033081","GO:0033081","regulation of T cell differentiation in thymus","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Adam8/Il1b/Il2rg",3
+"GO:0045662","GO:0045662","negative regulation of myoblast differentiation","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Tgfb1/Ccl9/Il1f9",3
+"GO:0045920","GO:0045920","negative regulation of exocytosis","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Hmox1/Cd300a/Cd84",3
+"GO:0045940","GO:0045940","positive regulation of steroid metabolic process","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Apoe/Il1b/Il1a",3
+"GO:2000191","GO:2000191","regulation of fatty acid transport","3/164","31/16202",0.00371734972818921,0.0242224554536366,0.0178956913520263,"Cyp4f18/Il1b/Il1a",3
+"GO:0007254","GO:0007254","JNK cascade","7/164","195/16202",0.00373616249675061,0.0242893310143444,0.0179450994062886,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9",7
+"GO:0051896","GO:0051896","regulation of protein kinase B signaling","6/164","147/16202",0.00384011324254711,0.0248657011020035,0.0183709249883825,"Tgfb1/Hcls1/Adam8/F7/Mmp3/Arrb2",6
+"GO:0051224","GO:0051224","negative regulation of protein transport","7/164","196/16202",0.00384232410551902,0.0248657011020035,0.0183709249883825,"Apoe/Srgn/Il1r2/Il1b/Tnfrsf9/Cd84/Lilra5",7
+"GO:0051403","GO:0051403","stress-activated MAPK cascade","8/164","249/16202",0.0038875342685346,0.0251011019475154,0.0185448405058804,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9/Mapk11",8
+"GO:0038127","GO:0038127","ERBB signaling pathway","5/164","103/16202",0.00394360926833443,0.0254054284157327,0.0187696786754,"Tgfb1/Ncf1/Mmp9/Adgre4/Plaur",5
+"GO:0010038","GO:0010038","response to metal ion","8/164","250/16202",0.00398229507932809,0.0255966070596631,0.0189109225724701,"Hmox1/Trpm2/Ncf1/Mmp9/Il1a/Hvcn1/Ryr2/Nedd4l",8
+"GO:0032370","GO:0032370","positive regulation of lipid transport","4/164","64/16202",0.00401193646849078,0.0257289198803213,0.0190086760560072,"Apoe/Cyp4f18/Il1b/Il1a",4
+"GO:0002691","GO:0002691","regulation of cellular extravasation","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Adam8/Il1a/Ptafr",3
+"GO:0010543","GO:0010543","regulation of platelet activation","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Apoe/Plek/Fcer1g",3
+"GO:0010714","GO:0010714","positive regulation of collagen metabolic process","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Tgfb1/Vsir/Arrb2",3
+"GO:0046686","GO:0046686","response to cadmium ion","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Hmox1/Ncf1/Mmp9",3
+"GO:0090218","GO:0090218","positive regulation of lipid kinase activity","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Tgfb1/Fgr/Fpr2",3
+"GO:1904467","GO:1904467","regulation of tumor necrosis factor secretion","3/164","32/16202",0.00407172439292667,0.0257510274939398,0.0190250092898779,"Mmp8/Cd84/Lilra5",3
+"GO:0043523","GO:0043523","regulation of neuron apoptotic process","8/164","251/16202",0.00407883223240862,0.0257510274939398,0.0190250092898779,"Apoe/Hmox1/Adam8/Il1b/Tyrobp/C5ar1/Cebpb/Arrb2",8
+"GO:0032649","GO:0032649","regulation of interferon-gamma production","5/164","104/16202",0.00410957447844922,0.0258875855726701,0.0191258991948366,"Vsir/Slc11a1/Il1b/Sirpa/Cd47",5
+"GO:0030198","GO:0030198","extracellular matrix organization","8/164","252/16202",0.00417716767968508,0.0262551623406755,0.019397467054709,"Tgfb1/Mmp8/Mmp9/Lox/Nfkb2/Mmp3/Mmp10/Mmp12",8
+"GO:0010035","GO:0010035","response to inorganic substance","11/164","427/16202",0.00418641608400716,0.0262552055069853,0.0193974989462304,"Hmox1/Trpm2/Ncf1/Mmp9/Hk3/Il1a/Hp/Sirpa/Hvcn1/Ryr2/Nedd4l",11
+"GO:0043062","GO:0043062","extracellular structure organization","8/164","253/16202",0.00427732345568907,0.0267270883093514,0.0197461287125907,"Tgfb1/Mmp8/Mmp9/Lox/Nfkb2/Mmp3/Mmp10/Mmp12",8
+"GO:0045621","GO:0045621","positive regulation of lymphocyte differentiation","5/164","105/16202",0.00428047348847409,0.0267270883093514,0.0197461287125907,"Tgfb1/Vsir/Adam8/Il1b/Il2rg",5
+"GO:0002866","GO:0002866","positive regulation of acute inflammatory response to antigenic stimulus","2/164","10/16202",0.00434468708260181,0.0268331652210255,0.0198244989535652,"Fcer1g/Fcgr3",2
+"GO:0033029","GO:0033029","regulation of neutrophil apoptotic process","2/164","10/16202",0.00434468708260181,0.0268331652210255,0.0198244989535652,"Cxcr2/Fcgr2b",2
+"GO:0033625","GO:0033625","positive regulation of integrin activation","2/164","10/16202",0.00434468708260181,0.0268331652210255,0.0198244989535652,"Plek/Cxcl13",2
+"GO:0071415","GO:0071415","cellular response to purine-containing compound","2/164","10/16202",0.00434468708260181,0.0268331652210255,0.0198244989535652,"Trpm2/Ryr2",2
+"GO:0097421","GO:0097421","liver regeneration","2/164","10/16202",0.00434468708260181,0.0268331652210255,0.0198244989535652,"Hmox1/Cebpb",2
+"GO:1904950","GO:1904950","negative regulation of establishment of protein localization","7/164","201/16202",0.00440792900728774,0.0271646991533719,0.0200694381562547,"Apoe/Srgn/Il1r2/Il1b/Tnfrsf9/Cd84/Lilra5",7
+"GO:0010573","GO:0010573","vascular endothelial growth factor production","3/164","33/16202",0.0044459604025103,0.0272219256541633,0.0201117174287785,"Il1b/Il1a/C5ar1",3
+"GO:0034122","GO:0034122","negative regulation of toll-like receptor signaling pathway","3/164","33/16202",0.0044459604025103,0.0272219256541633,0.0201117174287785,"Cd300a/Cd300lf/Arrb2",3
+"GO:0045066","GO:0045066","regulatory T cell differentiation","3/164","33/16202",0.0044459604025103,0.0272219256541633,0.0201117174287785,"Tgfb1/Vsir/Il2rg",3
+"GO:0032623","GO:0032623","interleukin-2 production","4/164","66/16202",0.00448047911560986,0.0273742820805325,0.0202242792451071,"Slc11a1/Il1b/Il1a/Fcer1g",4
+"GO:0045089","GO:0045089","positive regulation of innate immune response","5/164","108/16202",0.00482356767436378,0.0294072012078702,0.0217262117521603,"Adam8/Mmp12/Fpr2/Ifi205/Mndal",5
+"GO:1990774","GO:1990774","tumor necrosis factor secretion","3/164","34/16202",0.00484037386867453,0.029446471436626,0.0217552248261851,"Mmp8/Cd84/Lilra5",3
+"GO:0019915","GO:0019915","lipid storage","4/164","68/16202",0.00498455899144516,0.0302588292621703,0.0223553995252849,"Gm2a/Apoe/Msr1/Il1b",4
+"GO:0001906","GO:0001906","cell killing","6/164","156/16202",0.00512493035159847,0.0309785683593431,0.0228871469677208,"Ncf1/Tyrobp/Stx11/Trem1/Fcgr3/Arrb2",6
+"GO:0010951","GO:0010951","negative regulation of endopeptidase activity","6/164","156/16202",0.00512493035159847,0.0309785683593431,0.0228871469677208,"Mmp9/Renbp/Serpina3g/Serpinb6b/Plaur/Arrb2",6
+"GO:0043123","GO:0043123","positive regulation of I-kappaB kinase/NF-kappaB signaling","5/164","110/16202",0.00521175152000196,0.0314364884677825,0.0232254610143791,"S100a4/Clec4n/Il1b/Il1a/Il1f9",5
+"GO:0043114","GO:0043114","regulation of vascular permeability","3/164","35/16202",0.00525526515856483,0.0314837575953692,0.0232603837215088,"Tgfb1/Apoe/Cxcr2",3
+"GO:0002579","GO:0002579","positive regulation of antigen processing and presentation","2/164","11/16202",0.00527499775269122,0.0314837575953692,0.0232603837215088,"Trem2/Slc11a1",2
+"GO:0032308","GO:0032308","positive regulation of prostaglandin secretion","2/164","11/16202",0.00527499775269122,0.0314837575953692,0.0232603837215088,"Il1b/Il1a",2
+"GO:0070943","GO:0070943","neutrophil-mediated killing of symbiont cell","2/164","11/16202",0.00527499775269122,0.0314837575953692,0.0232603837215088,"Ncf1/Trem1",2
+"GO:1901163","GO:1901163","regulation of trophoblast cell migration","2/164","11/16202",0.00527499775269122,0.0314837575953692,0.0232603837215088,"Arhgdib/Mmp12",2
+"GO:0030193","GO:0030193","regulation of blood coagulation","4/164","70/16202",0.00552535437365474,0.0329088716468619,0.0243132662938708,"Apoe/Plek/F7/Fcer1g",4
+"GO:0051090","GO:0051090","regulation of DNA-binding transcription factor activity","10/164","383/16202",0.00568498670492727,0.0336831283057652,0.0248852916288541,"Itgb2/Tgfb1/Hck/Hmox1/Hcls1/Adam8/Fcgr2b/Il1b/Cd84/Arrb2",10
+"GO:0006953","GO:0006953","acute-phase response","3/164","36/16202",0.00569091924912612,0.0336831283057652,0.0248852916288541,"Il1b/Il1a/Hp",3
+"GO:0032733","GO:0032733","positive regulation of interleukin-10 production","3/164","36/16202",0.00569091924912612,0.0336831283057652,0.0248852916288541,"Trem2/Fcer1g/Lilra5",3
+"GO:1900046","GO:1900046","regulation of hemostasis","4/164","71/16202",0.0058098797500621,0.0343157346568117,0.0253526648903027,"Apoe/Plek/F7/Fcer1g",4
+"GO:0030168","GO:0030168","platelet activation","4/164","72/16202",0.00610401106266876,0.0359782062843194,0.0265809086240697,"Apoe/Plek/Fermt3/Fcer1g",4
+"GO:0043122","GO:0043122","regulation of I-kappaB kinase/NF-kappaB signaling","6/164","162/16202",0.0061408612703426,0.0360458406385192,0.0266308772793892,"S100a4/Clec4n/Il1b/Il1a/Sirpa/Il1f9",6
+"GO:0043271","GO:0043271","negative regulation of ion transport","6/164","162/16202",0.0061408612703426,0.0360458406385192,0.0266308772793892,"Tgfb1/Cyp4f18/Mmp9/Il1b/Cd300a/Nedd4l",6
+"GO:0035821","GO:0035821","modulation of process of other organism","5/164","115/16202",0.00627819595973812,0.0363099455102017,0.0268259994988207,"Tgfb1/Apoe/Mmp9/Csf1r/Mpeg1",5
+"GO:0001781","GO:0001781","neutrophil apoptotic process","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Cxcr2/Fcgr2b",2
+"GO:0033632","GO:0033632","regulation of cell-cell adhesion mediated by integrin","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Cxcl13/Fermt3",2
+"GO:0060033","GO:0060033","anatomical structure regression","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Spi1/Ninj1",2
+"GO:0061450","GO:0061450","trophoblast cell migration","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Arhgdib/Mmp12",2
+"GO:0072540","GO:0072540","T-helper 17 cell lineage commitment","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Tgfb1/Batf",2
+"GO:1900272","GO:1900272","negative regulation of long-term synaptic potentiation","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Apoe/Tyrobp",2
+"GO:1902950","GO:1902950","regulation of dendritic spine maintenance","2/164","12/16202",0.00628810038402649,0.0363099455102017,0.0268259994988207,"Apoe/Fcgr2b",2
+"GO:0032874","GO:0032874","positive regulation of stress-activated MAPK cascade","6/164","164/16202",0.00651000102872413,0.0375150363541689,0.0277163276423101,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Il1f9",6
+"GO:0033674","GO:0033674","positive regulation of kinase activity","11/164","454/16202",0.00656601271517936,0.0377612188741388,0.0278982087237751,"Tgfb1/Ncf1/Csf1r/Adam8/Slc11a1/Il1b/Fgr/Cd300a/Fpr2/Arrb2/Lilra5",11
+"GO:0002474","GO:0002474","antigen processing and presentation of peptide antigen via MHC class I","3/164","38/16202",0.00662558087230392,0.0378737932760874,0.0279813793484571,"Clec4a2/Fcer1g/Fcgr3",3
+"GO:0043551","GO:0043551","regulation of phosphatidylinositol 3-kinase activity","3/164","38/16202",0.00662558087230392,0.0378737932760874,0.0279813793484571,"Tgfb1/Fgr/Fpr2",3
+"GO:2000403","GO:2000403","positive regulation of lymphocyte migration","3/164","38/16202",0.00662558087230392,0.0378737932760874,0.0279813793484571,"Madcam1/Cxcl13/Adam8",3
+"GO:0002262","GO:0002262","myeloid cell homeostasis","6/164","165/16202",0.00670050272749905,0.0381485536048593,0.0281843738817279,"Spi1/Hmox1/Hcls1/Cxcr2/Fcgr2b/Fcer1g",6
+"GO:0070304","GO:0070304","positive regulation of stress-activated protein kinase signaling cascade","6/164","165/16202",0.00670050272749905,0.0381485536048593,0.0281843738817279,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Il1f9",6
+"GO:0050818","GO:0050818","regulation of coagulation","4/164","74/16202",0.00672164098688142,0.0381711970689819,0.028201103005076,"Apoe/Plek/F7/Fcer1g",4
+"GO:0032609","GO:0032609","interferon-gamma production","5/164","117/16202",0.00674478737368141,0.0381711970689819,0.028201103005076,"Vsir/Slc11a1/Il1b/Sirpa/Cd47",5
+"GO:1901216","GO:1901216","positive regulation of neuron death","5/164","117/16202",0.00674478737368141,0.0381711970689819,0.028201103005076,"Trpm2/Fcgr2b/Il1b/Tyrobp/C1qa",5
+"GO:0031589","GO:0031589","cell-substrate adhesion","9/164","332/16202",0.00676355779194293,0.0382013274093636,0.028223363476267,"Itgb2/Myo1g/Fermt3/Adam8/Rac2/Sirpa/Ninj1/Prex1/Mmp12",9
+"GO:0010959","GO:0010959","regulation of metal ion transport","10/164","394/16202",0.006891452395469,0.0388464608244592,0.0286999918056917,"Tgfb1/Cyba/Fxyd5/Trem2/Ccr1/Cd84/Arrb2/Lilra5/Ryr2/Nedd4l",10
+"GO:0046942","GO:0046942","carboxylic acid transport","8/164","275/16202",0.00698678976904707,0.0393058806611143,0.0290394138603019,"Apoe/Cyp4f18/Emb/Nfkbie/Slc11a1/Il1b/Il1a/Slc16a12",8
+"GO:1905521","GO:1905521","regulation of macrophage migration","3/164","39/16202",0.00712508451154622,0.0400046741053415,0.0295556865321888,"Rarres2/Trem2/C5ar1",3
+"GO:0043524","GO:0043524","negative regulation of neuron apoptotic process","6/164","168/16202",0.00729630259484345,0.0404103204985307,0.0298553804531652,"Apoe/Hmox1/Adam8/C5ar1/Cebpb/Arrb2",6
+"GO:0038034","GO:0038034","signal transduction in absence of ligand","4/164","76/16202",0.00737932095105752,0.0404103204985307,0.0298553804531652,"Il1b/Il1a/Bcl2a1b/Bcl2a1a",4
+"GO:0051702","GO:0051702","interaction with symbiont","4/164","76/16202",0.00737932095105752,0.0404103204985307,0.0298553804531652,"Apoe/Ncf1/Csf1r/Trem1",4
+"GO:0097192","GO:0097192","extrinsic apoptotic signaling pathway in absence of ligand","4/164","76/16202",0.00737932095105752,0.0404103204985307,0.0298553804531652,"Il1b/Il1a/Bcl2a1b/Bcl2a1a",4
+"GO:0001660","GO:0001660","fever generation","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Il1b/Il1a",2
+"GO:0007183","GO:0007183","SMAD protein complex assembly","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Tgfb1/Pmepa1",2
+"GO:0019886","GO:0019886","antigen processing and presentation of exogenous peptide antigen via MHC class II","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Fcgr2b/Fcer1g",2
+"GO:0032306","GO:0032306","regulation of prostaglandin secretion","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Il1b/Il1a",2
+"GO:0032604","GO:0032604","granulocyte macrophage colony-stimulating factor production","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Il1b/Cd84",2
+"GO:0032645","GO:0032645","regulation of granulocyte macrophage colony-stimulating factor production","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Il1b/Cd84",2
+"GO:0045086","GO:0045086","positive regulation of interleukin-2 biosynthetic process","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Il1b/Il1a",2
+"GO:0070942","GO:0070942","neutrophil mediated cytotoxicity","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Ncf1/Trem1",2
+"GO:0090594","GO:0090594","inflammatory response to wounding","2/164","13/16202",0.00738224439941479,0.0404103204985307,0.0298553804531652,"Hmox1/Il1a",2
+"GO:0015849","GO:0015849","organic acid transport","8/164","278/16202",0.00743870109785434,0.0405630514760157,0.0299682189900425,"Apoe/Cyp4f18/Emb/Nfkbie/Slc11a1/Il1b/Il1a/Slc16a12",8
+"GO:0051402","GO:0051402","neuron apoptotic process","8/164","278/16202",0.00743870109785434,0.0405630514760157,0.0299682189900425,"Apoe/Hmox1/Adam8/Il1b/Tyrobp/C5ar1/Cebpb/Arrb2",8
+"GO:0002824","GO:0002824","positive regulation of adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains","5/164","120/16202",0.00748944324734613,0.0406329255842649,0.0300198423887157,"Tgfb1/Slc11a1/Il1b/Fcer1g/Fcgr3",5
+"GO:0042542","GO:0042542","response to hydrogen peroxide","5/164","120/16202",0.00748944324734613,0.0406329255842649,0.0300198423887157,"Hmox1/Trpm2/Hk3/Hp/Sirpa",5
+"GO:2001234","GO:2001234","negative regulation of apoptotic signaling pathway","7/164","222/16202",0.00749442203666132,0.0406329255842649,0.0300198423887157,"Hmox1/Mmp9/Il1b/Plaur/Arrb2/Bcl2a1b/Bcl2a1a",7
+"GO:0043254","GO:0043254","regulation of protein-containing complex assembly","10/164","400/16202",0.0076285394199013,0.0411425432279173,0.030396350875884,"Tgfb1/Apoe/Hck/Plek/Mefv/Hcls1/Cxcl13/Pmepa1/Prex1/Mmp3",10
+"GO:0035307","GO:0035307","positive regulation of protein dephosphorylation","3/164","40/16202",0.0076463438311652,0.0411425432279173,0.030396350875884,"Tgfb1/Cd300a/Pirb",3
+"GO:0038083","GO:0038083","peptidyl-tyrosine autophosphorylation","3/164","40/16202",0.0076463438311652,0.0411425432279173,0.030396350875884,"Hck/Sla/Fgr",3
+"GO:2000008","GO:2000008","regulation of protein localization to cell surface","3/164","40/16202",0.0076463438311652,0.0411425432279173,0.030396350875884,"Tyrobp/Fcer1g/Nedd4l",3
+"GO:0031098","GO:0031098","stress-activated protein kinase signaling cascade","8/164","281/16202",0.00791234547591531,0.0424933336428646,0.0313943227121184,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9/Mapk11",8
+"GO:0032872","GO:0032872","regulation of stress-activated MAPK cascade","7/164","225/16202",0.00804022717741896,0.0430986517189571,0.0318415352368886,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9",7
+"GO:0006509","GO:0006509","membrane protein ectodomain proteolysis","3/164","41/16202",0.00818957196038471,0.0438165234264651,0.0323719030409498,"Apoe/Adam8/Il1b",3
+"GO:0010001","GO:0010001","glial cell differentiation","7/164","226/16202",0.00822852421757606,0.0439421753799503,0.032464735436974,"Tgfb1/Trem2/Il1b/Itgam/C1qa/C5ar1/Fpr2",7
+"GO:0016042","GO:0016042","lipid catabolic process","8/164","284/16202",0.0084083548708691,0.0447128566610889,0.0330341192620135,"Gm2a/Apoe/Cyp4f18/Rarres2/Aoah/Pla2g7/Il1b/Pld4",8
+"GO:0070302","GO:0070302","regulation of stress-activated protein kinase signaling cascade","7/164","227/16202",0.00842005572463308,0.0447128566610889,0.0330341192620135,"Mmp8/Ncf1/Fcgr2b/Il1b/Il1a/Sirpa/Il1f9",7
+"GO:1901215","GO:1901215","negative regulation of neuron death","7/164","227/16202",0.00842005572463308,0.0447128566610889,0.0330341192620135,"Apoe/Hmox1/Adam8/Gpnmb/C5ar1/Cebpb/Arrb2",7
+"GO:0002281","GO:0002281","macrophage activation involved in immune response","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Trem2/Tyrobp",2
+"GO:0006968","GO:0006968","cellular defense response","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Ncf1/Cxcr2",2
+"GO:0030213","GO:0030213","hyaluronan biosynthetic process","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Tgfb1/Il1b",2
+"GO:0045651","GO:0045651","positive regulation of macrophage differentiation","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Tgfb1/Hcls1",2
+"GO:0046348","GO:0046348","amino sugar catabolic process","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Renbp/Chil3",2
+"GO:0051284","GO:0051284","positive regulation of sequestering of calcium ion","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Tgfb1/Ryr2",2
+"GO:1900221","GO:1900221","regulation of amyloid-beta clearance","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Apoe/Trem2",2
+"GO:1902931","GO:1902931","negative regulation of alcohol biosynthetic process","2/164","14/16202",0.00855570580196264,0.0447509858527736,0.0330622893311957,"Apoe/Plek",2
+"GO:0051101","GO:0051101","regulation of DNA binding","5/164","124/16202",0.00856900257089364,0.0447509858527736,0.0330622893311957,"Tgfb1/Hmox1/Mmp8/Mmp9/Plaur",5
+"GO:0002714","GO:0002714","positive regulation of B cell mediated immunity","3/164","42/16202",0.00875496863831304,0.045471418466997,0.0335945491480731,"Tgfb1/Fcer1g/Fcgr3",3
+"GO:0002891","GO:0002891","positive regulation of immunoglobulin mediated immune response","3/164","42/16202",0.00875496863831304,0.045471418466997,0.0335945491480731,"Tgfb1/Fcer1g/Fcgr3",3
+"GO:0061098","GO:0061098","positive regulation of protein tyrosine kinase activity","3/164","42/16202",0.00875496863831304,0.045471418466997,0.0335945491480731,"Ncf1/Csf1r/Lilra5",3
+"GO:0051092","GO:0051092","positive regulation of NF-kappaB transcription factor activity","5/164","126/16202",0.00914724182657457,0.0474221058928802,0.0350357283945249,"Itgb2/Tgfb1/Adam8/Il1b/Cd84",5
+"GO:0051817","GO:0051817","modulation of process of other organism involved in symbiotic interaction","4/164","81/16202",0.00920547667328923,0.0475504713251176,0.035130565524476,"Tgfb1/Apoe/Mmp9/Csf1r",4
+"GO:1904894","GO:1904894","positive regulation of receptor signaling pathway via STAT","4/164","81/16202",0.00920547667328923,0.0475504713251176,0.035130565524476,"Hcls1/Csf1r/Crlf2/Cd300a",4
+"GO:0002821","GO:0002821","positive regulation of adaptive immune response","5/164","127/16202",0.00944622578480946,0.0487054944730375,0.0359839033621359,"Tgfb1/Slc11a1/Il1b/Fcer1g/Fcgr3",5
+"GO:0051341","GO:0051341","regulation of oxidoreductase activity","4/164","82/16202",0.0096028797476991,0.0493341435139478,0.0364483529397773,"Apoe/Cyba/Il1b/Hp",4
+"GO:0062207","GO:0062207","regulation of pattern recognition receptor signaling pathway","4/164","82/16202",0.0096028797476991,0.0493341435139478,0.0364483529397773,"Cyba/Cd300a/Cd300lf/Arrb2",4
+"GO:0010919","GO:0010919","regulation of inositol phosphate biosynthetic process","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Plek/Ptafr",2
+"GO:0033623","GO:0033623","regulation of integrin activation","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Plek/Cxcl13",2
+"GO:0045342","GO:0045342","MHC class II biosynthetic process","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Spi1/Slc11a1",2
+"GO:0051873","GO:0051873","killing by host of symbiont cells","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Ncf1/Trem1",2
+"GO:0071404","GO:0071404","cellular response to low-density lipoprotein particle stimulus","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Itgb2/Fcer1g",2
+"GO:1903978","GO:1903978","regulation of microglial cell activation","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Mmp8/Trem2",2
+"GO:2001267","GO:2001267","regulation of cysteine-type endopeptidase activity involved in apoptotic signaling pathway","2/164","15/16202",0.00980678682171728,0.0497519310008907,0.0367570167716246,"Mmp9/Plaur",2

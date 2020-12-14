@@ -1,0 +1,443 @@
+---
+title: "SI CD45+ signaling pathway exploration"
+author: "Bing Shui"
+date: "10/30/2020"
+output: 
+  html_document:
+    toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prepare libraries
+```{r}
+suppressMessages(
+  c(library(scater),
+    library(Seurat),
+    library(tidyverse),
+    library(cowplot),
+    library(Matrix.utils),
+    library(edgeR),
+    library(dplyr),
+    library(magrittr),
+    library(Matrix),
+    library(purrr),
+    library(reshape2),
+    library(S4Vectors),
+    library(tibble),
+    library(SingleCellExperiment),
+    library(pheatmap),
+    library(apeglm),
+    library(png),
+    library(DESeq2),
+    library(RColorBrewer),
+    library(mixOmics),
+    library(knitr),
+    library(mosaic),
+    library(gplots),
+    library(clusterProfiler),
+    library(gridExtra),
+    library(GSVA),
+    library(RANN))
+)
+```
+
+## Extract gene counts from Seurat object
+
+```{r}
+# Bring in Seurat object
+seurat <- readRDS('Results/seurat_labelled.rds')
+
+# Extract raw counts and metadata to create SingleCellExperiment object
+counts <- seurat@assays$RNA@counts 
+
+metadata <- seurat@meta.data
+
+# Set up metadata as desired for aggregation and DE analysis
+metadata$cluster_id <- factor(seurat@active.ident)
+
+# Create single cell experiment object
+sce <- SingleCellExperiment(assays = list(counts = counts), 
+                           colData = metadata)
+
+pdf('Figure/cell_cluster.pdf',
+    width = 10,
+    height = 7)
+DimPlot(seurat,
+        reduction = "umap",
+        label = TRUE,
+        label.size = 4,
+        repel = TRUE)
+dev.off()
+
+pdf('Figure/cell_cluster_by_condition.pdf',
+    width = 12,
+    height = 7)
+DimPlot(seurat,
+        reduction = "umap",
+        label = TRUE,
+        label.size = 4,
+        repel = TRUE,
+        split.by = "condition") + NoLegend()
+dev.off()
+
+```
+
+## Check number of cells from each sample in each cluster
+```{r}
+# Checj the number of cells from each sample in each cluster
+options(width = 100)
+table(sce$cluster_id, sce$sample)
+
+cell_distribution <- as.data.frame.matrix(table(sce$cluster_id, sce$sample))
+total_num <- colSums(cell_distribution)
+
+df <- melt(as.matrix(cell_distribution), value.name = "cell_num")
+df$Var1 <- factor(df$Var1)
+colnames(df)[1:2] <- c("Cell_Type", "Sample")
+
+ggplot(df, aes(x =  Sample, y = cell_num, fill = Cell_Type)) + 
+  geom_bar(position = "fill", stat="identity") + ggtitle("Cell Number Distribution")
+
+pdf('Figure/cell_distribution.pdf',
+    width = 10,
+    height = 7)
+ggplot(df, aes(x =  Sample, y = cell_num, fill = Cell_Type)) + 
+  geom_bar(position = "fill", stat="identity") + ggtitle("Cell Number Distribution")
+dev.off()
+```
+
+I actually cannot run DESeq on this dataset because the gene expression counts are already normalized so therefore not integers. I cannot load them into DESeq2.
+
+## Examine mTOR pathway leading edge genes
+```{r fig.height=8, fig.width=6}
+features <- c("Raf1", "Grk2", "Akt1", "Cdk1", "Csnk2b", "Mknk1", "Myd88", "Nfkbib", "Arhgdia", "Rac1", "Ripk1", "Stat2", "Tnfrsf1a", "Vav2", "Ywhaz", "Pdk1", "Trib3", "Dapp1", "Map2k3", "Mapk8", "Tbk1", "Ikbke", "Gsk3a", "Actr3", "Ap2m1", "Ptpn6")
+
+DotPlot(seurat, features = features, cols = "RdBu") + RotatedAxis() + coord_flip()
+
+pdf('Figure/mTOR_leadingedge_Dotplot.pdf',
+    width = 6,
+    height = 8)
+DotPlot(seurat, features = features, cols = "RdBu") + RotatedAxis() + coord_flip()
+dev.off()
+```
+
+```{r fig.height=30, fig.width=15}
+VlnPlot(object = seurat, 
+        features = features,
+        pt.size = 0.1,
+        ncol = 4)
+```
+
+## GSVA analysis
+The GSAV analysis requires input of a expression matrix object and a list of gene sets.
+
+The genesets here are Broad MsigDB genesets converted to mouse Entrez ID. These genesets are downloaded from [here](http://bioinf.wehi.edu.au/software/MSigDB/).
+
+GSVA is only done on the Hallmark geneset.
+
+```{r}
+DefaultAssay(seurat) <- "RNA"
+# Prepare the normalized count matrix
+# This count matrix is log transformed so we will need to use "Gaussian" distribution for GSVA
+counts <- as.matrix(seurat@assays$RNA@data)
+
+# convert gene identifiers to Entrez ID
+suppressMessages(suppressWarnings(id_list <- read_csv("Data/mouse_symbol_Ensembl.csv")))
+
+counts <- rownames_to_column(as.data.frame(counts), var = "gene_name")
+counts <- inner_join(counts, id_list[,c(2:3)], by = c("gene_name" = "Marker Symbol"))
+counts$gene_name <- NULL
+non_duplicate_id <- which(duplicated(counts$"EntrezGene ID") == FALSE)
+counts <- counts[non_duplicate_id,]
+rownames(counts) <- counts$"EntrezGene ID"
+counts$"EntrezGene ID" <- NULL
+counts <- as.matrix(counts)
+
+saveRDS(counts, "Data/counts.rds") 
+
+# Prepare the genesets
+#load("Data/GeneSet/mouse_H_v5p2.rdata")
+#load("Data/GeneSet/mouse_c2_v5p2.rdata")
+#load("Data/GeneSet/mouse_c6_v5p2.rdata")
+
+# filter the C2 genesets to only canonical pathways from BIOCARTA, KEGG, PID, and REACTOME
+#Mm.c2.canonical <- Mm.c2[c(grep("^KEGG", names(Mm.c2)),
+#+ grep("^REACTOME", names(Mm.c2)),
+#+ grep("^BIOCARTA", names(Mm.c2)),
+#+ grep("^PID", names(Mm.c2)))]
+
+#save(Mm.c2.canonical, file = "Data/GeneSet/mouse_c2_canonical.rdata")
+
+#load("Data/GeneSet/mouse_c2_canonical.rdata")
+
+# concocanate a master list genesets that I want to test for
+#Mm.gsva.master <- c(Mm.H, Mm.c2.canonical, Mm.c6)
+#save(Mm.gsva.master, file = "Data/GeneSet/mouse_gsva_master.rdata")
+
+load("Data/GeneSet/mouse_H_v5p2.rdata")
+```
+
+Now let's run GSVA. A Gaussian kernal was used for this since the input counts were natural log normalized from Seurat.
+
+The ECDF estimatation based on the Gaussuan kernal takes forever to run on a local machine. So the actual GSVA is run on the O2 cluster.
+
+Here is the R code used on O2.
+```{r eval = FALSE}
+# This part is not run in the markdown
+library(GSVA)
+load("mouse_H_v5p2.rdata")
+counts <- readRDS("counts.rds")
+
+gsva_out <- gsva(counts, Mm.H, min.sz=5, max.sz=500,
+                 kcdf="Gaussian", mx.diff=TRUE, verbose=TRUE, parallel.sz=5)
+
+saveRDS(gsva_out, "gsva_out.rds")
+```
+
+Here is the script for submitting the O2 job. I used 5 cores for parallel computing.
+```{bash eval = FALSE}
+#!/bin/bash
+#SBATCH -p priority
+#SBATCH -t 0-12:00
+#SBATCH --mem 100G
+#SBATCH -c 5
+#SBATCH -e out/ca.%j.err
+#SBATCH -o out/ca.%j.out
+
+module load gcc/6.2.0 R/3.6.1
+Rscript GSVA.R
+```
+
+Here we have the output from O2 cluster and load it here and merge it into metadata for later analysis.
+```{r}
+gsva_res <- t(readRDS("Results/gsva_out.rds"))
+
+seurat@meta.data <- cbind(seurat@meta.data, gsva_res)
+
+write_rds(seurat,
+          path = "Results/seurat_gsva.rds") 
+```
+
+Just some exploratory analysis using some Hallmark gene sets.
+
+### Inflammation related pathways
+```{r fig.height=15, fig.width=20}
+FeaturePlot(object = seurat, 
+            features = c("HALLMARK_ALLOGRAFT_REJECTION", "HALLMARK_INTERFERON_GAMMA_RESPONSE", "HALLMARK_IL6_JAK_STAT3_SIGNALING", "HALLMARK_INTERFERON_ALPHA_RESPONSE", "HALLMARK_INFLAMMATORY_RESPONSE", "HALLMARK_TNFA_SIGNALING_VIA_NFKB", "HALLMARK_COMPLEMENT", "HALLMARK_IL2_STAT5_SIGNALING"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE,
+            ncol = 3)
+
+pdf('Figure/GSVA_inflammation.pdf',
+    width = 20,
+    height = 15)
+FeaturePlot(object = seurat, 
+            features = c("HALLMARK_ALLOGRAFT_REJECTION", "HALLMARK_INTERFERON_GAMMA_RESPONSE", "HALLMARK_IL6_JAK_STAT3_SIGNALING", "HALLMARK_INTERFERON_ALPHA_RESPONSE", "HALLMARK_INFLAMMATORY_RESPONSE", "HALLMARK_TNFA_SIGNALING_VIA_NFKB", "HALLMARK_COMPLEMENT", "HALLMARK_IL2_STAT5_SIGNALING"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE,
+            ncol = 3)
+dev.off()
+
+```
+
+### TCT-specific pathways
+```{r fig.height=10, fig.width=20}
+FeaturePlot(object = seurat, 
+            features = c("HALLMARK_MTORC1_SIGNALING", "HALLMARK_PI3K_AKT_MTOR_SIGNALING", "HALLMARK_MYC_TARGETS_V1", "HALLMARK_MYC_TARGETS_V2", "HALLMARK_KRAS_SIGNALING_DN"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE,
+            ncol = 3)
+
+pdf('Figure/GSVA_TCT-specific.pdf',
+    width = 20,
+    height = 10)
+FeaturePlot(object = seurat, 
+            features = c("HALLMARK_MTORC1_SIGNALING", "HALLMARK_PI3K_AKT_MTOR_SIGNALING", "HALLMARK_MYC_TARGETS_V1", "HALLMARK_MYC_TARGETS_V2", "HALLMARK_KRAS_SIGNALING_DN"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE,
+            ncol = 3)
+dev.off()
+```
+
+```{r}
+# creat a new annotation column for inflammatory monocytes and all other cells
+seurat@meta.data$inf.monocyte <- "other cells"
+seurat@meta.data$inf.monocyte[grep("Inflammatory Monocytes", seurat@meta.data$orig.annotation)] <- "Inflammatory Monocytes"
+seurat@meta.data$inf.monocyte[grep("Neutrophil", seurat@meta.data$orig.annotation)] <- "Neutrophil"
+
+Idents(object = seurat) <- "inf.monocyte"
+
+# violin plot
+VlnPlot(object = seurat, 
+        features = c("HALLMARK_MTORC1_SIGNALING"),
+        pt.size = 0) + geom_boxplot(width = 0.1)
+
+pdf('Figure/GSVA_mTORC1_violin.pdf',
+    width = 10,
+    height = 7)
+VlnPlot(object = seurat, 
+        features = c("HALLMARK_MTORC1_SIGNALING"),
+        pt.size = 0) + geom_boxplot(width = 0.1)
+dev.off()
+
+# Stats
+NES <-  seurat@meta.data$HALLMARK_MTORC1_SIGNALING
+NES_inf_mono <- NES[grep("Inflammatory Monocytes", seurat@meta.data$inf.monocyte)]
+NES_neutrophil <- NES[grep("Neutrophil", seurat@meta.data$inf.monocyte)]
+NES_other <- NES[grep("other cells", seurat@meta.data$inf.monocyte)]
+## check if NES is normally distributed
+qqnorm(NES); qqline(NES)
+## data is relatively normal, but I am using a non-parametric method here just to be safe
+stats::wilcox.test(NES_inf_mono, NES_other, alternative = c("greater"), paired = FALSE)
+stats::wilcox.test(NES_neutrophil, NES_other, alternative = c("greater"), paired = FALSE)
+
+# violin plot
+VlnPlot(object = seurat, 
+        features = c("HALLMARK_PI3K_AKT_MTOR_SIGNALING"),
+        pt.size = 0) + geom_boxplot(width = 0.1)
+
+pdf('Figure/GSVA_PI3K_mTOR_violin.pdf',
+    width = 10,
+    height = 7)
+VlnPlot(object = seurat, 
+        features = c("HALLMARK_PI3K_AKT_MTOR_SIGNALING"),
+        pt.size = 0) + geom_boxplot(width = 0.1)
+dev.off()
+
+# Stats
+NES <-  seurat@meta.data$HALLMARK_PI3K_AKT_MTOR_SIGNALING
+NES_inf_mono <- NES[grep("Inflammatory Monocytes", seurat@meta.data$inf.monocyte)]
+NES_neutrophil <- NES[grep("Neutrophil", seurat@meta.data$inf.monocyte)]
+NES_other <- NES[grep("other cells", seurat@meta.data$inf.monocyte)]
+## check if NES is normally distributed
+qqnorm(NES); qqline(NES)
+## data is relatively normal, but I am using a non-parametric method here just to be safe
+stats::wilcox.test(NES_inf_mono, NES_other, alternative = c("greater"), paired = FALSE)
+stats::wilcox.test(NES_neutrophil, NES_other, alternative = c("greater"), paired = FALSE)
+```
+
+### Opposingly regulated pathways in MK2i treatment
+```{r fig.height=12, fig.width=20}
+FeaturePlot(object = seurat, 
+            features = c("HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION", "HALLMARK_APICAL_JUNCTION", "HALLMARK_PROTEIN_SECRETION", "HALLMARK_ANDROGEN_RESPONSE", "HALLMARK_P53_PATHWAY"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE,
+            ncol = 3)
+```
+
+
+## Scoring cells using signature gene sets
+I will be using the method described in the Biton et al., 2018 paper.
+
+"To score a speciﬁc set of n genes in a given cell, a ‘background’ gene set was deﬁned to control for differences in sequencing coverage and library complexity between cells (Kowalczyk et al., 2015). The background gene set was selected to be similar to the genes of interest in terms of expression level. Speciﬁcally, the 10n nearest gene neighbors in the 2-D space deﬁned by mean expression and detection frequency across all cells were selected. The signature score for that cell was then deﬁned as the mean expression of the n signature genes in that cell, minus the mean expression of the 10n background genes in that cell."
+
+First I need to acquire gene level metadata to generate the 2-D space for each gene. The 2 dimensions needed here are mean expression and detection frequency.
+```{r}
+counts <- seurat@assays$RNA@counts 
+counts_df <- as.data.frame(counts)
+gene_metadata <- as.data.frame(cbind(rownames(counts_df), rowMeans(counts_df), rowSums(!counts_df == 0)/dim(counts_df)[2]))
+gene_metadata$V1 <- NULL
+colnames(gene_metadata) <- c("mean_expression", "detection_freq")
+
+# index the gene list of interest to get their coord on the 2-D space
+gene_index <- match(features, rownames(gene_metadata))
+
+# remove NA
+gene_index <- gene_index[!is.na(gene_index)]
+
+feature_df <- gene_metadata[gene_index,]
+other_df <- gene_metadata[-gene_index,]
+
+# find 10n nearest neighbor of these features in the background list
+bg.gene <- nn2(other_df, feature_df, k = 10)
+
+bg.gene.index <- unique(as.vector(bg.gene$nn.idx))
+
+bg.gene.df <- other_df[bg.gene.index,]
+
+# now we have the gene signature of interest and the background gene list
+# signature score for each cell is the mean expression of the signature genes minus the mean expression of the background genes
+bg.index <- match(rownames(bg.gene.df), rownames(counts_df))
+
+sig.df <- counts_df[gene_index, ]
+bg.df <- counts_df[bg.index,]
+
+sig.score <- colMeans(sig.df) - colMeans(bg.df)
+
+seurat@meta.data$"mTOR_leading_edge_sig_score" <- sig.score
+
+write_rds(seurat,
+          path = "Results/seurat_gsva.rds") 
+
+FeaturePlot(object = seurat, 
+            features = c("mTOR_leading_edge_sig_score"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE)
+
+pdf('Figure/mTOR_leading_edge_signature.pdf',
+    width = 7,
+    height = 5)
+FeaturePlot(object = seurat, 
+            features = c("mTOR_leading_edge_sig_score"),
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = FALSE,
+            repel = TRUE)
+dev.off()
+
+pdf('Figure/mTOR_leading_edge_signature_Voilin.pdf',
+    width = 10,
+    height = 7)
+# violin plot
+VlnPlot(object = seurat, 
+        features = c("mTOR_leading_edge_sig_score"),
+        pt.size = 0) + geom_boxplot(width = 0.1)
+dev.off()
+
+# Stats
+sig.score_inf_mono <- sig.score[grep("Inflammatory Monocytes", seurat@meta.data$inf.monocyte)]
+sig.score_neutrophil <- sig.score[grep("Neutrophil", seurat@meta.data$inf.monocyte)]
+sig.score_other <- sig.score[grep("other cells", seurat@meta.data$inf.monocyte)]
+
+## check if sig.score is normally distributed
+qqnorm(sig.score); qqline(sig.score)
+## data is relatively normal, but I am using a non-parametric method here just to be safe
+stats::wilcox.test(sig.score_inf_mono, sig.score_other, alternative = c("greater"), paired = FALSE)
+stats::wilcox.test(sig.score_neutrophil, sig.score_other, alternative = c("greater"), paired = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

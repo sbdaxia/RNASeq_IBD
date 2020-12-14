@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1596743055166.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1582123997",
+    "id" : "2A862323",
+    "lastKnownWriteTime" : 1596746219,
+    "last_content_update" : 1596746219707,
+    "path" : "~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/mTOR_NFkB exploration.Rmd",
+    "project_path" : "mTOR_NFkB exploration.Rmd",
+    "properties" : {
+        "cursorPosition" : "166,51",
+        "last_setup_crc32" : "DE4D8197bb338d19",
+        "scrollLine" : "153",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

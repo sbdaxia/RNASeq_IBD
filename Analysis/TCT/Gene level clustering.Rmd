@@ -1,0 +1,183 @@
+---
+title: "Gene level clustering"
+author: "Bing Shui"
+date: "5/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Library loading and set up
+```{r}
+suppressMessages(
+  c(library(ggplot2),
+    library(mixOmics),
+    library(gplots),
+    library(RColorBrewer),
+    library(readr),
+    library(dplyr),
+    library(tidyverse),
+    library(knitr),
+    library(rafalib),
+    library(reshape))
+)
+```
+
+# Select genes for heatmap
+We will select the top 5000 genes with the highest variances.
+```{r}
+VST_TCT <- read_csv("VST_TCT.csv")
+
+dat <- as.data.frame(VST_TCT[, c(20:24, 8:13, 2:7)])
+rownames(dat) <- VST_TCT$X1
+```
+```{r fig.align="center", fig.width=10}
+# calculate row variance
+row_var <- apply(dat, 1, var)
+filter_dat <- dat[order(-row_var)[1:5000],]
+
+# Plot the heatmap
+suppressMessages(library(mosaic))
+
+for (i in 1:dim(filter_dat)[1]) {
+  filter_dat[i,1:17] <- zscore(as.numeric(filter_dat[i,1:17]))
+}
+
+my_palette <- colorRampPalette(c("blue", "white", "red"))(128)
+heatmap_matrix <- as.matrix(filter_dat[,1:17])
+
+png('Top 5000 variance.png',
+    width = 1000,
+    height = 1200,
+    res = 200,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "Top 5000 variance",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('Top 5000 variance.pdf',
+    width = 8,
+    height = 10)
+heatmap.2(heatmap_matrix,
+          main = "Top 5000 variance",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('Top 5000 variance.png')
+
+```
+
+# Examine the clustering of these genes
+```{r}
+row_clust <- hclust(dist(filter_dat, method = 'euclidean'), method = 'ward.D2')
+plot(row_clust, labels = FALSE)
+abline(h = 45, col = "red")
+```
+
+```{r}
+# seperate clusters
+h = 45
+clusters <- cutree(row_clust, h = h)
+
+# number of distinct cluster we get 
+length(unique(clusters))
+
+# generate of list of genes for the 10 clusters
+genecluster <- function(n) {
+  index <- which(clusters == n)
+  row_clust$labels[index]
+}
+
+cluster_gene <- lapply(1:10, genecluster)
+names(cluster_gene) <- paste("cluster", c(1:10))
+
+```
+
+Now we need to make a function that would plot a boxplot for all the genes in each cluster.
+```{r}
+cluster_boxplot <- function(a) {
+  # plot the boxplots
+  gene_list <- cluster_gene[[a]]
+  cluster_data <- filter_dat[gene_list,]
+  suppressMessages(df <- melt(cluster_data, variable_name = "Samples"))
+  df <- data.frame(df, Condition = substr(df$Samples,1,4))
+  ggplot(df, aes(x=Samples, y=value, fill = Condition)) + geom_boxplot() + xlab("") + 
+  ylab("Z-scored gene expression") + scale_fill_manual(values = c("#619CFF", "#F564E3", "#E69F00")) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle(names(cluster_gene)[a])
+}
+
+lapply(1:10, cluster_boxplot)
+```
+
+```{r  fig.align="center", fig.width=10}
+cluster_heatmap <- function(a) {
+  gene_list <- cluster_gene[[a]]
+  # plot the heatmap
+  heatmap_matrix <- as.matrix(filter_dat[gene_list,])
+  png(paste(names(cluster_gene)[a], "heatmap.png"),
+      width = 800,
+      height = 1000,
+      res = 150,
+      pointsize = 8)
+  heatmap.2(heatmap_matrix,
+            main = paste(names(cluster_gene)[a], "heatmap"),
+            density.info = "none",
+            key = TRUE,
+            lhei = c(1,7),
+            col=my_palette,
+            cexCol = 1,
+            margins = c(8,2),
+            trace = "none",
+            dendrogram = "row",
+            labRow = FALSE,
+            keysize = 2,
+            ylab = "Genes",
+            Colv = "NA")
+  dev.off()
+}
+
+lapply(1:10, cluster_heatmap)
+
+include_graphics("cluster 1 heatmap.png")
+include_graphics("cluster 2 heatmap.png")
+include_graphics("cluster 3 heatmap.png")
+include_graphics("cluster 4 heatmap.png")
+include_graphics("cluster 5 heatmap.png")
+include_graphics("cluster 6 heatmap.png")
+include_graphics("cluster 7 heatmap.png")
+include_graphics("cluster 8 heatmap.png")
+include_graphics("cluster 9 heatmap.png")
+include_graphics("cluster 10 heatmap.png")
+
+```
+
+
+
+
+
+
+

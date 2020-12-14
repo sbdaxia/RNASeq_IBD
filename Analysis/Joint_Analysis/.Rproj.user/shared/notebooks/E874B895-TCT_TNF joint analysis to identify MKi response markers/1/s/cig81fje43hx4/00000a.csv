@@ -1,0 +1,4 @@
+"0","pdf('GO analysis/GO dotplot_CC_overlap.pdf',"
+"0","    width = 8,"
+"0","    height = 4)"
+"0","dotplot(ego_CC, showCategory=10)"

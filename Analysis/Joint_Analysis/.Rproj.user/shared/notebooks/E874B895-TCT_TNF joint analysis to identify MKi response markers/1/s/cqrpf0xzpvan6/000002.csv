@@ -1,0 +1,6 @@
+"0","mki_target <- c(tnf_i_MK2i_DGE, tnf_ni_MK2i_DGE, tct_i_MK2i_DGE, tct_ni_MK2i_DGE)"
+"0","tct_biomarker_raw <- intersect(mki_target, tct_inf_DGE)"
+"0","tct_biomarker <- setdiff(tct_biomarker_raw, tnf_inf_DGE)"
+"0","n23 <- intersect(mki_target, tnf_inf_DGE)"
+"0","n123 <- intersect(inf_overlap, mki_target)"
+"0","grid.newpage()"

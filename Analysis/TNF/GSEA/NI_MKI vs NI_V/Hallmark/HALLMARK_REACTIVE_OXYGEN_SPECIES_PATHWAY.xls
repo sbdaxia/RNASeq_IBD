@@ -1,0 +1,47 @@
+NAME	PROBE	DESCRIPTION<br>(from dataset)	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	FES	"FES proto-oncogene, tyrosine kinase [Source:HGNC Symbol;Acc:HGNC:3657]"	null	null	56	0.8205793499946594	0.13395031	Yes	
+row_1	CAT	catalase [Source:HGNC Symbol;Acc:HGNC:1516]	null	null	1375	0.30284133553504944	0.0953713	No	
+row_2	GCLM	glutamate-cysteine ligase modifier subunit [Source:HGNC Symbol;Acc:HGNC:4312]	null	null	1652	0.2719157934188843	0.122292854	No	
+row_3	ERCC2	"ERCC excision repair 2, TFIIH core complex helicase subunit [Source:HGNC Symbol;Acc:HGNC:3434]"	null	null	2745	0.18807390332221985	0.07978043	No	
+row_4	G6PD	glucose-6-phosphate dehydrogenase [Source:HGNC Symbol;Acc:HGNC:4057]	null	null	2803	0.18471825122833252	0.10692179	No	
+row_5	GSR	glutathione-disulfide reductase [Source:HGNC Symbol;Acc:HGNC:4623]	null	null	3467	0.1450471132993698	0.086291	No	
+row_6	PTPA	protein phosphatase 2 phosphatase activator [Source:HGNC Symbol;Acc:HGNC:9308]	null	null	3970	0.12267710268497467	0.07282764	No	
+row_7	CDKN2D	cyclin dependent kinase inhibitor 2D [Source:HGNC Symbol;Acc:HGNC:1790]	null	null	4322	0.10599754005670547	0.066808544	No	
+row_8	MBP	myelin basic protein [Source:HGNC Symbol;Acc:HGNC:6925]	null	null	4859	0.08301669359207153	0.0443808	No	
+row_9	PRDX1	peroxiredoxin 1 [Source:HGNC Symbol;Acc:HGNC:9352]	null	null	5244	0.06700342148542404	0.029577008	No	
+row_10	EGLN2	egl-9 family hypoxia inducible factor 2 [Source:HGNC Symbol;Acc:HGNC:14660]	null	null	5668	0.04931417852640152	0.009157885	No	
+row_11	GCLC	glutamate-cysteine ligase catalytic subunit [Source:HGNC Symbol;Acc:HGNC:4311]	null	null	5783	0.04473257064819336	0.008933022	No	
+row_12	GLRX	glutaredoxin [Source:HGNC Symbol;Acc:HGNC:4330]	null	null	5872	0.040947623550891876	0.009836691	No	
+row_13	TXNRD2	thioredoxin reductase 2 [Source:HGNC Symbol;Acc:HGNC:18155]	null	null	6427	0.019321924075484276	-0.024504568	No	
+row_14	TXNRD1	thioredoxin reductase 1 [Source:HGNC Symbol;Acc:HGNC:12437]	null	null	6481	0.017243750393390656	-0.025205543	No	
+row_15	PDLIM1	PDZ and LIM domain 1 [Source:HGNC Symbol;Acc:HGNC:2067]	null	null	6508	0.01637321151793003	-0.024220902	No	
+row_16	LSP1	lymphocyte specific protein 1 [Source:HGNC Symbol;Acc:HGNC:6707]	null	null	6753	0.0074980896897614	-0.039515804	No	
+row_17	NDUFS2	NADH:ubiquinone oxidoreductase core subunit S2 [Source:HGNC Symbol;Acc:HGNC:7708]	null	null	7307	-0.014388260431587696	-0.07461743	No	
+row_18	SOD1	superoxide dismutase 1 [Source:HGNC Symbol;Acc:HGNC:11179]	null	null	7370	-0.016580473631620407	-0.076040335	No	
+row_19	NQO1	NAD(P)H quinone dehydrogenase 1 [Source:HGNC Symbol;Acc:HGNC:2874]	null	null	7479	-0.02067660726606846	-0.07989638	No	
+row_20	SOD2	superoxide dismutase 2 [Source:HGNC Symbol;Acc:HGNC:11180]	null	null	7665	-0.02688165195286274	-0.08793468	No	
+row_21	PFKP	"phosphofructokinase, platelet [Source:HGNC Symbol;Acc:HGNC:8878]"	null	null	7681	-0.027660932391881943	-0.084308915	No	
+row_22	SCAF4	SR-related CTD associated factor 4 [Source:HGNC Symbol;Acc:HGNC:19304]	null	null	7825	-0.03379489481449127	-0.08833731	No	
+row_23	MSRA	methionine sulfoxide reductase A [Source:HGNC Symbol;Acc:HGNC:7377]	null	null	7835	-0.03448956459760666	-0.08315818	No	
+row_24	ATOX1	antioxidant 1 copper chaperone [Source:HGNC Symbol;Acc:HGNC:798]	null	null	7934	-0.039010584354400635	-0.0832581	No	
+row_25	SRXN1	sulfiredoxin 1 [Source:HGNC Symbol;Acc:HGNC:16132]	null	null	7958	-0.04042750969529152	-0.07803197	No	
+row_26	FTL	ferritin light chain [Source:HGNC Symbol;Acc:HGNC:3999]	null	null	7964	-0.040644001215696335	-0.071548335	No	
+row_27	IPCEF1	interaction protein for cytohesin exchange factors 1 [Source:HGNC Symbol;Acc:HGNC:21204]	null	null	7995	-0.04208286106586456	-0.06651922	No	
+row_28	PRDX6	peroxiredoxin 6 [Source:HGNC Symbol;Acc:HGNC:16753]	null	null	8133	-0.046914905309677124	-0.06793812	No	
+row_29	GLRX2	glutaredoxin 2 [Source:HGNC Symbol;Acc:HGNC:16065]	null	null	8385	-0.05652130767703056	-0.075478464	No	
+row_30	PRDX2	peroxiredoxin 2 [Source:HGNC Symbol;Acc:HGNC:9353]	null	null	8589	-0.06504440307617188	-0.078331605	No	
+row_31	MGST1	microsomal glutathione S-transferase 1 [Source:HGNC Symbol;Acc:HGNC:7061]	null	null	8612	-0.06586606055498123	-0.068767294	No	
+row_32	OXSR1	oxidative stress responsive kinase 1 [Source:HGNC Symbol;Acc:HGNC:8508]	null	null	8628	-0.06670098751783371	-0.058587935	No	
+row_33	PRDX4	peroxiredoxin 4 [Source:HGNC Symbol;Acc:HGNC:17169]	null	null	8788	-0.07331597059965134	-0.05706746	No	
+row_34	TXN	thioredoxin [Source:HGNC Symbol;Acc:HGNC:12435]	null	null	9116	-0.08764056861400604	-0.064539894	No	
+row_35	STK25	serine/threonine kinase 25 [Source:HGNC Symbol;Acc:HGNC:11404]	null	null	9284	-0.09568154066801071	-0.059807688	No	
+row_36	JUNB	"JunB proto-oncogene, AP-1 transcription factor subunit [Source:HGNC Symbol;Acc:HGNC:6205]"	null	null	10147	-0.1357341855764389	-0.09550251	No	
+row_37	GPX4	glutathione peroxidase 4 [Source:HGNC Symbol;Acc:HGNC:4556]	null	null	10240	-0.1398928463459015	-0.078260414	No	
+row_38	HHEX	hematopoietically expressed homeobox [Source:HGNC Symbol;Acc:HGNC:4901]	null	null	10733	-0.16801027953624725	-0.083435334	No	
+row_39	NDUFB4	NADH:ubiquinone oxidoreductase subunit B4 [Source:HGNC Symbol;Acc:HGNC:7699]	null	null	10849	-0.17479394376277924	-0.06189482	No	
+row_40	ABCC1	ATP binding cassette subfamily C member 1 [Source:HGNC Symbol;Acc:HGNC:51]	null	null	11293	-0.20118960738182068	-0.05817568	No	
+row_41	HMOX2	heme oxygenase 2 [Source:HGNC Symbol;Acc:HGNC:5014]	null	null	11468	-0.21285000443458557	-0.034249466	No	
+row_42	NDUFA6	NADH:ubiquinone oxidoreductase subunit A6 [Source:HGNC Symbol;Acc:HGNC:7690]	null	null	11842	-0.23962266743183136	-0.019329641	No	
+row_43	SELENOS	selenoprotein S [Source:HGNC Symbol;Acc:HGNC:30396]	null	null	12396	-0.28849247097969055	-0.0084177805	No	
+row_44	GPX3	glutathione peroxidase 3 [Source:HGNC Symbol;Acc:HGNC:4555]	null	null	14029	-0.5005611181259155	-0.035108432	No	
+row_45	PRNP	prion protein [Source:HGNC Symbol;Acc:HGNC:9449]	null	null	14087	-0.5142689943313599	0.047354147	No	

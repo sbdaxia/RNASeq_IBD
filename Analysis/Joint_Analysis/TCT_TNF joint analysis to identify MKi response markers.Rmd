@@ -1,0 +1,1410 @@
+---
+title: "TCT/TNF joint analysis to identify MKi response markers"
+author: "Bing Shui"
+date: "7/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Index 
+* [Gene level analysis](#gene)
+* [Transcript level analysis](#transcript)
+
+# Library loading and set up
+```{r}
+suppressMessages(
+  c(library(DESeq2),
+    library(tximport),
+    library(gridExtra),
+    library(ensembldb),
+    library(EnsDb.Mmusculus.v79),
+    library(grid),
+    library(ggplot2),
+    library(lattice),
+    library(reshape),
+    library(mixOmics),
+    library(gplots),
+    library(RColorBrewer),
+    library(readr),
+    library(dplyr),
+    library(VennDiagram),
+    library(org.Mm.eg.db), 
+    library(pathview),
+    library(AnnotationDbi),
+    library(clusterProfiler),
+    library(fgsea))
+)
+```
+
+# Gene level analysis {#gene}
+## Identify inflammation related DGE
+First I need to identify DEG in inflammation in TCT and TNF models.
+```{r}
+# DGE in inflammation using I_V and NI_V comparison
+tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_V vs NI_V.csv")
+tct_inf_DGE <- unique(tct_inf$X1)
+tct_inf_DGE_up <- tct_inf$X1[tct_inf$log2FoldChange > 0]
+tct_inf_DGE_down <- tct_inf$X1[tct_inf$log2FoldChange < 0]
+
+tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_V vs NI_V.csv")
+tnf_inf_DGE <- unique(tnf_inf$X1)
+tnf_inf_DGE_up <- tnf_inf$X1[tnf_inf$log2FoldChange > 0]
+tnf_inf_DGE_down <- tnf_inf$X1[tnf_inf$log2FoldChange < 0]
+
+# Find out how big is the overlap
+## Total overlap
+inf_overlap <-intersect(tct_inf_DGE, tnf_inf_DGE)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE),
+                   length(tnf_inf_DGE),
+                   length(inf_overlap),
+                   catergory <- c("TCT inflammation DGE",
+                                  "TNF inflammation DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("TCT_TNF_inflammation_DGE_overlap.pdf",
+           width = 14,
+           height = 10)
+draw.pairwise.venn(length(tct_inf_DGE),
+                   length(tnf_inf_DGE),
+                   length(inf_overlap),
+                   catergory <- c("TCT inflammation DGE",
+                                  "TNF inflammation DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+## Overlap in up-regulated genes
+inf_overlap_up <-intersect(tct_inf_DGE_up, tnf_inf_DGE_up)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE_up),
+                   length(tnf_inf_DGE_up),
+                   length(inf_overlap_up),
+                   catergory <- c("TCT inflammation Up-DGE",
+                                  "TNF inflammation Up-DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("TCT_TNF_inflammation_DGE_overlap_up.pdf",
+           width = 14,
+           height = 10)
+draw.pairwise.venn(length(tct_inf_DGE_up),
+                   length(tnf_inf_DGE_up),
+                   length(inf_overlap_up),
+                   catergory <- c("TCT inflammation Up-DGE",
+                                  "TNF inflammation Up-DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+## Overlap in down-regulated genes
+inf_overlap_down <-intersect(tct_inf_DGE_down, tnf_inf_DGE_down)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE_down),
+                   length(tnf_inf_DGE_down),
+                   length(inf_overlap_down),
+                   catergory <- c("TCT inflammation Down-DGE",
+                                  "TNF inflammation Down-DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("TCT_TNF_inflammation_DGE_overlap_down.pdf",
+           width = 14,
+           height = 10)
+draw.pairwise.venn(length(tct_inf_DGE_down),
+                   length(tnf_inf_DGE_down),
+                   length(inf_overlap_down),
+                   catergory <- c("TCT inflammation Down-DGE",
+                                  "TNF inflammation Down-DGE"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+inf_overlap <- c(inf_overlap_up, inf_overlap_down)
+```
+It appears that 173/178 genes in total inflammation DGE overlap are dysregulated in the same direction between TCT and TNF, which is comforting. I will proceed with the remaining of the analysis using the total inflammation DGE list.
+
+### GO/KEGG/GSEA Analysis
+#### Overlapping genes
+##### GO analysis
+```{r}
+target_gene <- inf_overlap
+tct_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_V vs NI_V.csv")
+tnf_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_V vs NI_V.csv")
+detected_gene <- unique(c(tct_all$X1, tnf_all$X1))
+
+# GO analysis
+# Run GO enrichment analysis for biological process
+ego_BP <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_BP <- data.frame(ego_BP)
+
+write.csv(cluster_summary_BP, "GO analysis/GO analysis_BP_overlap.csv")
+
+# Run GO enrichment analysis for molecular function 
+ego_MF <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "MF", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_MF <- data.frame(ego_MF)
+
+write.csv(cluster_summary_MF, "GO analysis/GO analysis_MF_overlap.csv")
+
+# Run GO enrichment analysis for cellular component 
+ego_CC <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "CC", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_CC <- data.frame(ego_CC)
+
+write.csv(cluster_summary_CC, "GO analysis/GO analysis_CC_overlap.csv")
+```
+###### Biological process
+```{r}
+pdf("GO analysis/GO dotplot_BP_overlap.pdf",
+           width = 8,
+           height = 4)
+dotplot(ego_BP, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_BP_overlap.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_BP, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_overlap.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_overlap.pdf)
+
+###### Molecular Function
+```{r}
+pdf('GO analysis/GO dotplot_MF_overlap.pdf',
+    width = 9,
+    height = 4)
+dotplot(ego_MF, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_MF_overlap.pdf',
+    width = 8,
+    height = 8)
+emapplot(ego_MF, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_overlap.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_overlap.pdf)
+
+###### Cellular component
+```{r}
+pdf('GO analysis/GO dotplot_CC_overlap.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_CC, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_CC_overlap.pdf',
+    width = 8,
+    height = 8)
+emapplot(ego_CC, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_overlap.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_overlap.pdf)
+
+##### KEGG analysis
+KEGG analysis needs Entrez ID.
+```{r}
+# Convert Ensembl ID to Entrez ID
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_gene_entrez <- as.character(unique(annotations_entrez$ENTREZID[!is.na(annotations_entrez$ENTREZID)]))
+
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = detected_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+detected_gene_entrez <- as.character(unique(annotations_entrez$ENTREZID[!is.na(annotations_entrez$ENTREZID)]))
+
+kk <- enrichKEGG(gene = target_gene_entrez, universe = detected_gene_entrez, organism = 'mmu')
+write.csv(as.data.frame(kk), "KEGG analysis/KEGG_overlap.csv")
+
+dotplot(kk, showCategory = 50)
+pdf("KEGG analysis/KEGG_overlap_inflammation_DGE.pdf",
+    height = 6,
+    width = 8)
+dotplot(kk, showCategory = 20)
+dev.off()
+```
+
+##### GSEA analysis
+I only performed GSEA on the Hallmark geneset.
+
+I am ranking the overlapping genes based on the average LFC between TCT and TNF model.
+```{r}
+target_tct_LFC <- tct_inf$log2FoldChange[tct_inf$X1 %in% target_gene] 
+target_tnf_LFC <- tnf_inf$log2FoldChange[tnf_inf$X1 %in% target_gene] 
+target_LFC <- as.data.frame(cbind(target_gene, target_tct_LFC, target_tnf_LFC))
+
+target_LFC$target_gene <- as.character(target_LFC$target_gene)
+target_LFC$target_tct_LFC <- as.numeric(as.character(target_LFC$target_tct_LFC))
+target_LFC$target_tnf_LFC <- as.numeric(as.character(target_LFC$target_tnf_LFC))
+
+target_LFC$average_LFC <- rowMeans(target_LFC[,c(2:3)])
+
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_LFC <- inner_join(target_LFC, annotations_entrez, by = c("target_gene" = "GENEID"))
+target_LFC <- target_LFC[!is.na(target_LFC$ENTREZID),]
+
+load("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/mouse_H_v5p2.rdata")
+pathways <- Mm.H
+
+gseadata <- target_LFC$ENTREZID
+ranks <- target_LFC$average_LFC
+names(ranks) <- target_LFC$ENTREZID
+ranks <- sort(ranks, decreasing = T)
+fgseaRes <- fgsea(pathways, ranks, minSize=15, maxSize = 500)
+suppressMessages(fgseaRes[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes$leadingEdge <- as.character(fgseaRes$leadingEdge)
+write.csv(as.data.frame(fgseaRes), "GSEA analysis/GSEA_overlap.csv")
+plotEnrichment(pathways[[fgseaRes$pathway[1]]], ranks) + labs(title = fgseaRes$pathway[1])
+
+pdf('GSEA analysis/GSEA_overlapping_DGE.pdf',
+    width = 8,
+    height = 1)
+plotGseaTable(pathways[fgseaRes$pathway], ranks, fgseaRes, gseaParam = 0.5) 
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_overlapping_DGE.pdf)
+
+### TCT-specific genes
+#### TCT specific DGEs
+##### GO analysis
+```{r}
+target_gene <- setdiff(tct_inf$X1, inf_overlap)
+detected_gene <- tct_all$X1
+# GO analysis
+# Run GO enrichment analysis for biological process
+ego_BP <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_BP <- data.frame(ego_BP)
+
+write.csv(cluster_summary_BP, "GO analysis/GO analysis_BP_TCT.csv")
+
+# Run GO enrichment analysis for molecular function 
+ego_MF <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "MF", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_MF <- data.frame(ego_MF)
+
+write.csv(cluster_summary_MF, "GO analysis/GO analysis_MF_TCT.csv")
+
+# Run GO enrichment analysis for cellular component 
+ego_CC <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "CC", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_CC <- data.frame(ego_CC)
+
+write.csv(cluster_summary_CC, "GO analysis/GO analysis_CC_TCT.csv")
+```
+###### Biological process
+```{r}
+pdf('GO analysis/GO dotplot_BP_TCT.pdf',
+    width = 10,
+    height = 4)
+dotplot(ego_BP, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_BP_TCT.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_BP, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TCT.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TCT.pdf)
+
+###### Molecular Function
+```{r}
+pdf('GO analysis/GO dotplot_MF_TCT.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_MF, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_MF_TCT.pdf',
+    width = 8,
+    height = 8)
+emapplot(ego_MF, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TCT.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TCT.pdf)
+
+###### Cellular component
+```{r}
+pdf('GO analysis/GO dotplot_CC_TCT.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_CC, showCategory = 10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_CC_TCT.pdf',
+    width = 8,
+    height = 8)
+emapplot(ego_CC, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TCT.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TCT.pdf)
+
+##### KEGG analysis
+KEGG analysis needs Entrez ID.
+```{r}
+# Convert Ensembl ID to Entrez ID
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_gene_entrez <- as.character(unique(annotations_entrez$ENTREZID[!is.na(annotations_entrez$ENTREZID)]))
+
+annotations_detected_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = detected_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+detected_gene_entrez <- as.character(unique(annotations_detected_entrez$ENTREZID[!is.na(annotations_detected_entrez$ENTREZID)]))
+
+kk <- enrichKEGG(gene = target_gene_entrez, universe = detected_gene_entrez, organism = 'mmu')
+write.csv(as.data.frame(kk), "KEGG analysis/KEGG_TCT.csv")
+dotplot(kk, showCategory = 20)
+pdf("KEGG analysis/TCT_specific_KEGG analysis.pdf",
+    height = 4,
+    width = 10)
+dotplot(kk, showCategory = 20)
+dev.off()
+
+```
+
+##### GSEA analysis
+I only performed GSEA on the Hallmark geneset.
+
+```{r}
+target_LFC <- tct_inf[tct_inf$X1 %in% target_gene,]
+
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_LFC <- inner_join(target_LFC, annotations_entrez, by = c("X1" = "GENEID"))
+target_LFC <- target_LFC[!is.na(target_LFC$ENTREZID),]
+
+gseadata <- target_LFC$ENTREZID
+ranks <- target_LFC$log2FoldChange
+names(ranks) <- target_LFC$ENTREZID
+ranks <- sort(ranks, decreasing = T)
+fgseaRes <- fgsea(pathways, ranks, minSize=15, maxSize = 500)
+
+# number of GSEA pathway enriched
+dim(fgseaRes)[1] 
+```
+
+#### TCT exluding overlapping inflammation DGEs
+##### GSEA analysis
+I only performed GSEA on the Hallmark geneset.
+
+The ranking is done usin the default signal to noise ratio from GSEA software. 
+```{r}
+TCT_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/normalized_raw_gene_counts_I_V vs NI_V.csv")
+
+target_norm <- TCT_iv_niv_norm[!TCT_iv_niv_norm$X1 %in% inf_overlap, ]
+write_csv(target_norm, "GSEA analysis/TCT excluding overlap/normalized_counts.csv")
+
+tct_rank <- read_csv("GSEA analysis/TCT excluding overlap/Hallmark/TCT_rank.csv")
+human2mouse <- read_csv("Human_2_mouse_symbol.csv")
+mouseID <- read_csv("mouse_symbol_Ensembl.csv")
+tct_rank <- inner_join(tct_rank, human2mouse[,c(1,3)], by = c("NAME" = "Human Marker Symbol"))
+tct_rank <- inner_join(tct_rank, mouseID[,c(2,3)], by = c("Mouse Marker Symbol" = "Marker Symbol"))
+
+target_LFC <- tct_rank[!is.na(tct_rank$`EntrezGene ID`),]
+
+gseadata <- target_LFC$`EntrezGene ID`
+ranks <- target_LFC$SCORE
+names(ranks) <- target_LFC$`EntrezGene ID`
+ranks_tct <- sort(ranks, decreasing = T)
+fgseaRes_tct <- fgsea(pathways, ranks_tct, minSize=15, maxSize = 500)
+
+fgseaRes_tct_sig <- fgseaRes_tct[fgseaRes_tct$pval < 0.05 & fgseaRes_tct$padj < 0.1, ]
+
+fgseaRes_tct_sig <- fgseaRes_tct_sig[order(fgseaRes_tct_sig$NES, decreasing = TRUE), ]
+
+# number of GSEA pathway enriched
+dim(fgseaRes_tct_sig)[1]
+
+suppressMessages(fgseaRes_tct[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes_tct$leadingEdge <- as.character(fgseaRes_tct$leadingEdge)
+write.csv(as.data.frame(fgseaRes_tct), "GSEA analysis/GSEA_TCT_excluding overlap.csv")
+
+pdf('GSEA analysis/GSEA_TCT_excluding overlap.pdf',
+    width = 12,
+    height = 10)
+plotGseaTable(pathways[fgseaRes_tct_sig$pathway], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_excluding overlap.pdf)
+
+
+#### TNF-specific DGE
+
+##### GO analysis
+```{r}
+target_gene <- setdiff(tnf_inf$X1, inf_overlap)
+detected_gene <- tnf_all$X1
+
+# GO analysis
+# Run GO enrichment analysis for biological process
+ego_BP <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_BP <- data.frame(ego_BP)
+
+write.csv(cluster_summary_BP, "GO analysis/GO analysis_BP_TNF.csv")
+
+# Run GO enrichment analysis for molecular function 
+ego_MF <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "MF", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_MF <- data.frame(ego_MF)
+
+write.csv(cluster_summary_MF, "GO analysis/GO analysis_MF_TNF.csv")
+
+# Run GO enrichment analysis for cellular component 
+ego_CC <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "CC", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_CC <- data.frame(ego_CC)
+
+write.csv(cluster_summary_CC, "GO analysis/GO analysis_CC_TNF.csv")
+```
+###### Biological process
+```{r}
+pdf('GO analysis/GO dotplot_BP_TNF.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_BP, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_BP_TNF.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_BP, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TNF.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TNF.pdf)
+
+###### Molecular Function
+```{r}
+pdf('GO analysis/GO dotplot_MF_TNF.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_MF, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_MF_TNF.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_MF, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TNF.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TNF.pdf)
+
+###### Cellular component
+```{r}
+pdf('GO analysis/GO dotplot_CC_TNF.pdf',
+    width = 8,
+    height = 4)
+dotplot(ego_CC, showCategory=10)
+dev.off()
+
+pdf('GO analysis/GO enrichment_CC_TNF.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_CC, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TNF.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TNF.pdf)
+
+##### KEGG analysis
+KEGG analysis needs Entrez ID.
+```{r}
+# Convert Ensembl ID to Entrez ID
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_gene_entrez <- as.character(unique(annotations_entrez$ENTREZID[!is.na(annotations_entrez$ENTREZID)]))
+
+annotations_detected_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = detected_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+detected_gene_entrez <- as.character(unique(annotations_detected_entrez$ENTREZID[!is.na(annotations_detected_entrez$ENTREZID)]))
+
+kk <- enrichKEGG(gene = target_gene_entrez, universe = detected_gene_entrez, organism = 'mmu')
+write.csv(as.data.frame(kk), "KEGG analysis/KEGG_TCT.csv")
+dotplot(kk, showCategory = 20)
+pdf("KEGG analysis/TNF_specific_KEGG analysis.pdf",
+    height = 6,
+    width = 10)
+dotplot(kk, showCategory = 20)
+dev.off()
+```
+
+##### GSEA analysis
+I only performed GSEA on the Hallmark geneset.
+```{r}
+target_LFC <- tnf_inf[tnf_inf$X1 %in% target_gene,]
+
+annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
+                                           keys = target_gene,
+                                           columns = c("ENTREZID"),
+                                           keytype = "GENEID")
+
+target_LFC <- inner_join(target_LFC, annotations_entrez, by = c("X1" = "GENEID"))
+target_LFC <- target_LFC[!is.na(target_LFC$ENTREZID),]
+
+gseadata <- target_LFC$ENTREZID
+ranks <- target_LFC$log2FoldChange
+names(ranks) <- target_LFC$ENTREZID
+ranks <- sort(ranks, decreasing = T)
+fgseaRes <- fgsea(pathways, ranks, minSize=15, maxSize = 500)
+fgseaRes <- fgseaRes[fgseaRes$pval< 0.05 & fgseaRes$padj < 0.1,]
+fgseaRes <- fgseaRes[order(fgseaRes$NES, decreasing = TRUE), ]
+
+# number of GSEA pathway enriched
+dim(fgseaRes)[1]
+
+suppressMessages(fgseaRes[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes$leadingEdge <- as.character(fgseaRes$leadingEdge)
+write.csv(as.data.frame(fgseaRes), "GSEA analysis/GSEA_TNF_specific.csv")
+pdf('GSEA analysis/GSEA_TNF_specific_DGE.pdf',
+    width = 10,
+    height = 5)
+plotGseaTable(pathways[fgseaRes$pathway], ranks, fgseaRes, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific_DGE.pdf)
+
+
+#### TNF exluding overlapping inflammation DGEs
+##### GSEA analysis
+I only performed GSEA on the Hallmark geneset.
+
+The ranking is done using the default signal to noise ratio from GSEA software. 
+```{r}
+TNF_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/normalized_raw_gene_counts_I_V vs NI_V.csv")
+
+target_norm <- TNF_iv_niv_norm[!TNF_iv_niv_norm$X1 %in% inf_overlap, ]
+write_csv(target_norm, "GSEA analysis/TNF excluding overlap/normalized_counts.csv")
+
+tnf_rank <- read_csv("GSEA analysis/TNF excluding overlap/Hallmark/TNF_rank.csv")
+human2mouse <- read_csv("Human_2_mouse_symbol.csv")
+mouseID <- read_csv("mouse_symbol_Ensembl.csv")
+tnf_rank <- inner_join(tnf_rank, human2mouse[,c(1,3)], by = c("NAME" = "Human Marker Symbol"))
+tnf_rank <- inner_join(tnf_rank, mouseID[,c(2,3)], by = c("Mouse Marker Symbol" = "Marker Symbol"))
+
+target_LFC <- tnf_rank[!is.na(tnf_rank$`EntrezGene ID`),]
+
+gseadata <- target_LFC$`EntrezGene ID`
+ranks <- target_LFC$SCORE
+names(ranks) <- target_LFC$`EntrezGene ID`
+ranks_tnf <- sort(ranks, decreasing = T)
+fgseaRes_tnf <- fgsea(pathways, ranks_tnf, minSize=15, maxSize = 500)
+
+fgseaRes_tnf_sig <- fgseaRes_tnf[fgseaRes_tnf$pval < 0.05 & fgseaRes_tnf$padj < 0.1, ]
+
+fgseaRes_tnf_sig <- fgseaRes_tnf_sig[order(fgseaRes_tnf_sig$NES, decreasing = TRUE), ]
+
+# number of GSEA pathway enriched
+dim(fgseaRes_tnf_sig)[1]
+
+suppressMessages(fgseaRes_tnf[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes_tnf$leadingEdge <- as.character(fgseaRes_tnf$leadingEdge)
+write.csv(as.data.frame(fgseaRes_tnf), "GSEA analysis/GSEA_TNF_excluding overlap.csv")
+
+pdf('GSEA analysis/GSEA_TNF_excluding overlap.pdf',
+    width = 12,
+    height = 10)
+plotGseaTable(pathways[fgseaRes_tnf_sig$pathway], ranks_tct, fgseaRes_tnf_sig, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_excluding overlap.pdf)
+
+### Joint analysis of TCT-specific and TNF-specific GSEA
+This analysis is done using RNA-Seq excluding overlapping inflammation related DGE.
+
+I would like to look at what is the enriched GSEA hallmark pathways that are unqiue to TCT or TNF inflammation and the overlap.
+
+```{r}
+
+TCT_specific_gsea <- setdiff(fgseaRes_tct_sig$pathway, fgseaRes_tnf_sig$pathway)
+TNF_specific_gsea <- setdiff(fgseaRes_tnf_sig$pathway, fgseaRes_tct_sig$pathway)
+overlap_gsea <- intersect(fgseaRes_tct_sig$pathway, fgseaRes_tnf_sig$pathway)
+
+
+# Now I need to check if all the overlapping GSEA has the same direction of enrichment
+for (i in overlap_gsea) {
+  tct_nes <- fgseaRes_tct_sig$NES[fgseaRes_tct_sig$pathway == i]
+  tnf_nes <- fgseaRes_tnf_sig$NES[fgseaRes_tnf_sig$pathway == i]
+  dir <- tct_nes * tnf_nes
+  if (dir < 0) {
+    print(i)
+  }
+}
+
+# plot out the overlapping pathways
+pdf('GSEA analysis/Overlapping_GSEA_TCT.pdf',
+    width = 12,
+    height = 6)
+plotGseaTable(pathways[overlap_gsea], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5) +
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TCT.pdf)
+
+
+```{r}
+pdf('GSEA analysis/Overlapping_GSEA_TNF.pdf',
+    width = 12,
+    height = 6)
+plotGseaTable(pathways[overlap_gsea], ranks_tnf, fgseaRes_tnf_sig, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TNF.pdf)
+
+```{r}
+# plot out the model-specific pathways
+## TCT specific
+pdf('GSEA analysis/GSEA_TCT_specific.pdf',
+    width = 12,
+    height = 4)
+plotGseaTable(pathways[TCT_specific_gsea], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_specific.pdf)
+
+```{r}
+# plot out the model-specific pathways
+## TNF specific
+pdf('GSEA analysis/GSEA_TNF_specific.pdf',
+    width = 12,
+    height = 4)
+plotGseaTable(pathways[TNF_specific_gsea], ranks_tnf, fgseaRes_tnf_sig, gseaParam = 0.5)
+dev.off()
+```
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific.pdf)
+
+
+## Identify MK2 target genes
+There are 4 treatments of MK2i that can be used for comparison. TCT and TNF model each have MK2i treatment in inflammaed and non-inflammed conditions. 
+
+Again I am using 0.1 as the adjusted p-value cutoff.
+
+First let's examine the TCT model.
+```{r}
+# Non-inflammed condition
+tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_NI_MKI vs NI_V.csv")
+
+tct_ni_MK2i_DGE <- tct_ni_MK2i$X1
+
+# Inflammed condition
+tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_MKI vs I_V.csv")
+
+tct_i_MK2i_DGE <- tct_i_MK2i$X1
+
+# combined condition
+tct_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_MKI vs V.csv")
+
+tct_MK2i_DGE <- tct_MK2i$X1
+
+# Examine the overlap between NI and I conditions and also combined analysis
+
+n12 <- intersect(tct_ni_MK2i_DGE, tct_i_MK2i_DGE)
+n23 <- intersect(tct_i_MK2i_DGE, tct_MK2i_DGE)
+n13 <- intersect(tct_ni_MK2i_DGE, tct_MK2i_DGE)
+n123 <- intersect(n12, tct_MK2i_DGE)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tct_ni_MK2i_DGE),
+                 area2 = length(tct_i_MK2i_DGE),
+                 area3 = length(tct_MK2i_DGE),
+                 n12 = length(n12),
+                 n23 = length(n23),
+                 n13 = length(n13),
+                 n123 = length(n123),
+                 catergory <- c("TCT MK2i target\nnon-inflammation",
+                                "TCT MK2i target\ninflammation",
+                                "TCT MK2i target\ncombined"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("TCT-i_vs_ni_MK2i target.pdf",
+    height = 8,
+    width = 12)
+grid.newpage()
+draw.triple.venn(area1 = length(tct_ni_MK2i_DGE),
+                 area2 = length(tct_i_MK2i_DGE),
+                 area3 = length(tct_MK2i_DGE),
+                 n12 = length(n12),
+                 n23 = length(n23),
+                 n13 = length(n13),
+                 n123 = length(n123),
+                 catergory <- c("TCT MK2i target\nnon-inflammation",
+                                "TCT MK2i target\ninflammation",
+                                "TCT MK2i target\ncombined"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+```
+
+It appears that there is no overlapping MK2i targets between the inflammed and non-inflammed TCT models.
+
+Now let's examine the TNF model.
+
+```{r}
+# Non-inflammed condition
+tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_NI_MKI vs NI_V.csv")
+
+tnf_ni_MK2i_DGE <- tnf_ni_MK2i$X1
+
+# Inflammed condition
+tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_MKI vs I_V.csv")
+
+tnf_i_MK2i_DGE <- tnf_i_MK2i$X1
+
+# combined condition
+tnf_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_MKI vs V.csv")
+
+tnf_MK2i_DGE <- tnf_MK2i$X1
+
+# Examine the overlap between NI and I conditions
+n12 <- intersect(tnf_ni_MK2i_DGE, tnf_i_MK2i_DGE)
+n23 <- intersect(tnf_i_MK2i_DGE, tnf_MK2i_DGE)
+n13 <- intersect(tnf_ni_MK2i_DGE, tnf_MK2i_DGE)
+n123 <- intersect(n12, tnf_MK2i_DGE)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tnf_ni_MK2i_DGE),
+                 area2 = length(tnf_i_MK2i_DGE),
+                 area3 = length(tnf_MK2i_DGE),
+                 n12 = length(n12),
+                 n23 = length(n23),
+                 n13 = length(n13),
+                 n123 = length(n123),
+                 catergory <- c("TNF MK2i target\nnon-inflammation",
+                                "TNF MK2i target\ninflammation",
+                                "TNF MK2i target\ncombined"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("TNF-i_vs_ni_MK2i target.pdf",
+    height = 8,
+    width = 12)
+grid.newpage()
+draw.triple.venn(area1 = length(tnf_ni_MK2i_DGE),
+                 area2 = length(tnf_i_MK2i_DGE),
+                 area3 = length(tnf_MK2i_DGE),
+                 n12 = length(n12),
+                 n23 = length(n23),
+                 n13 = length(n13),
+                 n123 = length(n123),
+                 catergory <- c("TNF MK2i target\nnon-inflammation",
+                                "TNF MK2i target\ninflammation",
+                                "TNF MK2i target\ncombined"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+```
+
+Now let's take a looks and see if there is any overlap between TCT and TNF models.
+
+```{r}
+# Inflammed conditions
+i_MK2i_overlap <- intersect(tnf_i_MK2i_DGE, tct_i_MK2i_DGE)
+grid.newpage()
+draw.pairwise.venn(length(tnf_i_MK2i_DGE),
+                   length(tct_i_MK2i_DGE),
+                   length(i_MK2i_overlap),
+                   catergory <- c("MK2i target in\ninflammed TNF",
+                                  "MK2i target in\ninflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(135, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("Inflammed_TCT_vs_TNF_MKi_target.pdf",
+    height = 8,
+    width = 10)
+draw.pairwise.venn(length(tnf_i_MK2i_DGE),
+                   length(tct_i_MK2i_DGE),
+                   length(i_MK2i_overlap),
+                   catergory <- c("MK2i target in\ninflammed TNF",
+                                  "MK2i target in\ninflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(135, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+
+# Non-inflammed conditions
+ni_MK2i_overlap <- intersect(tnf_ni_MK2i_DGE, tct_ni_MK2i_DGE)
+grid.newpage()
+draw.pairwise.venn(length(tnf_ni_MK2i_DGE),
+                   length(tct_ni_MK2i_DGE),
+                   length(ni_MK2i_overlap),
+                   catergory <- c("MK2i target in\nnon-inflammed TNF",
+                                  "MK2i target in\nnon-inflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+
+pdf("Non-inflammed_TCT_vs_TNF_MKi_target.pdf",
+    height = 8,
+    width = 10)
+draw.pairwise.venn(length(tnf_ni_MK2i_DGE),
+                   length(tct_ni_MK2i_DGE),
+                   length(ni_MK2i_overlap),
+                   catergory <- c("MK2i target in\nnon-inflammed TNF",
+                                  "MK2i target in\nnon-inflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+dev.off()
+
+
+# Combined condition
+MK2i_overlap <- intersect(tnf_MK2i_DGE, tct_MK2i_DGE)
+grid.newpage()
+draw.pairwise.venn(length(tnf_MK2i_DGE),
+                   length(tct_MK2i_DGE),
+                   length(MK2i_overlap),
+                   catergory <- c("MK2i target in\ncombined TNF",
+                                  "MK2i target in\ncombined TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(135, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+So it appears that none of the 4 sets of DGEs have any overlap with each other. That is a little disturbing.
+
+## Identify Biomarkers of effective response to MK2i.
+Biomarkers are defined as genes that are targets of MK2i and are dysregulated in only TCT model of inflammation but not TNF model of inflammation.
+
+First we will be more stringent, I will only use targets of MK2i in inflammed TCT model.
+```{r}
+tct_biomarker_raw <- intersect(tct_i_MK2i_DGE, tct_inf_DGE)
+
+tct_biomarker <- setdiff(tct_biomarker_raw, tnf_inf_DGE)
+
+n23 <- intersect(tct_i_MK2i_DGE, tnf_inf_DGE)
+
+n123 <- intersect(inf_overlap, tct_i_MK2i_DGE)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tct_inf_DGE),
+                 area2 = length(tnf_inf_DGE),
+                 area3 = length(tct_i_MK2i_DGE),
+                 n12 = length(inf_overlap),
+                 n23 = length(n23),
+                 n13 = length(tct_biomarker_raw),
+                 n123 = length(n123),
+                 catergory <- c("TCT inflammation DGE",
+                                "TNF inflammation DGE",
+                                "MK2i target in inflammed TCT"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+
+pdf("MK2i responsiveness marker.pdf",
+    height = 8,
+    width = 10)
+draw.triple.venn(area1 = length(tct_inf_DGE),
+                 area2 = length(tnf_inf_DGE),
+                 area3 = length(tct_i_MK2i_DGE),
+                 n12 = length(inf_overlap),
+                 n23 = length(n23),
+                 n13 = length(tct_biomarker_raw),
+                 n123 = length(n123),
+                 catergory <- c("TCT inflammation DGE",
+                                "TNF inflammation DGE",
+                                "MK2i target in inflammed TCT"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+
+dev.off()
+
+```
+So there are three genes that popped out as potential biomarkers. List them here:
+```{r}
+tct_biomarker
+```
+
+We want to make sure the LFC are the opposite for these three genes in TCT inflammation DGE list and MK2i target in inflammed TCT.
+
+```{r}
+tct_inf_DGE_LFC <- tct_inf$log2FoldChange[tct_inf$X1 %in% tct_biomarker]
+tct_i_MK2i_LFC <- tct_i_MK2i$log2FoldChange[tct_i_MK2i$X1 %in% tct_biomarker]
+biomarker_table <- cbind(tct_biomarker, tct_inf_DGE_LFC, tct_i_MK2i_LFC)
+colnames(biomarker_table) <- c("Ensembl_ID", "LFC(TCT_inflammation_related)", "LFC(TCT_inflammed_MK2i_target)")
+biomarker_table
+```
+
+
+Now I will combined all 4 sets of MK2i targets and use that as MK2i targets.
+```{r}
+mki_target <- c(tnf_i_MK2i_DGE, tnf_ni_MK2i_DGE, tct_i_MK2i_DGE, tct_ni_MK2i_DGE)
+
+tct_biomarker_raw <- intersect(mki_target, tct_inf_DGE)
+
+tct_biomarker <- setdiff(tct_biomarker_raw, tnf_inf_DGE)
+
+n23 <- intersect(mki_target, tnf_inf_DGE)
+
+n123 <- intersect(inf_overlap, mki_target)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tct_inf_DGE),
+                 area2 = length(tnf_inf_DGE),
+                 area3 = length(mki_target),
+                 n12 = length(inf_overlap),
+                 n23 = length(n23),
+                 n13 = length(tct_biomarker_raw),
+                 n123 = length(n123),
+                 catergory <- c("TCT inflammation DGE",
+                                "TNF inflammation DGE",
+                                "All MK2i targets"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+
+
+So there are three genes that popped out as potential biomarkers. List them here:
+```{r}
+tct_biomarker
+```
+
+We want to make sure the LFC are the opposite for these three genes in TCT inflammation DGE list and MK2i target in inflammed TCT.
+
+```{r}
+tct_inf_DGE_LFC <- tct_inf$log2FoldChange[tct_inf$X1 %in% tct_biomarker]
+tct_i_MK2i_LFC <- tct_i_MK2i$log2FoldChange[tct_i_MK2i$X1 %in% tct_biomarker]
+biomarker_table <- cbind(tct_biomarker, tct_inf_DGE_LFC, tct_i_MK2i_LFC)
+colnames(biomarker_table) <- c("Ensembl_ID", "LFC(TCT_inflammation_related)", "LFC(TCT_inflammed_MK2i_target)")
+biomarker_table
+```
+
+It appears that MK2i are downregulating these three genes, while inflammation upregulates them in the TCT model. This indicates that they could be the genes that mediate the responsiveness to MK2i treatment.
+
+## Identify Biomarkers of effective response to MK2i using filtered data (analysis without I_V3 sample)
+
+```{r}
+tct_inf_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_V vs NI_V_filtered.csv")
+
+tct_inf_DGE_filtered <- tct_inf_DGE_filtered_data$X1
+
+tct_i_MK2i_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_MKI vs I_V_filtered.csv")
+
+tct_i_MK2i_DGE_filtered <- tct_i_MK2i_DGE_filtered_data$X1
+
+tct_biomarker_raw <- intersect(tct_i_MK2i_DGE_filtered, tct_inf_DGE_filtered)
+
+tct_biomarker <- setdiff(tct_biomarker_raw, tnf_inf_DGE)
+
+inf_overlap_filtered <- intersect(tct_inf_DGE_filtered,tnf_inf_DGE)
+
+n23 <- intersect(tct_i_MK2i_DGE_filtered, tnf_inf_DGE)
+
+n123 <- intersect(inf_overlap, tct_i_MK2i_DGE_filtered)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tct_inf_DGE_filtered),
+                 area2 = length(tnf_inf_DGE),
+                 area3 = length(tct_i_MK2i_DGE_filtered),
+                 n12 = length(inf_overlap),
+                 n23 = length(n23),
+                 n13 = length(tct_biomarker_raw),
+                 n123 = length(n123),
+                 catergory <- c("TCT inflammation DGE",
+                                "TNF inflammation DGE",
+                                "MK2i target in inflammed TCT"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+```
+So there are three genes that popped out as potential biomarkers. List them here:
+```{r}
+tct_biomarker
+```
+
+We want to make sure the LFC are the opposite for these three genes in TCT inflammation DGE list and MK2i target in inflammed TCT.
+
+```{r}
+tct_inf_DGE_LFC <- tct_inf_DGE_filtered_data$log2FoldChange[tct_inf_DGE_filtered_data$X1 %in% tct_biomarker]
+tct_i_MK2i_LFC <- tct_i_MK2i_DGE_filtered_data$log2FoldChange[tct_i_MK2i_DGE_filtered_data$X1 %in% tct_biomarker]
+biomarker_table <- cbind(tct_biomarker, tct_inf_DGE_LFC, tct_i_MK2i_LFC)
+colnames(biomarker_table) <- c("Ensembl_ID", "LFC(TCT_inflammation_related)", "LFC(TCT_inflammed_MK2i_target)")
+biomarker_table
+```
+
+
+# Transcript level analysis {#transcript}
+I am repeating the same analysis using the transcript level analysis result. 
+## Identify inflammation related DGE
+First I need to identify DEG in inflammation in TCT and TNF models.
+```{r}
+# DGE in inflammation using I_V and NI_V comparison
+tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_V vs NI_V_transcript_level.csv")
+tct_inf_DGE <- tct_inf$X1[tct_inf$padj < 0.05]
+tct_inf_DGE_up <- tct_inf$X1[tct_inf$padj < 0.05 & tct_inf$log2FoldChange > 0]
+tct_inf_DGE_down <- tct_inf$X1[tct_inf$padj < 0.05 & tct_inf$log2FoldChange < 0]
+
+tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_V vs NI_V_transcript_level.csv")
+tnf_inf_DGE <- tnf_inf$X1[tnf_inf$padj < 0.05]
+tnf_inf_DGE_up <- tnf_inf$X1[tnf_inf$padj < 0.05 & tnf_inf$log2FoldChange > 0]
+tnf_inf_DGE_down <- tnf_inf$X1[tnf_inf$padj < 0.05 & tnf_inf$log2FoldChange < 0]
+
+# Find out how big is the overlap
+## Total overlap
+inf_overlap <-intersect(tct_inf_DGE, tnf_inf_DGE)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE),
+                   length(tnf_inf_DGE),
+                   length(inf_overlap),
+                   catergory <- c("TCT inflammation DGE_transcript",
+                                  "TNF inflammation DGE_transcript"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+## Overlap in up-regulated genes
+inf_overlap_up <-intersect(tct_inf_DGE_up, tnf_inf_DGE_up)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE_up),
+                   length(tnf_inf_DGE_up),
+                   length(inf_overlap_up),
+                   catergory <- c("TCT inflammation Up-DGE_transcript",
+                                  "TNF inflammation Up-DGE_transcript"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+
+## Overlap in down-regulated genes
+inf_overlap_down <-intersect(tct_inf_DGE_down, tnf_inf_DGE_down)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_inf_DGE_down),
+                   length(tnf_inf_DGE_down),
+                   length(inf_overlap_down),
+                   catergory <- c("TCT inflammation Down-DGE_transcript",
+                                  "TNF inflammation Down-DGE_transcript"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+```
+It appears that 82/90 transcripts in total inflammation DGE overlap are dysregulated in the same direction between TCT and TNF, which is comforting. I will proceed with the remaining of the analysis using the total inflammation DGE list.
+
+## Identify MK2 target genes
+There are 4 treatments of MK2i that can be used for comparison. TCT and TNF model each have MK2i treatment in inflammaed and non-inflammed conditions. 
+
+Again I am using 0.1 as the adjusted p-value cutoff.
+
+First let's examine the TCT model.
+```{r}
+# Non-inflammed condition
+tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
+
+tct_ni_MK2i_DGE <- tct_ni_MK2i$X1[tct_ni_MK2i$padj < 0.1]
+
+# Inflammed condition
+tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
+
+tct_i_MK2i_DGE <- tct_i_MK2i$X1[tct_i_MK2i$padj < 0.1]
+
+# Examine the overlap between NI and I conditions
+tct_MK2i_overlap <- intersect(tct_i_MK2i_DGE, tct_ni_MK2i_DGE)
+
+grid.newpage()
+draw.pairwise.venn(length(tct_i_MK2i_DGE),
+                   length(tct_ni_MK2i_DGE),
+                   length(tct_MK2i_overlap)-1,
+                   catergory <- c("MK2i target transcripts\nin inflammed TCT",
+                                  "MK2i target transcripts\nin non-inflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+Now let's examine the TNF model.
+
+```{r}
+# Non-inflammed condition
+tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
+
+tnf_ni_MK2i_DGE <- tnf_ni_MK2i$X1[tnf_ni_MK2i$padj < 0.1]
+
+# Inflammed condition
+tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
+
+tnf_i_MK2i_DGE <- tnf_i_MK2i$X1[tnf_i_MK2i$padj < 0.1]
+
+# Examine the overlap between NI and I conditions
+tnf_MK2i_overlap <- intersect(tnf_i_MK2i_DGE, tnf_ni_MK2i_DGE)
+
+grid.newpage()
+draw.pairwise.venn(length(tnf_i_MK2i_DGE),
+                   length(tnf_ni_MK2i_DGE),
+                   length(tnf_MK2i_overlap)-1,
+                   catergory <- c("MK2i target transcripts\nin inflammed TNF",
+                                  "MK2i target transcripts\nin non-inflammed TNF"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.05,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+Now let's take a looks and see if there is any overlap between TCT and TNF models.
+
+```{r}
+# Inflammed conditions
+i_MK2i_overlap <- intersect(tnf_i_MK2i_DGE, tct_i_MK2i_DGE)
+grid.newpage()
+draw.pairwise.venn(length(tnf_i_MK2i_DGE),
+                   length(tct_i_MK2i_DGE),
+                   length(i_MK2i_overlap)-1,
+                   catergory <- c("MK2i target transcripts\nin inflammed TNF",
+                                  "MK2i target transcripts\nin inflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+
+
+# Non-inflammed conditions
+ni_MK2i_overlap <- intersect(tnf_ni_MK2i_DGE, tct_ni_MK2i_DGE)
+grid.newpage()
+draw.pairwise.venn(length(tnf_ni_MK2i_DGE),
+                   length(tct_ni_MK2i_DGE),
+                   length(ni_MK2i_overlap)-1,
+                   catergory <- c("MK2i target transcripts\nin non-inflammed TNF",
+                                  "MK2i target transcripts\nin non-inflammed TCT"),
+                   lty = "blank",
+                   ex.text = FALSE,
+                   fill = c("pink", "lightblue"),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+## Identify Biomarkers of effective response to MK2i.
+Biomarkers are defined as genes that are targets of MK2i and are dysregulated in only TCT model of inflammation but not TNF model of inflammation.
+
+First we will be more stringent, I will only use targets of MK2i in inflammed TCT model.
+```{r}
+tct_biomarker_raw <- intersect(tct_i_MK2i_DGE, tct_inf_DGE)
+
+tct_biomarker <- setdiff(tct_biomarker_raw, tnf_inf_DGE)
+
+n23 <- intersect(tct_i_MK2i_DGE, tnf_inf_DGE)
+
+n123 <- intersect(inf_overlap, tct_i_MK2i_DGE)
+
+grid.newpage()
+draw.triple.venn(area1 = length(tct_inf_DGE),
+                 area2 = length(tnf_inf_DGE),
+                 area3 = length(tct_i_MK2i_DGE),
+                 n12 = length(inf_overlap)-1,
+                 n23 = length(n23)-1,
+                 n13 = length(tct_biomarker_raw)-1,
+                 n123 = length(n123)-1,
+                 catergory <- c("TCT inflammation DGE transcripts",
+                                "TNF inflammation DGE transcripts",
+                                "MK2i target transcripts\nin inflammed TCT"),
+                 lty = "blank",
+                 ex.text = FALSE,
+                 fill = c("pink", "lightblue","lightgreen"),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = "sans", cat.fontfamily = "sans")
+```
+
+So there are three genes that popped out as potential biomarkers. List them here:
+```{r}
+tct_biomarker
+```
+
+We want to make sure the LFC are the opposite for these three genes in TCT inflammation DGE list and MK2i target in inflammed TCT.
+
+```{r}
+tct_inf_DGE_LFC <- tct_inf$log2FoldChange[tct_inf$X1 %in% tct_biomarker]
+tct_i_MK2i_LFC <- tct_i_MK2i$log2FoldChange[tct_i_MK2i$X1 %in% tct_biomarker]
+biomarker_table <- cbind(tct_biomarker, tct_inf_DGE_LFC, tct_i_MK2i_LFC)
+colnames(biomarker_table) <- c("Ensembl_ID", "LFC(TCT_inflammation_related)", "LFC(TCT_inflammed_MK2i_target)")
+biomarker_table
+```
+
+It appears that MK2i are downregulating 7/10 transcripts, while inflammation upregulates them in the TCT model. This indicates that they could be the genes that mediate the responsiveness to MK2i treatment.

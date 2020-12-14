@@ -1,0 +1,25 @@
+"0","pdf(""Non-inflammed_TCT_vs_TNF_MKi_target.pdf"",
+    height = 8,
+    width = 10)
+draw.pairwise.venn(length(tnf_ni_MK2i_DGE),
+                   length(tct_ni_MK2i_DGE),
+                   length(ni_MK2i_overlap),
+                   catergory <- c(""MK2i target in\nnon-inflammed TNF"",
+                                  ""MK2i target in\nnon-inflammed TCT""),
+                   lty = ""blank"",
+                   ex.text = FALSE,
+                   fill = c(""pink"", ""lightblue""),
+                   cat.pos = c(200, 135), cat.dist = 0.08, margin = 0.1,
+                   fontfamily = ""sans"", cat.fontfamily = ""sans"")
+"
+"1","(polygon[GRID.polygon.12497], polygon[GRID.polygon.12498], polygon[GRID.polygon.12499], polygon[GRID.polygon.12500], text[GRID.text.12501], text[GRID.text.12502], text[GRID.text.12503], text[GRID.text.12504])"
+"1"," "
+"1","
+"
+"0","dev.off()"
+"1","null device "
+"1","
+"
+"1","          1 "
+"1","
+"

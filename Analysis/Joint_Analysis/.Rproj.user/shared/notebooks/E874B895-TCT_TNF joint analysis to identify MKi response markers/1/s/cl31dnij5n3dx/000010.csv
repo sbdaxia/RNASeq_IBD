@@ -1,0 +1,12 @@
+"0","pdf(""KEGG analysis/KEGG_overlap_inflammation_DGE.pdf"",
+    height = 6,
+    width = 8)
+dotplot(kk, showCategory = 20)
+dev.off()
+"
+"1","null device "
+"1","
+"
+"1","          1 "
+"1","
+"

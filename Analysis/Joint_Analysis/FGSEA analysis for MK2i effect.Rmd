@@ -1,0 +1,238 @@
+---
+title: "FGSEA analysis for MK2i effect"
+author: "Bing Shui"
+date: "4/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prepare libraries
+```{r}
+suppressMessages(suppressWarnings(
+  c(library(fgsea),
+    library(tidyverse),
+    library(AnnotationDbi),
+    library(ensembldb),
+    library(EnsDb.Mmusculus.v79),
+    library(org.Mm.eg.db),
+    library(knitr),
+    library(gtools))
+))
+```
+
+## Load the RNASeq dataset and convert IDs
+I_MK2i vs NI_MK2i data are used here.
+```{r}
+# load TCT and TNF GSEA data
+tct_rank <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/GSEA/I_MKI vs I_V/Hallmark/TCT_IMKI_IV_rank.csv")
+
+tnf_rank <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GSEA/I_MKI vs I_V/Hallmark/TNF_IMKI_IV_rank.csv")
+
+
+# annotate each list with mouse ENTREZ ID
+## load conversion ID list from MGI
+human2mouse <- read_csv("Human_2_mouse_symbol.csv")
+mouseID <- read_csv("mouse_symbol_Ensembl.csv")
+
+tct_rank <- inner_join(tct_rank, human2mouse[,c(1,3)], by = c("NAME" = "Human Marker Symbol"))
+tct_rank <- inner_join(tct_rank, mouseID[,c(2,3)], by = c("Mouse Marker Symbol" = "Marker Symbol"))
+
+tnf_rank <- inner_join(tnf_rank, human2mouse[,c(1,3)], by = c("NAME" = "Human Marker Symbol"))
+tnf_rank <- inner_join(tnf_rank, mouseID[,c(2,3)], by = c("Mouse Marker Symbol" = "Marker Symbol"))
+
+```
+
+## GSEA for TCT MK2i effects
+```{r fig.align="center",  fig.height = 10}
+target_LFC <- tct_rank[!is.na(tct_rank$`EntrezGene ID`),]
+
+load("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/mouse_H_v5p2.rdata")
+pathways <- Mm.H
+
+gseadata <- target_LFC$`EntrezGene ID`
+ranks <- target_LFC$SCORE
+names(ranks) <- target_LFC$`EntrezGene ID`
+ranks_tct <- sort(ranks, decreasing = T)
+fgseaRes <- fgsea(pathways, ranks_tct, minSize=15, maxSize = 500, nperm=1000)
+
+fgseaRes_TCT <- fgseaRes[fgseaRes$pval< 0.05 & fgseaRes$padj < 0.1,]
+suppressMessages(fgseaRes_TCT[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes_TCT$leadingEdge <- as.character(fgseaRes_TCT$leadingEdge)
+fgseaRes_TCT <- fgseaRes_TCT[order(-fgseaRes_TCT$NES), ]
+
+write.csv(as.data.frame(fgseaRes_TCT), "GSEA analysis/TCT_inflammed_MK2i.csv")
+
+pdf('GSEA analysis/TCT_inflammed_MK2i.pdf',
+    width = 12,
+    height = 8)
+plotGseaTable(pathways[fgseaRes_TCT$pathway], ranks, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TCT_inflammed_MK2i.png',
+    width = 800,
+    height = 600)
+plotGseaTable(pathways[fgseaRes_TCT$pathway], ranks, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TCT_inflammed_MK2i.png')
+```
+
+## GSEA for TNF MK2i effects
+```{r fig.align="center",  fig.height = 10}
+target_LFC <- tnf_rank[!is.na(tnf_rank$`EntrezGene ID`),]
+
+gseadata <- target_LFC$`EntrezGene ID`
+ranks <- target_LFC$SCORE
+names(ranks) <- target_LFC$`EntrezGene ID`
+ranks_tnf <- sort(ranks, decreasing = T)
+fgseaRes <- fgsea(pathways, ranks_tnf, minSize=15, maxSize = 500, nperm=1000)
+
+fgseaRes_TNF <- fgseaRes[fgseaRes$pval< 0.05 & fgseaRes$padj < 0.1,]
+suppressMessages(fgseaRes_TNF[, leadingEdge := lapply(leadingEdge, mapIds, x=org.Mm.eg.db, keytype="ENTREZID", column="SYMBOL")])
+fgseaRes_TNF$leadingEdge <- as.character(fgseaRes_TNF$leadingEdge)
+fgseaRes_TNF <- fgseaRes_TNF[order(-fgseaRes_TNF$NES), ]
+
+write.csv(as.data.frame(fgseaRes_TNF), "GSEA analysis/TNF_inflammed_MK2i.csv")
+
+pdf('GSEA analysis/TNF_inflammed_MK2i.pdf',
+    width = 12,
+    height = 12)
+plotGseaTable(pathways[fgseaRes_TNF$pathway], ranks, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TNF_inflammed_MK2i.png',
+    width = 800,
+    height = 800)
+plotGseaTable(pathways[fgseaRes_TNF$pathway], ranks, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TNF_inflammed_MK2i.png')
+```
+
+## Examine the overlap
+```{r fig.align="center", fig.width=10}
+overlap <- intersect(fgseaRes_TCT$pathway, fgseaRes_TNF$pathway)
+
+paste("Number of overlapping GSEA pathways:", length(overlap))
+
+overlap_path <- as.data.frame(overlap)
+colnames(overlap_path) <- "Pathways"
+overlap_path <- inner_join(overlap_path, fgseaRes_TCT[,c(1,5)], by = c("Pathways" = "pathway"))
+overlap_path <- inner_join(overlap_path, fgseaRes_TNF[,c(1,5)], by = c("Pathways" = "pathway"))
+
+direction <- overlap_path[,2] * overlap_path[,3]
+
+oppo_dir <- overlap_path$Pathways[which(direction < 0)]
+same_dir <- setdiff(overlap, oppo_dir)
+paste("Pathways enriched in opposite directions:", oppo_dir)
+```
+
+## Overlapping pathways in the same direction
+```{r fig.align="center", fig.width=10}
+# TCT
+pdf('GSEA analysis/TCT_inflammed_MK2i_overlap_samedir.pdf',
+    width = 12,
+    height = 4)
+plotGseaTable(pathways[same_dir], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TCT_inflammed_MK2i_overlap_samedir.png',
+    width = 800,
+    height = 500)
+plotGseaTable(pathways[same_dir], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TCT_inflammed_MK2i_overlap_samedir.png')
+
+# TNF
+pdf('GSEA analysis/TNF_inflammed_MK2i_overlap_samedir.pdf',
+    width = 12,
+    height = 4)
+plotGseaTable(pathways[same_dir], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TNF_inflammed_MK2i_overlap_samedir.png',
+    width = 800,
+    height = 500)
+plotGseaTable(pathways[same_dir], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TNF_inflammed_MK2i_overlap_samedir.png')
+```
+
+## Overlapping pathways in the opposite direction
+```{r fig.align="center", fig.width=10}
+# TCT
+pdf('GSEA analysis/TCT_inflammed_MK2i_overlap_oppodir.pdf',
+    width = 12,
+    height = 2)
+plotGseaTable(pathways[oppo_dir], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TCT_inflammed_MK2i_overlap_oppodir.png',
+    width = 800,
+    height = 100)
+plotGseaTable(pathways[oppo_dir], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TCT_inflammed_MK2i_overlap_oppodir.png')
+
+# TNF
+pdf('GSEA analysis/TNF_inflammed_MK2i_overlap_oppodir.pdf',
+    width = 12,
+    height = 2)
+plotGseaTable(pathways[oppo_dir], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TNF_inflammed_MK2i_overlap_oppodir.png',
+    width = 800,
+    height = 100)
+plotGseaTable(pathways[oppo_dir], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TNF_inflammed_MK2i_overlap_oppodir.png')
+```
+
+## Examine the TCT specific pathways
+```{r fig.align="center", fig.width=10}
+# TCT
+tct_specific <- setdiff(fgseaRes_TCT$pathway, overlap)
+pdf('GSEA analysis/TCT_specific_inflammed_MK2i.pdf',
+    width = 12,
+    height = 4)
+plotGseaTable(pathways[tct_specific], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TCT_specific_inflammed_MK2i.png',
+    width = 800,
+    height = 400)
+plotGseaTable(pathways[tct_specific], ranks_tct, fgseaRes_TCT, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TCT_specific_inflammed_MK2i.png')
+```
+
+## Examine the TNF specific pathways
+
+```{r fig.align="center", fig.width=20}
+# TNF
+tnf_specific <- setdiff(fgseaRes_TNF$pathway, overlap)
+pdf('GSEA analysis/TNF_specific_inflammed_MK2i.pdf',
+    width = 12,
+    height = 8)
+plotGseaTable(pathways[tnf_specific], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+png('GSEA analysis/TNF_specific_inflammed_MK2i.png',
+    width = 800,
+    height = 800)
+plotGseaTable(pathways[tnf_specific], ranks_tnf, fgseaRes_TNF, gseaParam = 0.5) 
+dev.off()
+
+include_graphics('GSEA analysis/TNF_specific_inflammed_MK2i.png')
+```
+
+

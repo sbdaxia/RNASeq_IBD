@@ -1,0 +1,736 @@
+---
+title: "SI CD45+ clustering"
+author: "Bing Shui"
+date: "10/27/2020"
+output: 
+  html_document: 
+    fig_height: 7
+    fig_width: 10
+    toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prepare libraries
+```{r}
+suppressMessages(
+  c(library(Seurat),
+  library(tidyverse),
+  library(Matrix),
+  library(RCurl),
+  library(scales),
+  library(cowplot),
+  library(SingleCellExperiment),
+  library(AnnotationHub),
+  library(ensembldb),
+  library(gridExtra))
+)
+```
+
+## Load count matrixes and create Seurat object
+This is using data from "T Helper Cell Cytokines Modulate Intestinal Stem Cell Renewal and Differentiation", Biton et al.,2018. The data was used to generate Figure 5E of the paper.
+
+```{r}
+seurat_data <- read.table("Data/Fig5E_Log2TPM.txt.gz", sep = "\t")
+rownames(seurat_data) <- seurat_data[,1]
+colnames(seurat_data) <- seurat_data[1,]
+
+seurat_data <- seurat_data[,-1]
+seurat_data <- seurat_data[-1,]
+
+seurat_obj <- CreateSeuratObject(counts = seurat_data, min.features = 100)
+
+# Add number of genes per UMI for each cell to metadata
+seurat_obj$log10GenesPerUMI <- log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
+
+# Compute percent mito ratio
+seurat_obj$mitoRatio <- PercentageFeatureSet(object = seurat_obj, pattern = "^mt-")
+seurat_obj$mitoRatio <- seurat_obj@meta.data$mitoRatio / 100
+
+# Create metadata dataframe
+metadata <- seurat_obj@meta.data
+
+# Add cell IDs to metadata
+metadata$cells <- rownames(metadata)
+
+# Rename columns
+metadata <- metadata %>%
+  dplyr::rename(seq_folder = orig.ident,
+                nUMI = nCount_RNA,
+                nGene = nFeature_RNA)
+
+metadata <- separate(metadata, cells, c("barcode", "CD45", "genotype", "sample", "condition", "orig.annotation"), sep = "_", remove = FALSE, convert = TRUE)
+
+metadata$CD45 <- NULL
+
+# Add metadata back to Seurat object
+seurat_obj@meta.data <- metadata
+
+seurat <- subset(x = seurat_obj, subset = genotype == "MHCIIFlox", invert = FALSE)
+seurat$nCount_RNA <- NULL
+seurat$nFeature_RNA <- NULL
+```
+
+## Quanlity control
+### Filtering
+The filtering is done using standard criteria, nUMI >= 500, nGene >= 250, log10GenesPerUMI > 0.8, and mitoRatio < 0.2.
+
+Also any genes that are expressed in less than 10 cells were also filtered out.
+
+This is more just to check since I believe this data has already been filtered by the authors.
+
+```{r}
+# need to correct the sample column of the metadata
+metadata <- seurat@meta.data
+
+metadata$sample <- paste(metadata$condition, metadata$sample, sep = "-")
+
+seurat@meta.data <- metadata
+
+# Visualize the number of cell counts per sample
+metadata %>% 
+  ggplot(aes(x=sample, fill=sample)) + 
+  geom_bar() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) +
+  ggtitle("NCells")
+
+# Visualize the number UMIs/transcripts per cell
+metadata %>% 
+  ggplot(aes(color=sample, x=nUMI, fill= sample)) + 
+  geom_density(alpha = 0.2) + 
+  scale_x_log10() + 
+  theme_classic() +
+  ylab("Cell density") +
+  geom_vline(xintercept = 500) +
+  facet_wrap(.~condition)
+
+# Visualize the distribution of genes detected per cell via density plot
+metadata %>% 
+  ggplot(aes(color=sample, x=nGene, fill= sample)) + 
+  geom_density(alpha = 0.2) + 
+  theme_classic() +
+  scale_x_log10() + 
+  geom_vline(xintercept = 300) +
+  facet_wrap(.~condition)
+
+# Visualize the distribution of genes detected per cell via violin plot
+metadata %>% 
+  ggplot(aes(x=sample, y=log10(nGene), fill=sample)) +
+  geom_violin(aes(fill = NULL, color = sample)) +
+  geom_boxplot(width = 0.1) + 
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) +
+  ggtitle("NCells vs NGenes")
+
+# Visualize the correlation between genes detected and number of UMIs and determine whether strong presence of cells with low numbers of genes/UMIs
+metadata %>% 
+  ggplot(aes(x=nUMI, y=nGene, color=mitoRatio)) + 
+  geom_point() + 
+  scale_colour_gradient(low = "gray90", high = "black", limits = c(0, 0.4)) +
+  stat_smooth(method=lm) +
+  scale_x_log10() + 
+  scale_y_log10() + 
+  theme_classic() +
+  geom_vline(xintercept = 500) +
+  geom_hline(yintercept = 250) +
+  facet_wrap(~sample) 
+
+# Visualize the distribution of mitochondrial gene expression detected per cell
+metadata %>% 
+  ggplot(aes(color=sample, x=mitoRatio, fill=sample)) + 
+  geom_density(alpha = 0.2) + 
+  scale_x_log10() + 
+  theme_classic() +
+  geom_vline(xintercept = 0.2) +
+  facet_wrap(.~condition)
+
+# Visualize the overall complexity of the gene expression by visualizing the genes detected per UMI
+metadata %>%
+  ggplot(aes(x=log10GenesPerUMI, color = sample, fill=sample)) +
+  geom_density(alpha = 0.2) +
+  theme_classic() +
+  geom_vline(xintercept = 0.8) +
+  facet_wrap(.~condition)
+
+filtered_seurat <- subset(x = seurat, 
+                          subset= (nUMI >= 500) & 
+                            (nGene >= 250) & 
+                            (log10GenesPerUMI > 0.80) & 
+                            (mitoRatio < 0.20))
+
+# Extract counts
+counts <- GetAssayData(object = filtered_seurat, slot = "counts")
+
+# Output a logical vector for every gene on whether the more than zero counts per cell
+nonzero <- counts > 0
+
+# Sums all TRUE values and returns TRUE if more than 10 TRUE values per gene
+keep_genes <- Matrix::rowSums(nonzero) >= 10
+
+# Only keeping those genes expressed in more than 10 cells
+filtered_counts <- counts[keep_genes, ]
+
+# Reassign to filtered Seurat object
+filtered_seurat <- CreateSeuratObject(filtered_counts, meta.data = filtered_seurat@meta.data)
+```
+
+### Post filtering visualization
+Visualize the filtered data to confirm successful filtering.
+```{r}
+## Save filtered subset to new metadata
+metadata_clean <- filtered_seurat@meta.data
+
+grid.arrange(
+  ## Visualize the number of cell counts per sample
+  metadata_clean %>% 
+    ggplot(aes(x=sample, fill=sample)) + 
+    geom_bar() +
+    theme_classic() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    theme(plot.title = element_text(hjust=0.5, face="bold")) +
+    ggtitle("NCells"),
+  # Visualize the distribution of genes detected per cell via density plot
+  metadata_clean %>% 
+    ggplot(aes(color=sample, x=nGene, fill= sample)) + 
+    geom_density(alpha = 0.2) + 
+    theme_classic() +
+    scale_x_log10() + 
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    geom_vline(xintercept = 300) +
+    facet_wrap(.~condition),
+  # Visualize the distribution of genes detected per cell via violin plot
+  metadata_clean %>% 
+    ggplot(aes(x=sample, y=log10(nGene), fill=sample)) +
+    geom_violin(aes(fill = NULL, color = sample)) +
+    geom_boxplot(width = 0.1) + 
+    theme_classic() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    theme(plot.title = element_text(hjust=0.5, face="bold")) +
+    ggtitle("NCells vs NGenes"),
+  # Visualize the correlation between genes detected and number of UMIs and determine whether strong presence of cells with low numbers of genes/UMIs
+  metadata_clean %>% 
+    ggplot(aes(x=nUMI, y=nGene, color=mitoRatio)) + 
+    geom_point() + 
+    scale_colour_gradient(low = "gray90", high = "black", limits = c(0, 0.4)) +
+    stat_smooth(method=lm) +
+    scale_x_log10() + 
+    scale_y_log10() + 
+    theme_classic() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    geom_vline(xintercept = 500) +
+    geom_hline(yintercept = 250) +
+    facet_wrap(~sample),
+  # Visualize the distribution of mitochondrial gene expression detected per cell
+  metadata_clean %>% 
+    ggplot(aes(color=sample, x=mitoRatio, fill=sample)) + 
+    geom_density(alpha = 0.2) + 
+    scale_x_log10() + 
+    theme_classic() +
+    geom_vline(xintercept = 0.2) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    facet_wrap(.~condition),
+  # Visualize the overall complexity of the gene expression by visualizing the genes detected per UMI
+  metadata_clean %>%
+    ggplot(aes(x=log10GenesPerUMI, color = sample, fill=sample)) +
+    geom_density(alpha = 0.2) +
+    theme_classic() +
+    geom_vline(xintercept = 0.8) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    facet_wrap(.~condition),
+  nrow = 3
+)
+
+# Create .RData object to load at any time
+save(filtered_seurat, file="Data/seurat_filtered.RData")
+```
+
+## Normalize and transform the dataset
+We want to first explore if cells cluster by cell cycle. The cell cycle markers were generated using information from the [HBC training material](https://hbctraining.github.io/scRNA-seq/lessons/cell_cycle_scoring.html).
+```{r}
+# Normalize the counts for cell cycle phase exploration
+seurat_phase <- NormalizeData(filtered_seurat)
+
+# make a list of cell cycle markers for mouse
+#symbol_2_ensembl <- read_csv("Data/mouse_symbol_Ensembl.csv")
+#mouse_cycle_marker <- read_csv("Data/Mus_musculus.csv")
+#mouse_cycle_marker <- inner_join(mouse_cycle_marker, symbol_2_ensembl[,c(2,4)], by = c("geneID" = "Ensembl Gene ID") )
+#g2m_genes <- mouse_cycle_marker %>% dplyr::filter(phase == "G2/M")%>% dplyr::select(`Marker Symbol`) %>% unlist()
+#s_genes <- mouse_cycle_marker %>% dplyr::filter(phase == "S")%>% dplyr::select(`Marker Symbol`) %>% unlist()
+#save(g2m_genes, s_genes, file = "Data/mouse_cycle maker.rda")
+
+# Load cell cycle markers
+load("Data/mouse_cycle maker.rda")
+
+# Score cells for cell cycle
+seurat_phase <- CellCycleScoring(seurat_phase, 
+                                 g2m.features = g2m_genes, 
+                                 s.features = s_genes)
+
+
+# Identify the most variable genes
+seurat_phase <- FindVariableFeatures(seurat_phase, 
+                                     selection.method = "vst",
+                                     nfeatures = 2000, 
+                                     verbose = FALSE)
+
+# Scale the counts
+seurat_phase <- ScaleData(seurat_phase)
+
+# Perform PCA
+seurat_phase <- RunPCA(seurat_phase)
+
+# Plot the PCA colored by cell cycle phase
+DimPlot(seurat_phase,
+        reduction = "pca",
+        group.by= "Phase",
+        split.by = "Phase")
+```
+
+It doesn't seem like the cells have cell-cycle specific clustering pattern so we can proceed to SCT transformation without regressing out cell cycle effects. 
+
+```{r}
+## no clear clustering based on cell cycle was observed so we can move on to SCTransform
+options(future.globals.maxSize = 4000 * 1024^2)
+
+# Split seurat object by condition to perform cell cycle scoring and SCT on all samples
+split_seurat <- SplitObject(filtered_seurat, split.by = "sample")
+
+suppressMessages(suppressWarnings(for (i in 1:length(split_seurat)) {
+  split_seurat[[i]] <- NormalizeData(split_seurat[[i]], verbose = FALSE)
+  split_seurat[[i]] <- CellCycleScoring(split_seurat[[i]], g2m.features=g2m_genes, s.features=s_genes, , verbose = FALSE)
+  split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"), , verbose = FALSE)
+}))
+```
+
+## Integration
+This is to integrate all samples so they can be visualized in the same space and also remove batch effects across samples, assuming that they are from different batches.
+```{r}
+# Select the most variable features to use for integration
+integ_features <- SelectIntegrationFeatures(object.list = split_seurat, 
+                                            nfeatures = 3000) 
+
+# Prepare the SCT list object for integration
+split_seurat <- PrepSCTIntegration(object.list = split_seurat, 
+                                   anchor.features = integ_features)
+
+# Find best buddies - can take a while to run
+suppressMessages(integ_anchors <- FindIntegrationAnchors(object.list = split_seurat, 
+                                        normalization.method = "SCT", 
+                                        anchor.features = integ_features))
+
+# Integrate across samples
+suppressMessages(seurat_integrated <- IntegrateData(anchorset = integ_anchors, 
+                                   normalization.method = "SCT"))
+
+seurat_integrated@meta.data$sample <- factor(seurat_integrated@meta.data$sample, levels = c("Homeostasis-M1", "Homeostasis-M2", "Homeostasis-M3", "HPDay4-M1", "HPDay4-M2", "HPDay4-M3"))
+
+seurat_integrated@meta.data$condition <- factor(seurat_integrated@meta.data$condition, levels = c("Homeostasis", "HPDay4"))
+
+# Save integrated seurat object
+saveRDS(seurat_integrated, "Results/integrated_seurat.rds")
+
+# Run PCA
+seurat_integrated <- RunPCA(object = seurat_integrated)
+colnames(seurat_integrated@meta.data)[1] <- "seq_folder"
+
+# Plot PCA
+PCAPlot(seurat_integrated,
+        split.by = "condition",
+        group.by = "condition")  
+
+# Run UMAP
+suppressMessages(seurat_integrated <- RunUMAP(seurat_integrated, 
+                             dims = 1:40,
+                             reduction = "pca"))
+
+# Plot UMAP                             
+DimPlot(seurat_integrated, group.by = "condition")  
+
+DimPlot(seurat_integrated,
+        split.by = "condition",
+        group.by = "condition")  
+
+```
+
+## Clustering analysis
+Now the position of cells on the map is determined, we can move on to determine the clusters and their identity.
+
+```{r}
+# Explore heatmap of PCs
+DimHeatmap(seurat_integrated, 
+           dims = 1:9, 
+           cells = 500, 
+           balanced = TRUE)
+
+print(x = seurat_integrated[["pca"]], 
+      dims = 1:10, 
+      nfeatures = 5)
+
+# Plot the elbow plot
+ElbowPlot(object = seurat_integrated, 
+          ndims = 50)
+
+# Determine the K-nearest neighbor graph
+seurat_integrated <- FindNeighbors(object = seurat_integrated, 
+                                   dims = 1:40)
+
+# Determine the clusters for various resolutions  
+resoluations <- c(0.2, 0.4, 0.6, 0.8, 1.0, 1.4)
+suppressMessages(seurat_integrated <- FindClusters(object = seurat_integrated,
+                                  resolution = resoluations))
+
+# Explore resolutions
+nclusters <- c()
+for (i in (dim(seurat_integrated@meta.data)[2]-length(resoluations)) : (dim(seurat_integrated@meta.data)[2]-1)) {
+  nclusters <- c(nclusters, length(unique(seurat_integrated@meta.data[,i])))
+}
+names(nclusters) <- resoluations
+nclusters <- as.data.frame(nclusters)
+nclusters$resolution <- rownames(nclusters)
+rownames(nclusters) <- NULL
+print(nclusters)
+```
+
+Based on the Biton et al. 2018 paper, they identified 12 cell types. In the spirit of over-clustering, I picked resolution 0.4, which identified 19 clusters.
+
+But before I look at my own clusters, I want to see how the original annotations match up with the new UMAP.
+```{r}
+Idents(object = seurat_integrated) <- "orig.annotation"
+
+DimPlot(seurat_integrated,
+        reduction = "umap",
+        label = TRUE,
+        label.size = 4)
+```
+
+```{r}
+# Assign identity of clusters using 0.4 resoluation
+Idents(object = seurat_integrated) <- "integrated_snn_res.0.4"
+
+# Plot the UMAP
+DimPlot(seurat_integrated,
+        reduction = "umap",
+        label = TRUE,
+        label.size = 6)
+
+```
+
+QC the clusters
+```{r}
+# Extract identity and sample information from seurat object to determine the number of cells per cluster per sample
+n_cells <- FetchData(seurat_integrated, 
+                     vars = c("ident", "sample")) %>%
+  dplyr::count(ident, sample) %>%
+  tidyr::spread(ident, n)
+
+n_cells
+
+# UMAP of cells in each cluster by sample
+DimPlot(seurat_integrated, 
+        label = TRUE, 
+        split.by = "condition")  + NoLegend()
+
+# Explore whether clusters segregate by cell cycle phase
+DimPlot(seurat_integrated,
+        label = TRUE, 
+        split.by = "Phase")  + NoLegend()
+
+# Determine metrics to plot present in seurat_integrated@meta.data
+metrics <-  c("nUMI", "nGene", "S.Score", "G2M.Score", "mitoRatio")
+
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = metrics,
+            pt.size = 0.4, 
+            order = TRUE,
+            min.cutoff = 'q10',
+            label = TRUE)
+
+# Defining the information in the seurat object of interest
+columns <- c(paste0("PC_", 1:16),
+             "ident",
+             "UMAP_1", "UMAP_2")
+
+# Extracting this data from the seurat object
+pc_data <- FetchData(seurat_integrated, 
+                     vars = columns)
+
+# Adding cluster label to center of cluster on UMAP
+umap_label <- FetchData(seurat_integrated, 
+                        vars = c("ident", "UMAP_1", "UMAP_2"))  %>%
+  group_by(ident) %>%
+  summarise(x=mean(UMAP_1), y=mean(UMAP_2))
+
+# Plotting a UMAP plot for each of the PCs
+map(paste0("PC_", 1:16), function(pc){
+  ggplot(pc_data, 
+         aes(UMAP_1, UMAP_2)) +
+    geom_point(aes_string(color=pc), 
+               alpha = 0.7) +
+    scale_color_gradient(guide = FALSE, 
+                         low = "grey90", 
+                         high = "blue")  +
+    geom_text(data=umap_label, 
+              aes(label=ident, x, y)) +
+    ggtitle(pc)
+}) %>% 
+  plot_grid(plotlist = .)
+```
+
+## Define cluster identity using known cell type markers
+Since this is a published dataset, I will use the markers that were used in the Biton et al. 2018 paper.
+
+Here is the description of the markers they used:
+"In the case of the CD45+ immune cells, the following markers were used to interpret clusters post hoc. B cells: Bank1, Fcer2a, Cd79a, Cd79b, Cd22. B cell (cycling): Mki67, Cd79a, Cd79b, Ms4a1, Pou2af1. Cd4+ T helper cells: Cd4, Foxp3, Gata3, Cd3g, Tnfrsf4. Cd8 T cells: Gzma, Gzmb, Cd8a. Dendritic cells (DCs): Itgae, Tlr3, Cd209a, Cd209b, Irf8, H2-Ab1, Clec9a. Epithelial: Epcam, Krt8, Vil1, Muc2, Krt20. Inﬂammatory monocytes: Ccr2, Ly6c2, Fcgr1, Iﬁtm3, Fn1. Neutrophils: S100a9, S100a8, Csf3r, Cxcr2, Msrb1, Ccrl2. Natural Killer (NK) cells: Ncr1, Prf1, Klra1, Xcl1. Plasmacytoid dendritic cells: Siglech, Bst2, Tlr7. Plasma cell: Jchain, Mzb1, Xbp1, Sdc1."
+
+```{r}
+DimPlot(object = seurat_integrated, 
+        reduction = "umap", 
+        label = TRUE) + NoLegend()
+
+# Select the RNA counts slot to be the default assay
+DefaultAssay(seurat_integrated) <- "RNA"
+
+# Normalize RNA data for visualization purposes
+seurat_integrated <- NormalizeData(seurat_integrated, verbose = FALSE)
+```
+
+### B cells
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Bank1", "Fcer2a", "Cd79a", "Cd79b", "Cd22"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 0,3,4,14.
+
+### B cell (cycling)
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Mki67", "Cd79a", "Cd79b", "Ms4a1", "Pou2af1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 9.
+
+### Cd4+ T helper cells
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Cd4", "Foxp3", "Gata3", "Cd3g", "Tnfrsf4"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 12.
+
+### Cd8 T cells
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Gzma", "Gzmb", "Cd8a"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 12.
+
+### Dendritic cells (DCs)
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Itgae", "Tlr3", "Cd209a", "Cd209b", "Irf8", "H2-Ab1", "Clec9a"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 8,11,16.
+
+### Epithelial
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Epcam", "Krt8", "Vil1", "Muc2", "Krt20"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 15.
+
+### Inﬂammatory monocytes
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Ccr2", "Ly6c2", "Fcgr1", "Iﬁtm3", "Fn1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 13.
+
+### Neutrophils
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("S100a9", "S100a8", "Csf3r", "Cxcr2", "Msrb1", "Ccrl2"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 11.
+
+### NK cells
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Ncr1", "Prf1", "Klra1", "Xcl1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 2)
+```
+
+This identifies cluster 17.
+
+### Plasmacytoid dendritic cells (pDCs)
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Siglech", "Mzb1", "Tlr7", "Sdc1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 18.
+
+### Plasma cells
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Jchain", "Bst2", "Xbp1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+This identifies cluster 10.
+
+## Marker identification analysis
+### Find marker genes
+We will try to identify markers from the  un-identified clusters: 7  and see if these markers can help us identify this cluster.
+
+7 is likely M2 Macrophages since it is labeled as such but the paper didn't actually give me the marker genes they used to identify this cluster.
+
+```{r}
+# Identification of conserved markers in all conditions
+DefaultAssay(seurat_integrated) <- "RNA"
+gene_info <- read_csv("Data/MRK_Sequence.csv") 
+
+# Create function to get conserved markers for any given cluster
+get_conserved <- function(cluster){
+  FindConservedMarkers(seurat_integrated,
+                       ident.1 = cluster,
+                       grouping.var = "condition",
+                       only.pos = TRUE,
+                       logfc.threshold = 0.25) %>%
+    rownames_to_column(var = "gene") %>%
+    left_join(y = unique(gene_info[, c("Marker Symbol", "Marker Name")]),
+              by = c("gene" = "Marker Symbol")) %>%
+    cbind(cluster_id = cluster, .)
+} 
+
+# Iterate function across desired clusters
+conserved_markers <- map_dfr(c(7), get_conserved)
+
+# Save the marker genes
+write_csv(conserved_markers, "Results/C7_conserved markers.csv")
+```
+
+### Evaluate marker genes
+We first look at the top 10 genes with highest averaged LFC
+### Cluster 7
+```{r}
+# Extract top 10 markers per cluster
+top10 <- conserved_markers %>% 
+  mutate(avg_lfc = (HPDay4_avg_logFC + Homeostasis_avg_logFC) /2) %>% 
+  group_by(cluster_id) %>% 
+  top_n(n = 10, 
+        wt = avg_lfc)
+
+# Visualize top 10 markers per cluster
+top10
+```
+
+Csf1r and Lyz2 are a good marker of macrophage. Mafb, Ms4a4a and Aif1 are a good marker for M2 macrophage. 
+[MS4A4A: a novel cell surface marker for M2 macrophages and plasma cells](https://pubmed.ncbi.nlm.nih.gov/28303902/)
+[Colony-stimulating factor-1-induced AIF1 expression in tumor-associated macrophages enhances the progression of hepatocellular carcinoma](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5599077/)
+[The transcription factor MafB promotes anti-inflammatory M2 polarization and cholesterol efflux in macrophages](https://www.nature.com/articles/s41598-017-07381-8)
+[The role of CSF1R-dependent macrophages in control of the intestinal stem-cell niche](https://www.nature.com/articles/s41467-018-03638-6)
+
+```{r}
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("Csf1r", "Lyz2", "Mafb", "Ms4a4a", "Aif1"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE,
+            ncol = 3)
+```
+
+So cluster 7 is indeed M2 macrophages.
+
+The original annotation actually worked quite well. UMAP clustering was slightly off compared to the original clystering, possibly due to the reduction of cells (I only used half of the cells for this analysis since I didn't use the MHCII-- cells). So I will be using the original annotation for the following analysis.
+
+```{r}
+Idents(object = seurat_integrated) <- "orig.annotation"
+
+DimPlot(seurat_integrated,
+        reduction = "umap",
+        label = TRUE,
+        label.size = 4,
+        repel = TRUE)
+
+DimPlot(object = seurat_integrated, 
+        reduction = "umap", 
+        label = TRUE,
+        label.size = 3,
+        repel = TRUE,
+        split.by = "condition") + NoLegend()
+
+# Save final R object
+write_rds(seurat_integrated,
+          path = "Results/seurat_labelled.rds") 
+
+sessionInfo()
+```
+

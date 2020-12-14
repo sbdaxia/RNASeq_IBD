@@ -1,0 +1,12 @@
+"0","pdf('GO analysis/GO dotplot_BP_TCT.pdf',
+    width = 10,
+    height = 4)
+dotplot(ego_BP, showCategory=10)
+dev.off()
+"
+"1","null device "
+"1","
+"
+"1","          1 "
+"1","
+"

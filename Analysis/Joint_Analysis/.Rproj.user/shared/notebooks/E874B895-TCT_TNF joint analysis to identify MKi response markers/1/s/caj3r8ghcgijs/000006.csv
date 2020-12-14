@@ -1,0 +1,4 @@
+"0","pdf('GO analysis/GO dotplot_BP_TNF.pdf',"
+"0","    width = 8,"
+"0","    height = 4)"
+"0","dotplot(ego_BP, showCategory=10)"

@@ -1,0 +1,65 @@
+"0","target_gene <- inf_overlap"
+"0","tct_all <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_V vs NI_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m
+)
+"
+"0","tnf_all <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_V vs NI_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m
+)
+"
+"0","detected_gene <- unique(c(tct_all$X1, tnf_all$X1))"
+"0","# GO analysis"
+"0","# Run GO enrichment analysis for biological process"
+"0","ego_BP <- enrichGO(gene = target_gene, "
+"0","                universe = detected_gene,"
+"0","                keyType = ""ENSEMBL"","
+"0","                OrgDb = org.Mm.eg.db, "
+"0","                ont = ""BP"", "
+"0","                pAdjustMethod = ""BH"", "
+"0","                pvalueCutoff = 0.05, "
+"0","                readable = TRUE)"
+"0","# Output results from GO analysis to a table"
+"0","cluster_summary_BP <- data.frame(ego_BP)"
+"0","write.csv(cluster_summary_BP, ""GO analysis/GO analysis_BP_overlap.csv"")"
+"0","# Run GO enrichment analysis for molecular function "
+"0","ego_MF <- enrichGO(gene = target_gene, "
+"0","                universe = detected_gene,"
+"0","                keyType = ""ENSEMBL"","
+"0","                OrgDb = org.Mm.eg.db, "
+"0","                ont = ""MF"", "
+"0","                pAdjustMethod = ""BH"", "
+"0","                pvalueCutoff = 0.05, "
+"0","                readable = TRUE)"
+"0","# Output results from GO analysis to a table"
+"0","cluster_summary_MF <- data.frame(ego_MF)"
+"0","write.csv(cluster_summary_MF, ""GO analysis/GO analysis_MF_overlap.csv"")"
+"0","# Run GO enrichment analysis for cellular component "
+"0","ego_CC <- enrichGO(gene = target_gene, "
+"0","                universe = detected_gene,"
+"0","                keyType = ""ENSEMBL"","
+"0","                OrgDb = org.Mm.eg.db, "
+"0","                ont = ""CC"", "
+"0","                pAdjustMethod = ""BH"", "
+"0","                pvalueCutoff = 0.05, "
+"0","                readable = TRUE)"
+"0","# Output results from GO analysis to a table"
+"0","cluster_summary_CC <- data.frame(ego_CC)"
+"0","write.csv(cluster_summary_CC, ""GO analysis/GO analysis_CC_overlap.csv"")"

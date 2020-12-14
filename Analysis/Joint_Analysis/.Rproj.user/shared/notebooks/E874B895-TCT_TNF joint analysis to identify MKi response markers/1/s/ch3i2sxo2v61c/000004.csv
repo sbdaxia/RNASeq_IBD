@@ -1,0 +1,8 @@
+"0","pdf('GSEA analysis/Overlapping_GSEA_TCT.pdf',
+    width = 12,
+    height = 6)
+plotGseaTable(pathways[overlap_gsea], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5) +
+dev.off()
+"
+"1","integer(0)
+"

@@ -1,0 +1,1324 @@
+---
+title: "TNF model IBD MK2 inhibitor treatment RNA-Seq Analysis"
+author: "Bing Shui"
+date: "1/2/2020"
+output: 
+  html_document:
+    self-contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Index 
+* [Analysis of all samples](#all)
+* [I_V vs NI_V](#vcompare)
+* [I_MKI vs I_V](#icompare)
+* [NI_MKI vs NI_V](#nicompare)
+* [MKI vs V](#combinedcompare)
+
+# Alignmnent and counting of the `fastq` files
+
+This step is performed on the O2 cluster. The `fastq` file quality was checked using FastQC and MultiQC. They are aligned to Ensembl mm10 genome and counted using Salmon pseudoaligner. Output `sf` files were transfered from O2 to local machine for further processing in R.  
+
+# Library loading and set up
+```{r}
+suppressMessages(
+  c(library(DESeq2),
+    library(limma),
+    library(tximport),
+    library(gridExtra),
+    library(ensembldb),
+    library(EnsDb.Mmusculus.v79),
+    library(grid),
+    library(ggplot2),
+    library(lattice),
+    library(reshape),
+    library(mixOmics),
+    library(gplots),
+    library(RColorBrewer),
+    library(readr),
+    library(dplyr),
+    library(VennDiagram),
+    library(clusterProfiler),
+    library(DOSE),
+    library(org.Mm.eg.db), 
+    library(pathview),
+    library(AnnotationDbi),
+    library(knitr))
+)
+```
+
+# Analysis of all samples {#all}
+## Compile gene count files in DESeq2
+
+Set working directory to the folder that contains only gene count `txt` files
+
+```{r}
+# Generate a tx2gene object for matrix generation
+edb <- EnsDb.Mmusculus.v79 
+transcriptsID <- as.data.frame(transcripts(edb))
+tx2gene <- as.data.frame(cbind(transcriptsID$tx_id, transcriptsID$gene_id))
+
+# Generate DESeqData using the counting result generated using Salmon
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Gene Counts/TNF")
+inDir = getwd()
+countFiles = list.files(inDir, pattern=".sf$", full.names = TRUE)
+basename(countFiles)
+names(countFiles) <- c('I_MKI_1','I_MKI_2','I_MKI_3','I_MKI_4','I_MKI_5','I_MKI_6', 'I_V_1', 'I_V_2', 'I_V_3', 'I_V_4', 'I_V_5', 'NI_MKI_1','NI_MKI_2','NI_MKI_3','NI_MKI_4', 'NI_MKI_5', 'NI_V_1', 'NI_V_2', 'NI_V_3', 'NI_V_4', 'NI_V_5')
+
+txi.salmon <- tximport(countFiles, type = "salmon", tx2gene = tx2gene, ignoreTxVersion = TRUE)
+
+DESeqsampletable_all <- data.frame(condition = c(rep('experimental', 11), rep('control', 10)))
+
+DESeqsampletable_all$batch <- factor(c('2','3','3','3','3','3','2','2','2','2','3','2','2','2','2','2','2','2','2','2','2'))
+DESeqsampletable_all$gender <- factor(c('M', 'F', 'F', 'F', 'M', 'F', 'F', 'M', 'M', 'F', 'F', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'M', 'M', 'M'))
+
+rownames(DESeqsampletable_all) <- colnames(txi.salmon$counts)
+
+ddsHTSeq<- DESeqDataSetFromTximport(txi.salmon, DESeqsampletable_all, ~ condition + batch + gender)
+
+ddsHTSeq_norm <- estimateSizeFactors(ddsHTSeq)
+
+ddsHTSeq_norm <- DESeq(ddsHTSeq_norm)
+ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+
+```
+MA plot was generated to inspect the correct shrinkage of LFC.
+```{r}
+DESeq2::plotMA(ddsHTSeq_analysis)
+```
+
+## Quality Inspection of the Gene Count Data
+### Generate raw count table that contains the simple counts of each gene
+Data is transformed and pseudocount is calculated.
+```{r}
+rawCountTable <- as.data.frame(DESeq2::counts(ddsHTSeq_norm, normalized = TRUE))
+pseudoCount = log2(rawCountTable + 1)
+grid.arrange(
+  ggplot(pseudoCount, aes(x= I_MKI_1)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_1"), 
+  ggplot(pseudoCount, aes(x= I_MKI_2)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_2"),
+  ggplot(pseudoCount, aes(x= I_MKI_3)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_3"),
+  ggplot(pseudoCount, aes(x= I_MKI_4)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_4"),
+  ggplot(pseudoCount, aes(x= I_MKI_5)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_5"),
+  ggplot(pseudoCount, aes(x= I_MKI_6)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_MKI_6"), nrow = 2)
+  
+grid.arrange(
+  ggplot(pseudoCount, aes(x= I_V_1)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_V_1"),
+  ggplot(pseudoCount, aes(x= I_V_2)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_V_2"),
+  ggplot(pseudoCount, aes(x= I_V_3)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_V_3"),
+  ggplot(pseudoCount, aes(x= I_V_4)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_V_4"),
+  ggplot(pseudoCount, aes(x= I_V_5)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "I_V_5"), nrow = 2)
+
+grid.arrange(
+  ggplot(pseudoCount, aes(x= NI_MKI_1)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_MKI_1"),
+  ggplot(pseudoCount, aes(x= NI_MKI_2)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_MKI_2"),
+  ggplot(pseudoCount, aes(x= NI_MKI_3)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_MKI_3"),
+  ggplot(pseudoCount, aes(x= NI_MKI_4)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_MKI_4"),
+  ggplot(pseudoCount, aes(x= NI_MKI_5)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_MKI_5"), nrow = 2)
+
+grid.arrange(
+  ggplot(pseudoCount, aes(x= NI_V_1)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_V_1"),
+  ggplot(pseudoCount, aes(x= NI_V_2)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_V_2"),
+  ggplot(pseudoCount, aes(x= NI_V_3)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_V_3"),
+  ggplot(pseudoCount, aes(x= NI_V_4)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_V_4"),
+  ggplot(pseudoCount, aes(x= NI_V_5)) + xlab(expression(log[2](count + 1))) + ylab("Number of Genes") + 
+    geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6) + labs(title = "NI_V_5"), nrow = 2)
+
+
+```
+
+### Between-sample distribution
+Check on the gene count distribution across all genes.
+```{r}
+#Boxplots
+suppressMessages(df <- melt(pseudoCount, variable_name = "Samples"))
+df <- data.frame(df, Condition = substr(df$Samples,1,4))
+
+ggplot(df, aes(x=Samples, y=value, fill = Condition)) + geom_boxplot() + xlab("") + 
+  ylab(expression(log[2](count+1))) + scale_fill_manual(values = c("#619CFF", "#F564E3", "#E69F00", "#FF0000")) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+#Histograms and density plots
+ggplot(df, aes(x=value, colour = Samples, fill = Samples)) + ylim(c(0, 0.25)) + 
+  geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+  theme(legend.position = "top") + xlab(expression(log[2](count+1)))
+```
+
+### Clustering of the sample-to-sample distances
+This is the sanity check step to confirm that under a un-supervised clustering. For some reason, the code is giving error when try to plot this heatmap in RStudio, so I created a pdf file that contains the heatmap in the Analysis folder named `Hierchical Clustering.pdf`
+```{r fig.align="center"}
+keep <- c()
+for (i in 1:dim(rawCountTable)[1]) {
+  if (sum(rawCountTable[i,1:6] != 0) >=2 | sum(rawCountTable[i,7:11] != 0) >= 2 | sum(rawCountTable[i,12:16] != 0) >= 2 | sum(rawCountTable[i,17:21] != 0) >= 2) {
+    keep <- c(keep, i)
+  }
+}
+ddsHTSeq_transform <- varianceStabilizingTransformation(ddsHTSeq)
+rawCountTable_transform <- as.data.frame(assay(ddsHTSeq_transform))
+rawCountTable_transform_detected_TNF <- rawCountTable_transform[keep,]
+write.csv(rawCountTable_transform_detected_TNF, "VST_TNF.csv")
+
+pseudoCount_transform = log2(rawCountTable_transform + 1)
+mat.dist = pseudoCount_transform
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist/max(mat.dist)
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF")
+png('Hierchical_Clustering.png')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+pdf('Hierchical_Clustering.pdf')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+include_graphics('Hierchical_Clustering.png')
+```
+
+### Principal component plot of the samples
+I performed PCA analysis on all datasets to confirm that samples from the same condition group together. This step has to be performed using `varianceStabelizingTransformed` dataset, so that the high variance in genes with low counts will not skew the data.
+
+The top 500 most variable genes are selected for PCA analysis.
+
+```{r}
+plotPCA(ddsHTSeq_transform, intgroup = "condition", ntop = 500) +
+  geom_text(aes(label=name), vjust = 2) + 
+  xlim(-30, 35) + ylim(-20, 20)
+```
+
+# I_V vs NI_V {#vcompare}
+## Compile gene count files in DESeq2
+
+Set working directory to the folder that contains only gene count `txt` files
+
+```{r}
+# Generate DESeqData using the counting result generated using Salmon
+countFiles_vcompare <- c(countFiles[17:21], countFiles[7:11])
+
+txi.salmon <- tximport(countFiles_vcompare, type = "salmon", tx2gene = tx2gene, ignoreTxVersion = TRUE)
+
+DESeqsampletable <- DESeqsampletable_all[c(17:21, 7:11), ]
+
+ddsHTSeq<- DESeqDataSetFromTximport(txi.salmon, DESeqsampletable, ~ condition + batch + gender)
+
+ddsHTSeq_norm <- DESeq(ddsHTSeq)
+ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+```
+MA plot was generated to inspect the correct shrinkage of LFC.
+```{r}
+DESeq2::plotMA(ddsHTSeq_analysis)
+```
+
+### Clustering of the sample-to-sample distances
+This is the sanity check step to confirm that under a un-supervised clustering. For some reason, the code is giving error when try to plot this heatmap in RStudio, so I created a pdf file that contains the heatmap in the Analysis folder named `Hierchical Clustering.pdf`
+```{r fig.align="center"}
+rawCountTable <- as.data.frame(DESeq2::counts(ddsHTSeq_norm, normalized = TRUE))
+pseudoCount = log2(rawCountTable + 1)
+ddsHTSeq_transform <- varianceStabilizingTransformation(ddsHTSeq)
+rawCountTable_transform <- as.data.frame(assay(ddsHTSeq_transform))
+pseudoCount_transform = log2(rawCountTable_transform + 1)
+mat.dist = pseudoCount_transform
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist/max(mat.dist)
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF")
+png('Hierchical_Clustering_I_V vs NI_V.png')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+pdf('Hierchical_Clustering_I_V vs NI_V.pdf')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+include_graphics('Hierchical_Clustering_I_V vs NI_V.png')
+```
+
+Final output is following:
+![Hierchical Clustering](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Hierchical_Clustering_I_V vs NI_V.png)
+
+### Principal component plot of the samples
+I performed PCA analysis on all datasets to confirm that samples from the same condition group together. This step has to be performed using `varianceStabelizingTransformed` dataset, so that the high variance in genes with low counts will not skew the data.
+
+The top 500 most variable genes are selected for PCA analysis.
+
+```{r}
+(PCA <- plotPCA(ddsHTSeq_transform, intgroup = "condition", ntop = 500))
+
+pdf('PCA_TNF_IV-vs-NIV.pdf',
+    height = 6,
+    width = 8)
+PCA
+dev.off()
+```
+
+## Differential analysis
+### Raw data filtering and Generate the raw count file with all detected genes
+This step removes all genes with 0 counts across all samples, output a `csv` file and also generate a density plot using filtered dataset.
+```{r}
+keep <- c()
+for (i in 1:dim(rawCountTable)[1]) {
+  if (sum(rawCountTable[i,1:5] != 0) >=2 | sum(rawCountTable[i,6:10] != 0) >= 2) {
+    keep <- c(keep, i)
+  }
+}
+filterCount <- pseudoCount[keep,]
+df <- melt(filterCount, variable_name = "Samples")
+df <- data.frame(df, Condition = substr(df$Samples,1,4))
+detected_raw_count_norm <- rawCountTable[keep,]
+write.csv(detected_raw_count_norm, "normalized_raw_gene_counts_I_V vs NI_V.csv")
+
+ggplot(df, aes(x=value, colour = Samples, fill = Samples)) + 
+  geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+  theme(legend.position = "top") + xlab("pseudocounts")
+```  
+  
+### Generate file with differential analysis result
+This step generates the analysis file that contains results from differential analysis.
+```{r}
+write.csv(as.data.frame(ddsHTSeq_analysis[keep,]), "Differential Analysis_I_V vs NI_V.csv")
+```
+
+### Draw heatmap for transcripts that are significantly dysregulated in I_V samples compared to NI_V samples
+Genes that were not detected were removed from the list. Genes with `padj` < 0.05 were considered significantly dysregulated. Their normalized counts were z-scored and used for plotting the heatmap.
+
+```{r fig.height=10, fig.align="center"}
+suppressMessages(library(mosaic))
+
+rawCountTable_transform_detected_iv_vs_niv <- rawCountTable_transform[keep,]
+write.csv(rawCountTable_transform_detected_iv_vs_niv, "VST_I_V vs NI_V.csv")
+
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.05 & abs(dif_analysis$log2FoldChange) > 0.25)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected_iv_vs_niv)))
+}
+sig_count <- rawCountTable_transform_detected_iv_vs_niv[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:16] <- zscore(as.numeric(sig_dif[i,7:16]))
+}
+
+my_palette <- colorRampPalette(c("blue", "white", "red"))(128)
+heatmap_matrix <- as.matrix(sig_dif[,7:16])
+
+png('I_V vs NI_V RNASeq.png',
+    width = 600,
+    height = 1200,
+    res = 200,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "I_V vs NI_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('I_V vs NI_V RNASeq.pdf',
+    width = 6,
+    height = 10)
+heatmap.2(heatmap_matrix,
+          main = "I_V vs NI_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('I_V vs NI_V RNASeq.png')
+
+# output number of significant DE genes
+dim(sig_dif)[1]
+write.csv(sig_dif, "Significant genes_I_V vs NI_V.csv")
+```
+
+
+### Scatter plot, MA plot and Volcano plot for data visualization
+
+```{r}
+# Scatter plot
+detected_pseudocount <- pseudoCount[keep,]
+dif_analysis$I_V_mean <- rowMeans(detected_pseudocount[,6:10])
+dif_analysis$NI_V_mean <- rowMeans(detected_pseudocount[,1:5])
+(scatter <- ggplot(dif_analysis, aes(x = NI_V_mean, y = I_V_mean)) +
+  xlab("NI_V_Average(log2)") + ylab("I_V_Average(log2)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+  labs(title = "I_V vs NI_V Scatter Plot"))
+
+pdf('ScatterPlot_I_V vs NI_V.pdf')
+scatter
+dev.off()
+
+# MA plot
+(MA <- ggplot(dif_analysis, aes(x = log(baseMean,2), y = log2FoldChange,)) +
+  xlab("Average Expression") + ylab("LFC") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "I_V vs NI_V MA Plot"))
+
+pdf('MAPlot_I_V vs NI_V.pdf')
+MA
+dev.off()
+
+# Volcano Plot
+(volcano <- ggplot(dif_analysis, aes(x = log2FoldChange, y = -log(pvalue,10))) +
+  xlab("LFC") + ylab("-log10(P value)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.05 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "I_V vs NI_V Volcano Plot"))
+
+pdf('VolcanoPlot_I_V vs NI_V.pdf')
+volcano
+dev.off()
+
+```
+
+### GO analysis for DE genes
+Classic GO analysis is performed here for all DE genes detected in this dataset. The reference list is list of genes detected in RNASeq. Three categories of GO terms are tested here, including biological process, molecular function and cellular component.
+```{r}
+target_gene <- as.character(rownames(sig_dif))
+detected_gene <- as.character(rownames(detected_pseudocount))
+
+# Run GO enrichment analysis for biological process
+ego_BP <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_BP <- data.frame(ego_BP)
+
+write.csv(cluster_summary_BP, "GO analysis/GO analysis_BP_I_V vs NI_V.csv")
+
+# Run GO enrichment analysis for molecular function 
+ego_MF <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "MF", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_MF <- data.frame(ego_MF)
+
+write.csv(cluster_summary_MF, "GO analysis/GO analysis_MF_I_V vs NI_V.csv")
+
+# Run GO enrichment analysis for cellular component 
+ego_CC <- enrichGO(gene = target_gene, 
+                universe = detected_gene,
+                keyType = "ENSEMBL",
+                OrgDb = org.Mm.eg.db, 
+                ont = "CC", 
+                pAdjustMethod = "BH", 
+                pvalueCutoff = 0.05, 
+                readable = TRUE)
+
+# Output results from GO analysis to a table
+cluster_summary_CC <- data.frame(ego_CC)
+
+write.csv(cluster_summary_CC, "GO analysis/GO analysis_CC_I_V vs NI_V.csv")
+```
+#### Draw Dotplot representing the results
+##### Biological process
+```{r}
+png('GO analysis/GO dotplot_BP_I_V vs NI_V.png',
+    width = 1600,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+dotplot(ego_BP, showCategory=50)
+dev.off()
+```
+Final output is following:
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO dotplot_BP_I_V vs NI_V.png)
+
+##### Molecular Function
+```{r}
+png('GO analysis/GO dotplot_MF_I_V vs NI_V.png',
+    width = 1200,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+dotplot(ego_MF, showCategory=50)
+dev.off()
+```
+
+Final output is following:
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO dotplot_MF_I_V vs NI_V.png)
+
+##### Cellular component
+```{r}
+png('GO analysis/GO dotplot_CC_I_V vs NI_V.png',
+    width = 1200,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+dotplot(ego_CC, showCategory=50)
+dev.off()
+```
+Final output is following:
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO dotplot_CC_I_V vs NI_V.png)
+#### Draw enrichment Go plot representing the results
+##### Biological process
+```{r}
+png('GO analysis/GO enrichment_BP_I_V vs NI_V.png',
+    width = 1200,
+    height = 1200,
+    res = 100,
+    pointsize = 8)
+emapplot(ego_BP, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO enrichment_BP_I_V vs NI_V.png)
+##### Molecular function 
+```{r}
+png('GO analysis/GO enrichment_MF_I_V vs NI_V.png',
+    width = 1200,
+    height = 1200,
+    res = 100,
+    pointsize = 8)
+emapplot(ego_MF, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO enrichment_MF_I_V vs NI_V.png)
+##### Cellular component
+```{r}
+png('GO analysis/GO enrichment_CC_I_V vs NI_V.png',
+    width = 1200,
+    height = 1200,
+    res = 100,
+    pointsize = 8)
+emapplot(ego_CC, showCategory = 50)
+dev.off()
+```
+Final output is following:
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO enrichment_CC_I_V vs NI_V.png)
+#### Draw category netplot representing the results
+The category netplot shows the relationships between the genes associated with the top five most significant GO terms and the fold changes of the significant genes associated with these terms (color). 
+##### Biological process
+```{r}
+OE_foldchanges <- sig_dif$log2FoldChange
+names(OE_foldchanges) <- rownames(sig_dif)
+
+png('GO analysis/GO cnetplot_BP_I_V vs NI_V.png',
+    width = 1600,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+cnetplot(ego_BP, 
+         categorySize="pvalue", 
+         showCategory = 5, 
+         foldChange=OE_foldchanges, 
+         vertex.label.font=6)
+dev.off()
+```
+Final output is following:
+![BP_cnetplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO cnetplot_BP_I_V vs NI_V.png)
+##### Molecular function
+```{r}
+png('GO analysis/GO cnetplot_MF_I_V vs NI_V.png',
+    width = 1600,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+cnetplot(ego_MF, 
+         categorySize="pvalue", 
+         showCategory = 5, 
+         foldChange=OE_foldchanges, 
+         vertex.label.font=6)
+dev.off()
+```
+Final output is following:
+![MF_cnetplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO cnetplot_MF_I_V vs NI_V.png)
+##### Cellular component
+```{r}
+png('GO analysis/GO cnetplot_CC_I_V vs NI_V.png',
+    width = 1600,
+    height = 1600,
+    res = 100,
+    pointsize = 8)
+cnetplot(ego_CC, 
+         categorySize="pvalue", 
+         showCategory = 5, 
+         foldChange=OE_foldchanges, 
+         vertex.label.font=6)
+dev.off()
+```
+Final output is following:
+![CC_cnetplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/GO analysis/GO cnetplot_CC_I_V vs NI_V.png)
+
+# I_MKI vs I_V {#icompare}
+## Compile gene count files in DESeq2
+Set working directory to the folder that contains only gene count `txt` files
+
+```{r}
+# Generate DESeqData using the counting result generated using Salmon
+countFiles_icompare <- c(countFiles[7:11], countFiles[1:6])
+
+txi.salmon <- tximport(countFiles_icompare, type = "salmon", tx2gene = tx2gene, ignoreTxVersion = TRUE)
+
+DESeqsampletable <- DESeqsampletable_all[c(7:11, 1:6), ]
+DESeqsampletable$condition <- factor(c(rep('control', 5), rep('experimental', 6)))
+
+ddsHTSeq<- DESeqDataSetFromTximport(txi.salmon, DESeqsampletable, ~ condition + batch + gender)
+
+ddsHTSeq_norm <- DESeq(ddsHTSeq)
+ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+```
+MA plot was generated to inspect the correct shrinkage of LFC.
+```{r}
+DESeq2::plotMA(ddsHTSeq_analysis)
+```
+
+### Clustering of the sample-to-sample distances
+This is the sanity check step to confirm that under a un-supervised clustering. For some reason, the code is giving error when try to plot this heatmap in RStudio, so I created a pdf file that contains the heatmap in the Analysis folder named `Hierchical Clustering.pdf`
+```{r fig.align="center"}
+rawCountTable <- as.data.frame(DESeq2::counts(ddsHTSeq_norm, normalized = TRUE))
+pseudoCount = log2(rawCountTable + 1)
+ddsHTSeq_transform <- varianceStabilizingTransformation(ddsHTSeq)
+rawCountTable_transform <- as.data.frame(assay(ddsHTSeq_transform))
+pseudoCount_transform = log2(rawCountTable_transform + 1)
+mat.dist = pseudoCount_transform
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist/max(mat.dist)
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF")
+png('Hierchical_Clustering_I_MKI vs I_V.png')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+pdf('Hierchical_Clustering_I_MKI vs I_V.pdf')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+include_graphics('Hierchical_Clustering_I_MKI vs I_V.png')
+```
+
+### Principal component plot of the samples
+I performed PCA analysis on all datasets to confirm that samples from the same condition group together. This step has to be performed using `varianceStabelizingTransformed` dataset, so that the high variance in genes with low counts will not skew the data.
+
+The top 500 most variable genes are selected for PCA analysis.
+
+```{r}
+(PCA <- plotPCA(ddsHTSeq_transform, intgroup = "condition", ntop = 500))
+
+pdf('PCA_TNF_IMKi-vs-IV.pdf',
+    height = 6,
+    width = 8)
+PCA
+dev.off()
+
+```
+
+## Differential analysis
+### Raw data filtering and Generate the raw count file with all detected genes
+This step removes all genes with less than 50 counts across all control or experimental samples, output a `csv` file and also generate a density plot using filtered dataset.
+
+```{r}
+keep <- c()
+for (i in 1:dim(rawCountTable)[1]) {
+  if (sum(rawCountTable[i,1:5] != 0) >=2 | sum(rawCountTable[i,6:11] != 0) >= 2) {
+    keep <- c(keep, i)
+  }
+}
+
+filterCount <- pseudoCount[keep,]
+df <- melt(filterCount, variable_name = "Samples")
+df <- data.frame(df, Condition = substr(df$Samples,1,4))
+detected_raw_count_norm <- rawCountTable[keep,]
+write.csv(detected_raw_count_norm, "normalized_raw_gene_counts_I_MKI vs I_V.csv")
+
+ggplot(df, aes(x=value, colour = Samples, fill = Samples)) + 
+  geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+  theme(legend.position = "top") + xlab("pseudocounts")
+```  
+  
+### Generate file with differential analysis result
+This step generates the analysis file that contains results from differential analysis.
+```{r}
+write.csv(as.data.frame(ddsHTSeq_analysis[keep,]), "Differential Analysis_I_MKI vs I_V.csv")
+```
+
+### Draw heatmap for transcripts that are significantly dysregulated in I_MKI samples compared to I_V samples
+Genes that were not detected were removed from the list. Genes with `padj` < 0.1 (I decided to relax the padj cutoff here as well to keep it consistent with the TCT model analysis) were considered significantly dysregulated. Their normalized counts were z-scored and used for plotting the heatmap.
+
+```{r fig.height=10, fig.align="center"}
+suppressMessages(library(mosaic))
+
+rawCountTable_transform_detected <- rawCountTable_transform[keep,]
+write.csv(rawCountTable_transform_detected, "VST_I_MKI vs I_V.csv")
+
+
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.1 & abs(dif_analysis$log2FoldChange) > 0.25)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected)))
+}
+sig_count <- rawCountTable_transform_detected[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:17] <- zscore(as.numeric(sig_dif[i,7:17]))
+}
+
+heatmap_matrix <- as.matrix(sig_dif[,7:17])
+
+png('I_MKI vs I_V RNASeq.png',
+    width = 600,
+    height = 1200,
+    res = 200,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "I_MKI vs I_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('I_MKI vs I_V RNASeq.pdf',
+    width = 6,
+    height = 10)
+heatmap.2(heatmap_matrix,
+          main = "I_MKI vs I_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('I_MKI vs I_V RNASeq.png')
+
+# output number of significant DE genes
+dim(sig_dif)[1]
+write.csv(sig_dif, "Significant genes_I_MKI vs I_V.csv")
+```
+
+
+### Draw heatmap of inflamed MK2i targets in NI_V vs I_V vs I_MK2i comparison of TNF and TCT
+#### TNF
+```{r fig.height=10, fig.align="center"}
+# rearrange the TCT master count matrix
+rawCountTable_transform_detected_TNF <- read_csv("VST_TNF.csv", )
+row_names <- rawCountTable_transform_detected_TNF$X1
+rawCountTable_transform_detected_TNF$X1 <- NULL
+rawCountTable_transform_detected_reshape <- cbind(rawCountTable_transform_detected_TNF[,17:21], rawCountTable_transform_detected_TNF[,7:11], rawCountTable_transform_detected_TNF[,1:6])
+rownames(rawCountTable_transform_detected_reshape) <- row_names
+
+# plot the heatmap
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.1 & abs(dif_analysis$log2FoldChange) > 0.25)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected_reshape)))
+}
+sig_count <- rawCountTable_transform_detected_reshape[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:22] <- zscore(as.numeric(sig_dif[i,7:22]))
+}
+
+heatmap_matrix <- as.matrix(sig_dif[,7:22])
+
+png('TNF MK2i targets in TNF NI_V vs I_V vs I_MK2i RNASeq.png',
+    width = 600,
+    height = 700,
+    res = 100,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "TNF MK2i targets\nTNF I_V vs NI_V vs I_MK2i\npadj < 0.1 LFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          lwid = c(1,5),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,3),
+          labRow = FALSE,
+          trace = "none",
+          dendrogram = "row",
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('TNF MK2i targets in TNF NI_V vs I_V vs I_MK2i RNASeq.pdf',
+    width = 9,
+    height = 11)
+heatmap.2(heatmap_matrix,
+          main = "TNF MK2i targets\nTNF I_V vs NI_V vs I_MK2i\npadj < 0.1 LFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          lwid = c(1,5),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,3),
+          labRow = FALSE,
+          trace = "none",
+          dendrogram = "row",
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('TNF MK2i targets in TNF NI_V vs I_V vs I_MK2i RNASeq.png')
+
+```
+
+#### TCT
+```{r fig.height=10, fig.align="center"}
+# rearrange the TCT master count matrix
+rawCountTable_transform_detected_TCT <- read_csv("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/VST_TCT.csv", )
+row_names <- rawCountTable_transform_detected_TCT$X1
+rawCountTable_transform_detected_TCT$X1 <- NULL
+rawCountTable_transform_detected_reshape <- cbind(rawCountTable_transform_detected_TCT[,19:23], rawCountTable_transform_detected_TCT[,7:12], rawCountTable_transform_detected_TCT[,1:6])
+rownames(rawCountTable_transform_detected_reshape) <- row_names
+
+# plot the heatmap
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.1 & abs(dif_analysis$log2FoldChange) > 0.25)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected_reshape)))
+}
+sig_count <- rawCountTable_transform_detected_reshape[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:23] <- zscore(as.numeric(sig_dif[i,7:23]))
+}
+
+heatmap_matrix <- as.matrix(sig_dif[,7:23])
+
+png('TNF MK2i targets in TCT NI_V vs I_V vs I_MK2i RNASeq.png',
+    width = 600,
+    height = 700,
+    res = 100,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "TNF MK2i targets\nTCT I_V vs NI_V vs I_MK2i\npadj < 0.1 LFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          lwid = c(1,5),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,3),
+          labRow = FALSE,
+          trace = "none",
+          dendrogram = "row",
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('TNF MK2i targets in TCT NI_V vs I_V vs I_MK2i RNASeq.pdf',
+    width = 9,
+    height = 11)
+heatmap.2(heatmap_matrix,
+          main = "TNF MK2i targets\nTCT NI_V vs I_V vs I_MK2i\npadj < 0.1 LFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          lwid = c(1,5),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,3),
+          labRow = FALSE,
+          trace = "none",
+          dendrogram = "row",
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('TNF MK2i targets in TCT NI_V vs I_V vs I_MK2i RNASeq.png')
+
+```
+
+### Scatter plot, MA plot and Volcano plot for data visualization
+
+```{r}
+# Scatter plot
+detected_pseudocount <- pseudoCount[keep,]
+dif_analysis$I_MKI_mean <- rowMeans(detected_pseudocount[,6:11])
+dif_analysis$I_V_mean <- rowMeans(detected_pseudocount[,1:5])
+(scatter <- ggplot(dif_analysis, aes(x = I_V_mean, y = I_MKI_mean)) +
+  xlab("I_V_Average(log2)") + ylab("I_MKI_Average(log2)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+  labs(title = "I_MKI vs I_V Scatter Plot"))
+
+pdf('ScatterPlot_I_MKi vs I_V.pdf')
+scatter
+dev.off()
+
+# MA plot
+(MA <- ggplot(dif_analysis, aes(x = log(baseMean,2), y = log2FoldChange,)) +
+  xlab("Average Expression") + ylab("LFC") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "I_MKI vs I_V MA Plot"))
+
+pdf('MAPlot_I_MKi vs I_V.pdf')
+MA
+dev.off()
+
+# Volcano Plot
+(volcano <- ggplot(dif_analysis, aes(x = log2FoldChange, y = -log(pvalue,10))) +
+  xlab("LFC") + ylab("-log10(P value)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "I_MKI vs I_V Volcano Plot"))
+
+pdf('VolcanoPlot_I_MKi vs I_V.pdf')
+volcano
+dev.off()
+```
+
+# NI_MKI vs NI_V {#nicompare}
+## Compile gene count files in DESeq2
+Set working directory to the folder that contains only gene count `txt` files
+
+```{r}
+# Generate DESeqData using the counting result generated using Salmon
+countFiles_icompare <- c(countFiles[17:21], countFiles[12:16])
+
+txi.salmon <- tximport(countFiles_icompare, type = "salmon", tx2gene = tx2gene, ignoreTxVersion = TRUE)
+
+DESeqsampletable <- DESeqsampletable_all[c(17:21, 12:16), ]
+DESeqsampletable$condition <- factor(c(rep('control', 5), rep('experimental', 5)))
+DESeqsampletable$batch <- NULL
+
+ddsHTSeq<- DESeqDataSetFromTximport(txi.salmon, DESeqsampletable, ~ condition + gender)
+
+ddsHTSeq_norm <- DESeq(ddsHTSeq)
+ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+```
+MA plot was generated to inspect the correct shrinkage of LFC.
+```{r}
+DESeq2::plotMA(ddsHTSeq_analysis)
+```
+
+### Clustering of the sample-to-sample distances
+This is the sanity check step to confirm that under a un-supervised clustering. For some reason, the code is giving error when try to plot this heatmap in RStudio, so I created a pdf file that contains the heatmap in the Analysis folder named `Hierchical Clustering.pdf`
+```{r fig.align="center"}
+rawCountTable <- as.data.frame(DESeq2::counts(ddsHTSeq_norm, normalized = TRUE))
+pseudoCount = log2(rawCountTable + 1)
+ddsHTSeq_transform <- varianceStabilizingTransformation(ddsHTSeq)
+rawCountTable_transform <- as.data.frame(assay(ddsHTSeq_transform))
+pseudoCount_transform = log2(rawCountTable_transform + 1)
+mat.dist = pseudoCount_transform
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist/max(mat.dist)
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF")
+png('Hierchical_Clustering_NI_MKI vs NI_V.png')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+pdf('Hierchical_Clustering_NI_MKI vs NI_V.pdf')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+
+include_graphics('Hierchical_Clustering_NI_MKI vs NI_V.png')
+```
+
+
+### Principal component plot of the samples
+I performed PCA analysis on all datasets to confirm that samples from the same condition group together. This step has to be performed using `varianceStabelizingTransformed` dataset, so that the high variance in genes with low counts will not skew the data.
+
+The top 500 most variable genes are selected for PCA analysis.
+
+```{r}
+(PCA <- plotPCA(ddsHTSeq_transform, intgroup = "condition", ntop = 500))
+pdf('PCA_TNF_NIMKi-vs-NIV.pdf',
+    width = 8,
+    height = 6)
+PCA
+dev.off()
+```
+
+## Differential analysis
+### Raw data filtering and Generate the raw count file with all detected genes
+This step removes all genes with less than 50 counts in average across all control or experimental samples, output a `csv` file and also generate a density plot using filtered dataset.
+```{r}
+keep <- c()
+for (i in 1:dim(rawCountTable)[1]) {
+  if (sum(rawCountTable[i,1:5] != 0) >=2 | sum(rawCountTable[i,6:10] != 0) >= 2) {
+    keep <- c(keep, i)
+  }
+}
+filterCount <- pseudoCount[keep,]
+df <- melt(filterCount, variable_name = "Samples")
+df <- data.frame(df, Condition = substr(df$Samples,1,4))
+detected_raw_count_norm <- rawCountTable[keep,]
+write.csv(detected_raw_count_norm, "normalized_raw_gene_counts_NI_MKI vs NI_V.csv")
+
+ggplot(df, aes(x=value, colour = Samples, fill = Samples)) + 
+  geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+  theme(legend.position = "top") + xlab("pseudocounts")
+```  
+  
+### Generate file with differential analysis result
+This step generates the analysis file that contains results from differential analysis.
+```{r}
+write.csv(as.data.frame(ddsHTSeq_analysis[keep,]), "Differential Analysis_NI_MKI vs NI_V.csv")
+```
+
+### Draw heatmap for transcripts that are significantly dysregulated in NI_MKI samples compared to NI_V samples
+Genes that were not detected were removed from the list. Genes with `padj` < 0.1 were considered significantly dysregulated. Their normalized counts were z-scored and used for plotting the heatmap.
+
+```{r fig.height=10, fig.align="center"}
+suppressMessages(library(mosaic))
+
+rawCountTable_transform_detected <- rawCountTable_transform[keep,]
+write.csv(rawCountTable_transform_detected, "VST_NI_MKI vs NI_V.csv")
+
+
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.1 & abs(dif_analysis$log2FoldChange) > 0.25)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected)))
+}
+sig_count <- rawCountTable_transform_detected[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:16] <- zscore(as.numeric(sig_dif[i,7:16]))
+}
+
+heatmap_matrix <- as.matrix(sig_dif[,7:16])
+
+png('NI_MKI vs NI_V RNASeq.png',
+    width = 600,
+    height = 1200,
+    res = 200,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "NI_MKI vs NI_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+pdf('NI_MKI vs NI_V RNASeq.pdf',
+    width = 6,
+    height = 10)
+heatmap.2(heatmap_matrix,
+          main = "NI_MKI vs NI_V RNASeq\npadj < 0.1\nLFC > 0.25",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "row",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+include_graphics('NI_MKI vs NI_V RNASeq.png')
+
+# output number of significant DE genes
+dim(sig_dif)[1]
+write.csv(sig_dif, "Significant genes_NI_MKI vs NI_V.csv")
+```
+
+
+
+### Scatter plot, MA plot and Volcano plot for data visualization
+
+```{r}
+# Scatter plot
+detected_pseudocount <- pseudoCount[keep,]
+dif_analysis$NI_MKI_mean <- rowMeans(detected_pseudocount[,6:10])
+dif_analysis$NI_V_mean <- rowMeans(detected_pseudocount[,1:5])
+(scatter <- ggplot(dif_analysis, aes(x = NI_V_mean, y = NI_MKI_mean)) +
+  xlab("NI_V_Average(log2)") + ylab("NI_MKI_Average(log2)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+  labs(title = "NI_MKI vs NI_V Scatter Plot"))
+
+pdf('ScatterPlot_NI_MKi vs NI_V.pdf')
+scatter
+dev.off()
+
+# MA plot
+(MA <- ggplot(dif_analysis, aes(x = log(baseMean,2), y = log2FoldChange,)) +
+  xlab("Average Expression") + ylab("LFC") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "NI_MKI vs NI_V MA Plot"))
+
+pdf('MAPlot_NI_MKi vs NI_V.pdf')
+MA
+dev.off()
+
+# Volcano Plot
+(volcano <- ggplot(dif_analysis, aes(x = log2FoldChange, y = -log(pvalue,10))) +
+  xlab("LFC") + ylab("-log10(P value)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "black") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.25), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.25), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "NI_MKI vs NI_V Volcano Plot"))
+
+pdf('VolcanoPlot_NI_MKi vs NI_V.pdf')
+volcano
+dev.off()
+```
+
+
+# MKI vs V {#combinedcompare}
+## Compile gene count files in DESeq2
+Set working directory to the folder that contains only gene count `txt` files
+
+```{r}
+# Generate DESeqData using the counting result generated using Salmon
+countFiles_all <- c(countFiles[17:21], countFiles[7:11], countFiles[12:16], countFiles[1:6])
+
+txi.salmon <- tximport(countFiles_all, type = "salmon", tx2gene = tx2gene, ignoreTxVersion = TRUE)
+
+DESeqsampletable <- DESeqsampletable_all[c(17:21, 7:11, 12:16, 1:6), ]
+DESeqsampletable$condition <- factor(c(rep('control', 10), rep('experimental', 11)))
+
+ddsHTSeq<- DESeqDataSetFromTximport(txi.salmon, DESeqsampletable, ~ condition + batch + gender)
+
+ddsHTSeq_norm <- DESeq(ddsHTSeq)
+ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+```
+MA plot was generated to inspect the correct shrinkage of LFC.
+```{r}
+DESeq2::plotMA(ddsHTSeq_analysis)
+```
+
+### Clustering of the sample-to-sample distances
+This is the sanity check step to confirm that under a un-supervised clustering. For some reason, the code is giving error when try to plot this heatmap in RStudio, so I created a pdf file that contains the heatmap in the Analysis folder named `Hierchical Clustering.pdf`
+```{r}
+rawCountTable <- as.data.frame(DESeq2::counts(ddsHTSeq_norm, normalized = TRUE))
+pseudoCount = log2(rawCountTable + 1)
+ddsHTSeq_transform <- varianceStabilizingTransformation(ddsHTSeq)
+rawCountTable_transform <- as.data.frame(assay(ddsHTSeq_transform))
+pseudoCount_transform = log2(rawCountTable_transform + 1)
+mat.dist = pseudoCount_transform
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist/max(mat.dist)
+setwd("/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF")
+png('Hierchical_Clustering_MKI vs V.png')
+cim(mat.dist, symkey = FALSE, margins = c(6, 6))
+suppressMessages(dev.off())
+```
+
+Final output is following:
+![Hierchical Clustering](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Hierchical_Clustering_MKI vs V.png)
+
+### Principal component plot of the samples
+I performed PCA analysis on all datasets to confirm that samples from the same condition group together. This step has to be performed using `varianceStabelizingTransformed` dataset, so that the high variance in genes with low counts will not skew the data.
+
+The top 500 most variable genes are selected for PCA analysis.
+
+```{r}
+plotPCA(ddsHTSeq_transform, intgroup = "condition", ntop = 500) 
+  #geom_text(aes(label=name), vjust = 2) +
+  #xlim(-30, 20) + ylim(-25, 15)
+```
+
+## Differential analysis
+### Raw data filtering and Generate the raw count file with all detected genes
+This step removes all genes with less than 50 counts across all control or experimental samples, output a `csv` file and also generate a density plot using filtered dataset.
+
+```{r}
+keep <- c()
+for (i in 1:dim(rawCountTable)[1]) {
+  if (sum(rawCountTable[i,1:10] != 0) >=2 | sum(rawCountTable[i,11:21] != 0) >= 2) {
+    keep <- c(keep, i)
+  }
+}
+
+filterCount <- pseudoCount[keep,]
+df <- melt(filterCount, variable_name = "Samples")
+df <- data.frame(df, Condition = substr(df$Samples,1,4))
+detected_raw_count_norm <- rawCountTable[keep,]
+write.csv(detected_raw_count_norm, "normalized_raw_gene_counts_MKI vs V.csv")
+
+ggplot(df, aes(x=value, colour = Samples, fill = Samples)) + 
+  geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+  theme(legend.position = "top") + xlab("pseudocounts")
+```  
+  
+### Generate file with differential analysis result
+This step generates the analysis file that contains results from differential analysis.
+```{r}
+write.csv(as.data.frame(ddsHTSeq_analysis[keep,]), "Differential Analysis_MKI vs V.csv")
+```
+
+### Draw heatmap for transcripts that are significantly dysregulated in I_MKI samples compared to I_V samples
+Genes that were not detected were removed from the list. Genes with `padj` < 0.1 (I decided to relax the padj cutoff here as well to keep it consistent with the TCT model analysis) were considered significantly dysregulated. Their normalized counts were z-scored and used for plotting the heatmap.
+
+```{r}
+suppressMessages(library(mosaic))
+
+rawCountTable_transform_detected <- rawCountTable_transform[keep,]
+write.csv(rawCountTable_transform_detected, "VST_MKI vs V.csv")
+
+
+dif_analysis <- as.data.frame(ddsHTSeq_analysis)[keep,]
+sig_dif <- subset(dif_analysis, dif_analysis$padj < 0.1 & abs(dif_analysis$log2FoldChange) > 0.1)
+sig_index <- c()
+for (i in 1:dim(sig_dif)[1]) {
+  sig_index <- c(sig_index ,grep(rownames(sig_dif)[i], rownames(rawCountTable_transform_detected)))
+}
+sig_count <- rawCountTable_transform_detected[sig_index,]
+sig_dif <- cbind(sig_dif, sig_count)
+for (i in 1:dim(sig_dif)[1]) {
+  sig_dif[i,7:27] <- zscore(as.numeric(sig_dif[i,7:27]))
+}
+
+heatmap_matrix <- as.matrix(sig_dif[,7:27])
+
+png('MKI vs V RNASeq.png',
+    width = 600,
+    height = 1200,
+    res = 200,
+    pointsize = 8)
+heatmap.2(heatmap_matrix,
+          main = "MKI vs V RNASeq\npadj < 0.1\n LFC > 0.1",
+          density.info = "none",
+          key = TRUE,
+          lhei = c(1,7),
+          col=my_palette,
+          cexCol = 1,
+          margins = c(8,2),
+          trace = "none",
+          dendrogram = "both",
+          labRow = FALSE,
+          keysize = 2,
+          ylab = "Genes",
+          Colv = "NA")
+dev.off()
+
+# output number of significant DE genes
+dim(sig_dif)[1]
+write.csv(sig_dif, "Significant genes_MKI vs V.csv")
+```
+
+Final output is ![Heatmap for differential genes](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/MKI vs V RNASeq.png)
+
+### Scatter plot, MA plot and Volcano plot for data visualization
+
+```{r}
+# Scatter plot
+detected_pseudocount <- pseudoCount[keep,]
+dif_analysis$MKI_mean <- rowMeans(detected_pseudocount[,11:21])
+dif_analysis$V_mean <- rowMeans(detected_pseudocount[,1:10])
+ggplot(dif_analysis, aes(x = V_mean, y = MKI_mean)) +
+  xlab("V_Average(log2)") + ylab("MKI_Average(log2)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.1), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.1), alpha = 0.5, size = 1, color = "blue") +
+  labs(title = "MKI vs V Scatter Plot")
+
+# MA plot
+ggplot(dif_analysis, aes(x = log(baseMean,2), y = log2FoldChange,)) +
+  xlab("Average Expression") + ylab("LFC") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "grey") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.1), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.1), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "MKI vs V MA Plot")
+
+# Volcano Plot
+ggplot(dif_analysis, aes(x = log2FoldChange, y = -log(pvalue,10))) +
+  xlab("LFC") + ylab("-log10(P value)") + 
+  geom_point(data = dif_analysis, alpha = 0.5, size = 1, color = "black") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange > 0.1), alpha = 0.5, size = 1, color = "red") +
+  geom_point(data = subset(dif_analysis, padj < 0.1 & log2FoldChange < -0.1), alpha = 0.5, size = 1, color = "blue") +
+labs(title = "MKI vs V Volcano Plot")
+```
+
+```{r}
+sessionInfo()
+```

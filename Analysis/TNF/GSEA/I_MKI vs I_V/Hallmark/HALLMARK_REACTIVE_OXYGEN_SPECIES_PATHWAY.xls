@@ -1,0 +1,47 @@
+NAME	PROBE	DESCRIPTION<br>(from dataset)	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CAT	catalase [Source:HGNC Symbol;Acc:HGNC:1516]	null	null	1315	0.6377596855163574	-0.054420955	No	
+row_1	PTPA	protein phosphatase 2 phosphatase activator [Source:HGNC Symbol;Acc:HGNC:9308]	null	null	1754	0.572240948677063	-0.053267505	No	
+row_2	G6PD	glucose-6-phosphate dehydrogenase [Source:HGNC Symbol;Acc:HGNC:4057]	null	null	2037	0.5333779454231262	-0.04368644	No	
+row_3	GSR	glutathione-disulfide reductase [Source:HGNC Symbol;Acc:HGNC:4623]	null	null	2771	0.4460039734840393	-0.069171816	No	
+row_4	SOD2	superoxide dismutase 2 [Source:HGNC Symbol;Acc:HGNC:11180]	null	null	4205	0.3016461431980133	-0.14955257	No	
+row_5	MBP	myelin basic protein [Source:HGNC Symbol;Acc:HGNC:6925]	null	null	4334	0.290158748626709	-0.14262863	No	
+row_6	OXSR1	oxidative stress responsive kinase 1 [Source:HGNC Symbol;Acc:HGNC:8508]	null	null	4681	0.25625720620155334	-0.15220828	No	
+row_7	PRNP	prion protein [Source:HGNC Symbol;Acc:HGNC:9449]	null	null	4985	0.2271994650363922	-0.16044794	No	
+row_8	LSP1	lymphocyte specific protein 1 [Source:HGNC Symbol;Acc:HGNC:6707]	null	null	5682	0.16701510548591614	-0.19838959	No	
+row_9	IPCEF1	interaction protein for cytohesin exchange factors 1 [Source:HGNC Symbol;Acc:HGNC:21204]	null	null	6299	0.11653035879135132	-0.2336466	No	
+row_10	SCAF4	SR-related CTD associated factor 4 [Source:HGNC Symbol;Acc:HGNC:19304]	null	null	6536	0.09735345840454102	-0.24432987	No	
+row_11	GPX3	glutathione peroxidase 3 [Source:HGNC Symbol;Acc:HGNC:4555]	null	null	6559	0.0950276330113411	-0.2407202	No	
+row_12	ABCC1	ATP binding cassette subfamily C member 1 [Source:HGNC Symbol;Acc:HGNC:51]	null	null	8194	-0.05087441951036453	-0.34807977	No	
+row_13	HHEX	hematopoietically expressed homeobox [Source:HGNC Symbol;Acc:HGNC:4901]	null	null	8487	-0.07793401181697845	-0.3635764	No	
+row_14	MSRA	methionine sulfoxide reductase A [Source:HGNC Symbol;Acc:HGNC:7377]	null	null	8523	-0.08059689402580261	-0.3616158	No	
+row_15	FES	"FES proto-oncogene, tyrosine kinase [Source:HGNC Symbol;Acc:HGNC:3657]"	null	null	8853	-0.10982386022806168	-0.37789646	No	
+row_16	GCLC	glutamate-cysteine ligase catalytic subunit [Source:HGNC Symbol;Acc:HGNC:4311]	null	null	9405	-0.16156654059886932	-0.40636113	No	
+row_17	MGST1	microsomal glutathione S-transferase 1 [Source:HGNC Symbol;Acc:HGNC:7061]	null	null	9482	-0.1701832264661789	-0.4023625	No	
+row_18	TXNRD2	thioredoxin reductase 2 [Source:HGNC Symbol;Acc:HGNC:18155]	null	null	9904	-0.21575719118118286	-0.41916513	Yes	
+row_19	PRDX4	peroxiredoxin 4 [Source:HGNC Symbol;Acc:HGNC:17169]	null	null	9940	-0.21989288926124573	-0.40974066	Yes	
+row_20	ERCC2	"ERCC excision repair 2, TFIIH core complex helicase subunit [Source:HGNC Symbol;Acc:HGNC:3434]"	null	null	10095	-0.2339949905872345	-0.4075778	Yes	
+row_21	PDLIM1	PDZ and LIM domain 1 [Source:HGNC Symbol;Acc:HGNC:2067]	null	null	10097	-0.2340787649154663	-0.39510256	Yes	
+row_22	GCLM	glutamate-cysteine ligase modifier subunit [Source:HGNC Symbol;Acc:HGNC:4312]	null	null	10111	-0.23503603041172028	-0.3833845	Yes	
+row_23	HMOX2	heme oxygenase 2 [Source:HGNC Symbol;Acc:HGNC:5014]	null	null	10541	-0.28116247057914734	-0.3972215	Yes	
+row_24	NQO1	NAD(P)H quinone dehydrogenase 1 [Source:HGNC Symbol;Acc:HGNC:2874]	null	null	10831	-0.3085765540599823	-0.40015754	Yes	
+row_25	PFKP	"phosphofructokinase, platelet [Source:HGNC Symbol;Acc:HGNC:8878]"	null	null	10874	-0.31459060311317444	-0.3861305	Yes	
+row_26	GLRX2	glutaredoxin 2 [Source:HGNC Symbol;Acc:HGNC:16065]	null	null	11010	-0.329933226108551	-0.37754694	Yes	
+row_27	PRDX1	peroxiredoxin 1 [Source:HGNC Symbol;Acc:HGNC:9352]	null	null	11020	-0.3312811255455017	-0.3604023	Yes	
+row_28	SRXN1	sulfiredoxin 1 [Source:HGNC Symbol;Acc:HGNC:16132]	null	null	11380	-0.3740788698196411	-0.36454454	Yes	
+row_29	GLRX	glutaredoxin [Source:HGNC Symbol;Acc:HGNC:4330]	null	null	11395	-0.37578681111335754	-0.34535202	Yes	
+row_30	PRDX6	peroxiredoxin 6 [Source:HGNC Symbol;Acc:HGNC:16753]	null	null	11537	-0.3941909968852997	-0.33372957	Yes	
+row_31	NDUFS2	NADH:ubiquinone oxidoreductase core subunit S2 [Source:HGNC Symbol;Acc:HGNC:7708]	null	null	12067	-0.4550906717777252	-0.3449842	Yes	
+row_32	TXNRD1	thioredoxin reductase 1 [Source:HGNC Symbol;Acc:HGNC:12437]	null	null	12158	-0.46482864022254944	-0.32614082	Yes	
+row_33	SOD1	superoxide dismutase 1 [Source:HGNC Symbol;Acc:HGNC:11179]	null	null	13038	-0.5758617520332336	-0.35450432	Yes	
+row_34	NDUFB4	NADH:ubiquinone oxidoreductase subunit B4 [Source:HGNC Symbol;Acc:HGNC:7699]	null	null	13343	-0.6152297258377075	-0.3420196	Yes	
+row_35	NDUFA6	NADH:ubiquinone oxidoreductase subunit A6 [Source:HGNC Symbol;Acc:HGNC:7690]	null	null	13434	-0.6301918029785156	-0.31431556	Yes	
+row_36	EGLN2	egl-9 family hypoxia inducible factor 2 [Source:HGNC Symbol;Acc:HGNC:14660]	null	null	13509	-0.6420453190803528	-0.28489843	Yes	
+row_37	FTL	ferritin light chain [Source:HGNC Symbol;Acc:HGNC:3999]	null	null	13650	-0.6634659767150879	-0.2587801	Yes	
+row_38	SELENOS	selenoprotein S [Source:HGNC Symbol;Acc:HGNC:30396]	null	null	13928	-0.7083662152290344	-0.23948579	Yes	
+row_39	JUNB	"JunB proto-oncogene, AP-1 transcription factor subunit [Source:HGNC Symbol;Acc:HGNC:6205]"	null	null	13935	-0.7101561427116394	-0.20183782	Yes	
+row_40	CDKN2D	cyclin dependent kinase inhibitor 2D [Source:HGNC Symbol;Acc:HGNC:1790]	null	null	14149	-0.7516018748283386	-0.17591503	Yes	
+row_41	GPX4	glutathione peroxidase 4 [Source:HGNC Symbol;Acc:HGNC:4556]	null	null	14157	-0.7522348761558533	-0.13607973	Yes	
+row_42	PRDX2	peroxiredoxin 2 [Source:HGNC Symbol;Acc:HGNC:9353]	null	null	14175	-0.7579213976860046	-0.09661345	Yes	
+row_43	TXN	thioredoxin [Source:HGNC Symbol;Acc:HGNC:12435]	null	null	14261	-0.7781129479408264	-0.060646534	Yes	
+row_44	STK25	serine/threonine kinase 25 [Source:HGNC Symbol;Acc:HGNC:11404]	null	null	14732	-0.9502925276756287	-0.041391894	Yes	
+row_45	ATOX1	antioxidant 1 copper chaperone [Source:HGNC Symbol;Acc:HGNC:798]	null	null	14753	-0.9673696756362915	0.009095112	Yes	

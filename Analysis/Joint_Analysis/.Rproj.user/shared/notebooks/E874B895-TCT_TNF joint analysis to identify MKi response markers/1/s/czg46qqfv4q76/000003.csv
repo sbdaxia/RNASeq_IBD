@@ -1,0 +1,24 @@
+"0","pdf(""TCT-i_vs_ni_MK2i target.pdf"",
+    height = 8,
+    width = 12)
+grid.newpage()
+draw.triple.venn(area1 = length(tct_ni_MK2i_DGE),
+                 area2 = length(tct_i_MK2i_DGE),
+                 area3 = length(tct_MK2i_DGE),
+                 n12 = length(n12),
+                 n23 = length(n23),
+                 n13 = length(n13),
+                 n123 = length(n123),
+                 catergory <- c(""TCT MK2i target\nnon-inflammation"",
+                                ""TCT MK2i target\ninflammation"",
+                                ""TCT MK2i target\ncombined""),
+                 lty = ""blank"",
+                 ex.text = FALSE,
+                 fill = c(""pink"", ""lightblue"",""lightgreen""),
+                 cat.dist = 0.08, margin = 0.1,
+                 fontfamily = ""sans"", cat.fontfamily = ""sans"")
+"
+"1","(polygon[GRID.polygon.12448], polygon[GRID.polygon.12449], polygon[GRID.polygon.12450], polygon[GRID.polygon.12451], polygon[GRID.polygon.12452], polygon[GRID.polygon.12453], text[GRID.text.12454], text[GRID.text.12455], text[GRID.text.12456], text[GRID.text.12457], text[GRID.text.12458], text[GRID.text.12459], text[GRID.text.12460])"
+"1"," "
+"1","
+"

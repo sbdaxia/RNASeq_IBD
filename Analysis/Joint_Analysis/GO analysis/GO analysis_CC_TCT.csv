@@ -1,0 +1,5 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0009897","GO:0009897","external side of plasma membrane","13/118","376/16320",3.28161745041189e-06,0.000605034731123517,0.000598279957410814,"Il12rb1/Cd48/Fcgr1/Sell/Il2ra/Cd2/Klrb1c/Thy1/Ccr7/Cxcr4/Cxcr3/Fcgr4/Klrb1b",13
+"GO:0045121","GO:0045121","membrane raft","12/118","353/16320",9.49613157266903e-06,0.000605034731123517,0.000598279957410814,"Lck/Cd48/Fcgr1/Zap70/Cd2/Btk/Thy1/Rftn1/Ltb4r1/Cacna1c/Prtn3/Ahnak",12
+"GO:0098857","GO:0098857","membrane microdomain","12/118","354/16320",9.77005844578484e-06,0.000605034731123517,0.000598279957410814,"Lck/Cd48/Fcgr1/Zap70/Cd2/Btk/Thy1/Rftn1/Ltb4r1/Cacna1c/Prtn3/Ahnak",12
+"GO:0098589","GO:0098589","membrane region","12/118","362/16320",1.22229238610811e-05,0.000605034731123517,0.000598279957410814,"Lck/Cd48/Fcgr1/Zap70/Cd2/Btk/Thy1/Rftn1/Ltb4r1/Cacna1c/Prtn3/Ahnak",12

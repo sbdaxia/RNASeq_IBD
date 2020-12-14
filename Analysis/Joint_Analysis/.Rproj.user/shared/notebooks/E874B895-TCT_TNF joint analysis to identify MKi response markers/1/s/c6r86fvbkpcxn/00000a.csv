@@ -1,0 +1,12 @@
+"0","pdf('GO analysis/GO enrichment_CC_TNF.pdf',
+    width = 14,
+    height = 14)
+emapplot(ego_CC, showCategory = 50)
+dev.off()
+"
+"1","null device "
+"1","
+"
+"1","          1 "
+"1","
+"

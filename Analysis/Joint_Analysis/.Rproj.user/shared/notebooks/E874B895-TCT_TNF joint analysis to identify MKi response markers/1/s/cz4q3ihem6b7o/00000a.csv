@@ -1,0 +1,12 @@
+"0","pdf('GSEA analysis/GSEA_overlapping_DGE.pdf',
+    width = 8,
+    height = 1)
+plotGseaTable(pathways[fgseaRes$pathway], ranks, fgseaRes, gseaParam = 0.5) 
+dev.off()
+"
+"1","null device "
+"1","
+"
+"1","          1 "
+"1","
+"

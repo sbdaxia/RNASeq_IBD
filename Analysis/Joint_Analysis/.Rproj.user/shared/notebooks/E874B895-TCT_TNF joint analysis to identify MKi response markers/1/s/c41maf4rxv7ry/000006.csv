@@ -1,0 +1,69 @@
+"0","# Non-inflammed condition"
+"0","tnf_ni_MK2i <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_NI_MKI vs NI_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m,
+  NI_V_1 = [32mcol_double()[39m,
+  NI_V_2 = [32mcol_double()[39m,
+  NI_V_3 = [32mcol_double()[39m,
+  NI_V_4 = [32mcol_double()[39m,
+  NI_V_5 = [32mcol_double()[39m,
+  NI_MKI_1 = [32mcol_double()[39m,
+  NI_MKI_2 = [32mcol_double()[39m,
+  NI_MKI_3 = [32mcol_double()[39m,
+  NI_MKI_4 = [32mcol_double()[39m,
+  NI_MKI_5 = [32mcol_double()[39m
+)
+"
+"0","tnf_ni_MK2i_DGE <- tnf_ni_MK2i$X1"
+"0","# Inflammed condition"
+"0","tnf_i_MK2i <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_MKI vs I_V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  X1 = [31mcol_character()[39m,
+  baseMean = [32mcol_double()[39m,
+  log2FoldChange = [32mcol_double()[39m,
+  lfcSE = [32mcol_double()[39m,
+  stat = [32mcol_double()[39m,
+  pvalue = [32mcol_double()[39m,
+  padj = [32mcol_double()[39m,
+  I_V_1 = [32mcol_double()[39m,
+  I_V_2 = [32mcol_double()[39m,
+  I_V_3 = [32mcol_double()[39m,
+  I_V_4 = [32mcol_double()[39m,
+  I_V_5 = [32mcol_double()[39m,
+  I_MKI_1 = [32mcol_double()[39m,
+  I_MKI_2 = [32mcol_double()[39m,
+  I_MKI_3 = [32mcol_double()[39m,
+  I_MKI_4 = [32mcol_double()[39m,
+  I_MKI_5 = [32mcol_double()[39m,
+  I_MKI_6 = [32mcol_double()[39m
+)
+"
+"0","tnf_i_MK2i_DGE <- tnf_i_MK2i$X1"
+"0","# combined condition"
+"0","tnf_MK2i <- read_csv(""~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_MKI vs V.csv"")"
+"2","Missing column names filled in: 'X1' [1]"
+"2","Parsed with column specification:
+cols(
+  .default = col_double(),
+  X1 = [31mcol_character()[39m
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"0","tnf_MK2i_DGE <- tnf_MK2i$X1"
+"0","# Examine the overlap between NI and I conditions"
+"0","n12 <- intersect(tnf_ni_MK2i_DGE, tnf_i_MK2i_DGE)"
+"0","n23 <- intersect(tnf_i_MK2i_DGE, tnf_MK2i_DGE)"
+"0","n13 <- intersect(tnf_ni_MK2i_DGE, tnf_MK2i_DGE)"
+"0","n123 <- intersect(n12, tnf_MK2i_DGE)"
+"0","grid.newpage()"
