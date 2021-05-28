@@ -83,7 +83,7 @@ ddsHTSeq_norm <- estimateSizeFactors(ddsHTSeq)
 
 ddsHTSeq_norm <- DESeq(ddsHTSeq_norm)
 ddsHTSeq_analysis <- results(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"))
-ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis)
+ddsHTSeq_analysis <- lfcShrink(ddsHTSeq_norm, contrast = c("condition", "experimental", "control"), res = ddsHTSeq_analysis, type = "normal")
 
 ```
 MA plot was generated to inspect the correct shrinkage of LFC.
