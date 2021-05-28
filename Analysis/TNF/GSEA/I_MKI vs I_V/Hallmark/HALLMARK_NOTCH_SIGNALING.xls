@@ -1,0 +1,33 @@
+NAME	PROBE	DESCRIPTION<br>(from dataset)	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ARRB1	arrestin beta 1 [Source:HGNC Symbol;Acc:HGNC:711]	null	null	115	1.1221810579299927	0.06754554	Yes	
+row_1	WNT2	Wnt family member 2 [Source:HGNC Symbol;Acc:HGNC:12780]	null	null	308	0.9050012826919556	0.11533797	Yes	
+row_2	FZD1	frizzled class receptor 1 [Source:HGNC Symbol;Acc:HGNC:4038]	null	null	838	0.7308714985847473	0.12876529	Yes	
+row_3	NOTCH3	notch receptor 3 [Source:HGNC Symbol;Acc:HGNC:7883]	null	null	885	0.7197784781455994	0.17395833	Yes	
+row_4	MAML2	mastermind like transcriptional coactivator 2 [Source:HGNC Symbol;Acc:HGNC:16259]	null	null	982	0.6992644667625427	0.21440968	Yes	
+row_5	DTX4	deltex E3 ubiquitin ligase 4 [Source:HGNC Symbol;Acc:HGNC:29151]	null	null	1446	0.6171727180480957	0.22465141	Yes	
+row_6	WNT5A	Wnt family member 5A [Source:HGNC Symbol;Acc:HGNC:12784]	null	null	1589	0.5952005386352539	0.25502503	Yes	
+row_7	NOTCH2	notch receptor 2 [Source:HGNC Symbol;Acc:HGNC:7882]	null	null	2092	0.5248284935951233	0.25644648	Yes	
+row_8	FBXW11	F-box and WD repeat domain containing 11 [Source:HGNC Symbol;Acc:HGNC:13607]	null	null	2584	0.4677172303199768	0.25477675	Yes	
+row_9	HEYL	hes related family bHLH transcription factor with YRPW motif like [Source:HGNC Symbol;Acc:HGNC:4882]	null	null	2628	0.4630328416824341	0.2829469	Yes	
+row_10	PRKCA	protein kinase C alpha [Source:HGNC Symbol;Acc:HGNC:9393]	null	null	2862	0.43681830167770386	0.29656976	Yes	
+row_11	FZD5	frizzled class receptor 5 [Source:HGNC Symbol;Acc:HGNC:4043]	null	null	3381	0.3805265426635742	0.28723317	Yes	
+row_12	JAG1	jagged canonical Notch ligand 1 [Source:HGNC Symbol;Acc:HGNC:6188]	null	null	3471	0.3721161484718323	0.30620763	Yes	
+row_13	KAT2A	lysine acetyltransferase 2A [Source:HGNC Symbol;Acc:HGNC:4201]	null	null	3564	0.3635118007659912	0.32440293	Yes	
+row_14	FZD7	frizzled class receptor 7 [Source:HGNC Symbol;Acc:HGNC:4045]	null	null	4762	0.24719874560832977	0.26041916	No	
+row_15	CCND1	cyclin D1 [Source:HGNC Symbol;Acc:HGNC:1582]	null	null	5035	0.22269219160079956	0.25705147	No	
+row_16	ST3GAL6	"ST3 beta-galactoside alpha-2,3-sialyltransferase 6 [Source:HGNC Symbol;Acc:HGNC:18080]"	null	null	5202	0.20876659452915192	0.25988424	No	
+row_17	DTX1	deltex E3 ubiquitin ligase 1 [Source:HGNC Symbol;Acc:HGNC:3060]	null	null	5273	0.202081099152565	0.26873007	No	
+row_18	DLL1	delta like canonical Notch ligand 1 [Source:HGNC Symbol;Acc:HGNC:2908]	null	null	5390	0.1910122036933899	0.2737371	No	
+row_19	PSEN2	presenilin 2 [Source:HGNC Symbol;Acc:HGNC:9509]	null	null	6151	0.12863029539585114	0.23121245	No	
+row_20	PPARD	peroxisome proliferator activated receptor delta [Source:HGNC Symbol;Acc:HGNC:9235]	null	null	6353	0.11256691813468933	0.22523548	No	
+row_21	DTX2	deltex E3 ubiquitin ligase 2 [Source:HGNC Symbol;Acc:HGNC:15973]	null	null	7803	-0.015926523134112358	0.12877418	No	
+row_22	NOTCH1	notch receptor 1 [Source:HGNC Symbol;Acc:HGNC:7881]	null	null	8411	-0.07057534903287888	0.09265285	No	
+row_23	LFNG	LFNG O-fucosylpeptide 3-beta-N-acetylglucosaminyltransferase [Source:HGNC Symbol;Acc:HGNC:6560]	null	null	10047	-0.22980763018131256	-0.0019787238	No	
+row_24	HES1	hes family bHLH transcription factor 1 [Source:HGNC Symbol;Acc:HGNC:5192]	null	null	11204	-0.352637380361557	-0.05612908	No	
+row_25	APH1A	"aph-1 homolog A, gamma-secretase subunit [Source:HGNC Symbol;Acc:HGNC:29509]"	null	null	11877	-0.4335540533065796	-0.072273575	No	
+row_26	CUL1	cullin 1 [Source:HGNC Symbol;Acc:HGNC:2551]	null	null	12112	-0.4606667160987854	-0.057118062	No	
+row_27	RBX1	ring-box 1 [Source:HGNC Symbol;Acc:HGNC:9928]	null	null	12482	-0.5031924247741699	-0.048196167	No	
+row_28	TCF7L2	transcription factor 7 like 2 [Source:HGNC Symbol;Acc:HGNC:11641]	null	null	12797	-0.5411906838417053	-0.03302305	No	
+row_29	SKP1	S-phase kinase associated protein 1 [Source:HGNC Symbol;Acc:HGNC:10899]	null	null	13899	-0.7032637596130371	-0.05994827	No	
+row_30	PSENEN	"presenilin enhancer, gamma-secretase subunit [Source:HGNC Symbol;Acc:HGNC:30100]"	null	null	14697	-0.9219003319740295	-0.051743653	No	
+row_31	SAP30	Sin3A associated protein 30 [Source:HGNC Symbol;Acc:HGNC:10532]	null	null	14747	-0.9618884325027466	0.009490371	No	

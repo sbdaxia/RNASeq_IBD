@@ -1,0 +1,34 @@
+producer_class	xtools.gsea.Gsea
+producer_timestamp	1596055170345
+param	zip_report	false
+param	num	100
+param	scoring_scheme	weighted
+param	norm	meandiv
+param	out	/Users/mizuhi/gsea_home/output/jul29
+param	mode	Max_probe
+param	include_only_symbols	true
+param	set_max	500
+param	gmx	ftp.broadinstitute.org://pub/gsea/gene_sets/h.all.v7.1.symbols.gmt
+param	plot_top_x	20
+param	nperm	1000
+param	order	descending
+param	rpt_label	my_analysis
+param	rnd_seed	timestamp
+param	set_min	15
+param	res	/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/TCT excluding overlap/normalized_counts.txt
+param	chip	ftp.broadinstitute.org://pub/gsea/annotations_versioned/Mouse_ENSEMBL_Gene_ID_to_Human_Orthologs_MSigDB.v7.1.chip
+param	create_svgs	false
+param	cls	/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/TCT excluding overlap/phenotype.cls#I_V_versus_NI_V
+param	sort	real
+param	create_gcts	false
+param	help	false
+param	save_rnd_lists	false
+param	median	false
+param	metric	Signal2Noise
+param	make_sets	true
+param	rnd_type	no_balance
+param	gui	false
+param	permute	phenotype
+param	collapse	Collapse
+
+file	/Users/mizuhi/gsea_home/output/jul29/my_analysis.Gsea.1596055170345/index.html
