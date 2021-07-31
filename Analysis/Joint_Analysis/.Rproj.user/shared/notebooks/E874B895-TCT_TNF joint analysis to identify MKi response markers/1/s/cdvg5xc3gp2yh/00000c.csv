@@ -1,3 +1,0 @@
-"0","## Overlap in up-regulated genes"
-"0","inf_overlap_up <-intersect(tct_inf_DGE_up, tnf_inf_DGE_up)"
-"0","grid.newpage()"

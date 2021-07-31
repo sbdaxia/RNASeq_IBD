@@ -1,7 +1,0 @@
-"0","suppressMessages(df <- melt(heatmap_matrix))"
-"0","df <- data.frame(df, Condition = substr(df$X2,1,4))"
-"0","df$Condition <- factor(df$Condition, levels = c(""NI_V"", ""I_V_"", ""I_MK""))"
-"0","df$X2 <- factor(df$X2, levels = c(""NI_V_1"", ""NI_V_2"", ""NI_V_4"", ""NI_V_6"", ""NI_V_7"", ""I_V_1"", ""I_V_2"", ""I_V_3"", ""I_V_4"", ""I_V_5"", ""I_V_6"", ""I_MKI_1"", ""I_MKI_2"", ""I_MKI_3"", ""I_MKI_4"", ""I_MKI_5"", ""I_MKI_6""))"
-"0","ggplot(df, aes(x=X2, y=value, fill = Condition)) + geom_boxplot() + xlab("""") + "
-"0","  ylab(""Z-scored gene expression"") + scale_fill_manual(values = c(""#619CFF"", ""#F564E3"", ""#E69F00"")) + "
-"0","  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle('mTOR_NFkB genes\nTCT I_V vs NI_V vs I_MK2i')"

@@ -1,8 +1,13 @@
 ---
 title: "TCT/TNF joint analysis to identify MKi response markers"
 author: "Bing Shui"
-date: "7/29/2020"
-output: html_document
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: true
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -44,12 +49,12 @@ suppressMessages(
 First I need to identify DEG in inflammation in TCT and TNF models.
 ```{r}
 # DGE in inflammation using I_V and NI_V comparison
-tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_V vs NI_V.csv")
+tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_I_V vs NI_V.csv")
 tct_inf_DGE <- unique(tct_inf$X1)
 tct_inf_DGE_up <- tct_inf$X1[tct_inf$log2FoldChange > 0]
 tct_inf_DGE_down <- tct_inf$X1[tct_inf$log2FoldChange < 0]
 
-tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_V vs NI_V.csv")
+tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Significant genes_I_V vs NI_V.csv")
 tnf_inf_DGE <- unique(tnf_inf$X1)
 tnf_inf_DGE_up <- tnf_inf$X1[tnf_inf$log2FoldChange > 0]
 tnf_inf_DGE_down <- tnf_inf$X1[tnf_inf$log2FoldChange < 0]
@@ -154,8 +159,8 @@ It appears that 173/178 genes in total inflammation DGE overlap are dysregulated
 ##### GO analysis
 ```{r}
 target_gene <- inf_overlap
-tct_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_V vs NI_V.csv")
-tnf_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_V vs NI_V.csv")
+tct_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Differential Analysis_I_V vs NI_V.csv")
+tnf_all <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Differential Analysis_I_V vs NI_V.csv")
 detected_gene <- unique(c(tct_all$X1, tnf_all$X1))
 
 # GO analysis
@@ -219,8 +224,8 @@ emapplot(ego_BP, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_overlap.pdf)
-![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_overlap.pdf)
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_overlap.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_overlap.pdf)
 
 ###### Molecular Function
 ```{r}
@@ -237,8 +242,8 @@ emapplot(ego_MF, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_overlap.pdf)
-![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_overlap.pdf)
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_overlap.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_overlap.pdf)
 
 ###### Cellular component
 ```{r}
@@ -255,8 +260,8 @@ emapplot(ego_CC, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_overlap.pdf)
-![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_overlap.pdf)
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_overlap.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_overlap.pdf)
 
 ##### KEGG analysis
 KEGG analysis needs Entrez ID.
@@ -310,7 +315,7 @@ annotations_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
 target_LFC <- inner_join(target_LFC, annotations_entrez, by = c("target_gene" = "GENEID"))
 target_LFC <- target_LFC[!is.na(target_LFC$ENTREZID),]
 
-load("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/mouse_H_v5p2.rdata")
+load("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/mouse_H_v5p2.rdata")
 pathways <- Mm.H
 
 gseadata <- target_LFC$ENTREZID
@@ -329,7 +334,7 @@ pdf('GSEA analysis/GSEA_overlapping_DGE.pdf',
 plotGseaTable(pathways[fgseaRes$pathway], ranks, fgseaRes, gseaParam = 0.5) 
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_overlapping_DGE.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_overlapping_DGE.pdf)
 
 ### TCT-specific genes
 #### TCT specific DGEs
@@ -398,8 +403,8 @@ emapplot(ego_BP, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TCT.pdf)
-![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TCT.pdf)
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TCT.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TCT.pdf)
 
 ###### Molecular Function
 ```{r}
@@ -416,8 +421,8 @@ emapplot(ego_MF, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TCT.pdf)
-![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TCT.pdf)
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TCT.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TCT.pdf)
 
 ###### Cellular component
 ```{r}
@@ -434,8 +439,8 @@ emapplot(ego_CC, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TCT.pdf)
-![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TCT.pdf)
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TCT.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TCT.pdf)
 
 ##### KEGG analysis
 KEGG analysis needs Entrez ID.
@@ -496,7 +501,7 @@ I only performed GSEA on the Hallmark geneset.
 
 The ranking is done usin the default signal to noise ratio from GSEA software. 
 ```{r}
-TCT_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/normalized_raw_gene_counts_I_V vs NI_V.csv")
+TCT_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/normalized_raw_gene_counts_I_V vs NI_V.csv")
 
 target_norm <- TCT_iv_niv_norm[!TCT_iv_niv_norm$X1 %in% inf_overlap, ]
 write_csv(target_norm, "GSEA analysis/TCT excluding overlap/normalized_counts.csv")
@@ -532,7 +537,7 @@ pdf('GSEA analysis/GSEA_TCT_excluding overlap.pdf',
 plotGseaTable(pathways[fgseaRes_tct_sig$pathway], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_excluding overlap.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_excluding overlap.pdf)
 
 
 #### TNF-specific DGE
@@ -603,8 +608,8 @@ emapplot(ego_BP, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TNF.pdf)
-![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TNF.pdf)
+![BP_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_BP_TNF.pdf)
+![BP_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_BP_TNF.pdf)
 
 ###### Molecular Function
 ```{r}
@@ -621,8 +626,8 @@ emapplot(ego_MF, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TNF.pdf)
-![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TNF.pdf)
+![MF_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_MF_TNF.pdf)
+![MF_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_MF_TNF.pdf)
 
 ###### Cellular component
 ```{r}
@@ -639,8 +644,8 @@ emapplot(ego_CC, showCategory = 50)
 dev.off()
 ```
 Final output is following:
-![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TNF.pdf)
-![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TNF.pdf)
+![CC_dotplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO dotplot_CC_TNF.pdf)
+![CC_enrichplot](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GO analysis/GO enrichment_CC_TNF.pdf)
 
 ##### KEGG analysis
 KEGG analysis needs Entrez ID.
@@ -661,7 +666,7 @@ annotations_detected_entrez <- AnnotationDbi::select(EnsDb.Mmusculus.v79,
 detected_gene_entrez <- as.character(unique(annotations_detected_entrez$ENTREZID[!is.na(annotations_detected_entrez$ENTREZID)]))
 
 kk <- enrichKEGG(gene = target_gene_entrez, universe = detected_gene_entrez, organism = 'mmu')
-write.csv(as.data.frame(kk), "KEGG analysis/KEGG_TCT.csv")
+write.csv(as.data.frame(kk), "KEGG analysis/KEGG_TNF.csv")
 dotplot(kk, showCategory = 20)
 pdf("KEGG analysis/TNF_specific_KEGG analysis.pdf",
     height = 6,
@@ -703,7 +708,7 @@ pdf('GSEA analysis/GSEA_TNF_specific_DGE.pdf',
 plotGseaTable(pathways[fgseaRes$pathway], ranks, fgseaRes, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific_DGE.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific_DGE.pdf)
 
 
 #### TNF exluding overlapping inflammation DGEs
@@ -712,7 +717,7 @@ I only performed GSEA on the Hallmark geneset.
 
 The ranking is done using the default signal to noise ratio from GSEA software. 
 ```{r}
-TNF_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/normalized_raw_gene_counts_I_V vs NI_V.csv")
+TNF_iv_niv_norm <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/normalized_raw_gene_counts_I_V vs NI_V.csv")
 
 target_norm <- TNF_iv_niv_norm[!TNF_iv_niv_norm$X1 %in% inf_overlap, ]
 write_csv(target_norm, "GSEA analysis/TNF excluding overlap/normalized_counts.csv")
@@ -748,7 +753,7 @@ pdf('GSEA analysis/GSEA_TNF_excluding overlap.pdf',
 plotGseaTable(pathways[fgseaRes_tnf_sig$pathway], ranks_tct, fgseaRes_tnf_sig, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_excluding overlap.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_excluding overlap.pdf)
 
 ### Joint analysis of TCT-specific and TNF-specific GSEA
 This analysis is done using RNA-Seq excluding overlapping inflammation related DGE.
@@ -779,7 +784,7 @@ pdf('GSEA analysis/Overlapping_GSEA_TCT.pdf',
 plotGseaTable(pathways[overlap_gsea], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5) +
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TCT.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TCT.pdf)
 
 
 ```{r}
@@ -789,7 +794,7 @@ pdf('GSEA analysis/Overlapping_GSEA_TNF.pdf',
 plotGseaTable(pathways[overlap_gsea], ranks_tnf, fgseaRes_tnf_sig, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TNF.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/Overlapping_GSEA_TNF.pdf)
 
 ```{r}
 # plot out the model-specific pathways
@@ -800,7 +805,7 @@ pdf('GSEA analysis/GSEA_TCT_specific.pdf',
 plotGseaTable(pathways[TCT_specific_gsea], ranks_tct, fgseaRes_tct_sig, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_specific.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_TCT_specific.pdf)
 
 ```{r}
 # plot out the model-specific pathways
@@ -811,7 +816,7 @@ pdf('GSEA analysis/GSEA_TNF_specific.pdf',
 plotGseaTable(pathways[TNF_specific_gsea], ranks_tnf, fgseaRes_tnf_sig, gseaParam = 0.5)
 dev.off()
 ```
-![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific.pdf)
+![GSEA](/Users/mizuhi/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/Joint_Analysis/GSEA analysis/GSEA_TNF_specific.pdf)
 
 
 ## Identify MK2 target genes
@@ -822,17 +827,17 @@ Again I am using 0.1 as the adjusted p-value cutoff.
 First let's examine the TCT model.
 ```{r}
 # Non-inflammed condition
-tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_NI_MKI vs NI_V.csv")
+tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_NI_MKI vs NI_V.csv")
 
 tct_ni_MK2i_DGE <- tct_ni_MK2i$X1
 
 # Inflammed condition
-tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_MKI vs I_V.csv")
+tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_I_MKI vs I_V.csv")
 
 tct_i_MK2i_DGE <- tct_i_MK2i$X1
 
 # combined condition
-tct_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_MKI vs V.csv")
+tct_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_MKI vs V.csv")
 
 tct_MK2i_DGE <- tct_MK2i$X1
 
@@ -889,17 +894,17 @@ Now let's examine the TNF model.
 
 ```{r}
 # Non-inflammed condition
-tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_NI_MKI vs NI_V.csv")
+tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Significant genes_NI_MKI vs NI_V.csv")
 
 tnf_ni_MK2i_DGE <- tnf_ni_MK2i$X1
 
 # Inflammed condition
-tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_I_MKI vs I_V.csv")
+tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Significant genes_I_MKI vs I_V.csv")
 
 tnf_i_MK2i_DGE <- tnf_i_MK2i$X1
 
 # combined condition
-tnf_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Significant genes_MKI vs V.csv")
+tnf_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Significant genes_MKI vs V.csv")
 
 tnf_MK2i_DGE <- tnf_MK2i$X1
 
@@ -1149,11 +1154,11 @@ It appears that MK2i are downregulating these three genes, while inflammation up
 ## Identify Biomarkers of effective response to MK2i using filtered data (analysis without I_V3 sample)
 
 ```{r}
-tct_inf_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_V vs NI_V_filtered.csv")
+tct_inf_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_I_V vs NI_V_filtered.csv")
 
 tct_inf_DGE_filtered <- tct_inf_DGE_filtered_data$X1
 
-tct_i_MK2i_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Significant genes_I_MKI vs I_V_filtered.csv")
+tct_i_MK2i_DGE_filtered_data <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Significant genes_I_MKI vs I_V_filtered.csv")
 
 tct_i_MK2i_DGE_filtered <- tct_i_MK2i_DGE_filtered_data$X1
 
@@ -1206,12 +1211,12 @@ I am repeating the same analysis using the transcript level analysis result.
 First I need to identify DEG in inflammation in TCT and TNF models.
 ```{r}
 # DGE in inflammation using I_V and NI_V comparison
-tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_V vs NI_V_transcript_level.csv")
+tct_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Differential Analysis_I_V vs NI_V_transcript_level.csv")
 tct_inf_DGE <- tct_inf$X1[tct_inf$padj < 0.05]
 tct_inf_DGE_up <- tct_inf$X1[tct_inf$padj < 0.05 & tct_inf$log2FoldChange > 0]
 tct_inf_DGE_down <- tct_inf$X1[tct_inf$padj < 0.05 & tct_inf$log2FoldChange < 0]
 
-tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_V vs NI_V_transcript_level.csv")
+tnf_inf <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Differential Analysis_I_V vs NI_V_transcript_level.csv")
 tnf_inf_DGE <- tnf_inf$X1[tnf_inf$padj < 0.05]
 tnf_inf_DGE_up <- tnf_inf$X1[tnf_inf$padj < 0.05 & tnf_inf$log2FoldChange > 0]
 tnf_inf_DGE_down <- tnf_inf$X1[tnf_inf$padj < 0.05 & tnf_inf$log2FoldChange < 0]
@@ -1274,12 +1279,12 @@ Again I am using 0.1 as the adjusted p-value cutoff.
 First let's examine the TCT model.
 ```{r}
 # Non-inflammed condition
-tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
+tct_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
 
 tct_ni_MK2i_DGE <- tct_ni_MK2i$X1[tct_ni_MK2i$padj < 0.1]
 
 # Inflammed condition
-tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TCT/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
+tct_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TCT/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
 
 tct_i_MK2i_DGE <- tct_i_MK2i$X1[tct_i_MK2i$padj < 0.1]
 
@@ -1303,12 +1308,12 @@ Now let's examine the TNF model.
 
 ```{r}
 # Non-inflammed condition
-tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
+tnf_ni_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Differential Analysis_NI_MKI vs NI_V_transcript_level.csv")
 
 tnf_ni_MK2i_DGE <- tnf_ni_MK2i$X1[tnf_ni_MK2i$padj < 0.1]
 
 # Inflammed condition
-tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis/Analysis/TNF/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
+tnf_i_MK2i <- read_csv("~/OneDrive - Harvard University/Haigis Lab/Projects/Colloboration Projects/IBD RNA-Seq analysis_LuciaSuarez/Analysis/TNF/Differential Analysis_I_MKI vs I_V_transcript_level.csv")
 
 tnf_i_MK2i_DGE <- tnf_i_MK2i$X1[tnf_i_MK2i$padj < 0.1]
 
