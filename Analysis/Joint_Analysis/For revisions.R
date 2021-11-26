@@ -306,3 +306,39 @@ heatmap.2(heatmap_matrix,
           labRow = rownames(heatmap_matrix),
           Colv = "NA")
 dev.off()
+
+
+# Generate csv file ccontaining unified DEGs from TCT and TNF inflammation
+de_tct <- read_csv("../TCT/Differential Analysis_I_V vs NI_V.csv")
+de_tnf <- read_csv("../TNF/Differential Analysis_I_V vs NI_V.csv")
+sig_tct <- de_tct %>% filter(padj < 0.05) %>% dplyr::select(X1) %>% unlist()
+sig_tnf <- de_tnf %>% filter(padj < 0.05) %>% dplyr::select(X1) %>% unlist()
+sig_uni <- unique(c(sig_tct, sig_tnf))
+uni_tct <- de_tct %>% filter(X1 %in% sig_uni)
+uni_tnf <- de_tnf %>% filter(X1 %in% sig_uni)
+colnames(uni_tct) <- paste0("TCT_", colnames(uni_tct))
+colnames(uni_tnf) <- paste0("TNF_", colnames(uni_tnf))
+
+uni_tbl <- inner_join(uni_tct, uni_tnf, by = c("TCT_X1" = "TNF_X1"))
+
+gene_name <- AnnotationDbi::select(org.Mm.eg.db,
+                                   keys = uni_tbl$TCT_X1,
+                                   columns = c("SYMBOL"),
+                                   keytype = "ENSEMBL")
+non_duplicates_idx <- which(duplicated(gene_name$ENSEMBL) == FALSE)
+gene_name <- gene_name[non_duplicates_idx, ]
+
+uni_tbl <- left_join(uni_tbl, gene_name, by = c("TCT_X1"="ENSEMBL"))
+
+uni_tbl <- as.data.frame(uni_tbl)
+rownames(uni_tbl) <- uni_tbl$TCT_X1
+uni_tbl <- uni_tbl[,-1]
+
+uni_tbl$SameDirection <- FALSE
+
+uni_tbl$SameDirection[(uni_tbl$TCT_log2FoldChange * uni_tbl$TNF_log2FoldChange) > 0] <- TRUE
+
+
+write.csv(uni_tbl, "PDF_for_revision/Uni_DEGs.csv")
+
+sum(uni_tbl$SameDirection)
